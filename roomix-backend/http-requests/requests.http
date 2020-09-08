@@ -1,0 +1,18 @@
+###
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "username": "Jake",
+  "password": "passme",
+  "displayname": "John",
+  "picUrl": "http://..."
+
+}
+###
+GET http://localhost:8080/user/Max
+Content-Type: application/json
+###
+GET http://localhost:8080/user
+Content-Type: application/json
+###
