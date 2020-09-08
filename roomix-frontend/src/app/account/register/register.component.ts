@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AccountService} from '../account.service';
 import {first} from 'rxjs/operators';
+import {AccountService} from '../account.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
 
   regForm: FormGroup;
-
 
   constructor(private accountService: AccountService) { }
 
@@ -29,7 +28,5 @@ export class RegisterComponent implements OnInit {
           .pipe(first())
           .subscribe(data => {});
     }
-
   }
-
 }
