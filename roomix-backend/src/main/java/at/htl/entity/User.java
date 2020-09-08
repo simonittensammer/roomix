@@ -1,10 +1,14 @@
 package at.htl.entity;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.security.jpa.Password;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
+@Table(name = "USR")
 public class User {
 
     @Id
@@ -12,7 +16,7 @@ public class User {
     @Column(name = "USR_ID")
     Long id;
 
-    @Column(name = "USR_NAME")
+    @Column(name = "USR_NAME", unique = true)
     String username;
 
     @Column(name = "USR_PWD")
@@ -24,8 +28,8 @@ public class User {
     @Column(name = "USR_PIC")
     String picUrl;
 
-    @OneToMany
-    List<User> firendList;
+//    @OneToMany
+//    List<User> firendList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Member> memberList;
@@ -41,7 +45,7 @@ public class User {
     Member activeMember;
 
     public User() {
-        this.firendList = new LinkedList<>();
+//        this.firendList = new LinkedList<>();
         this.memberList = new LinkedList<>();
         this.friendRequestList = new LinkedList<>();
         this.roomInviteList = new LinkedList<>();
@@ -52,7 +56,7 @@ public class User {
         this.password = password;
         this.displayname = displayname;
         this.picUrl = picUrl;
-        this.firendList = new LinkedList<>();
+//        this.firendList = new LinkedList<>();
         this.memberList = new LinkedList<>();
         this.friendRequestList = new LinkedList<>();
         this.roomInviteList = new LinkedList<>();
@@ -98,13 +102,13 @@ public class User {
         this.picUrl = picUrl;
     }
 
-    public List<User> getFirendList() {
-        return firendList;
-    }
-
-    public void setFirendList(List<User> firendList) {
-        this.firendList = firendList;
-    }
+//    public List<User> getFirendList() {
+//        return firendList;
+//    }
+//
+//    public void setFirendList(List<User> firendList) {
+//        this.firendList = firendList;
+//    }
 
     public List<Member> getMemberList() {
         return memberList;
@@ -136,5 +140,20 @@ public class User {
 
     public void setActiveMember(Member activeMember) {
         this.activeMember = activeMember;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", displayname='" + displayname + '\'' +
+                ", picUrl='" + picUrl + '\'' +
+                ", memberList=" + memberList +
+                ", friendRequestList=" + friendRequestList +
+                ", roomInviteList=" + roomInviteList +
+                ", activeMember=" + activeMember +
+                '}';
     }
 }
