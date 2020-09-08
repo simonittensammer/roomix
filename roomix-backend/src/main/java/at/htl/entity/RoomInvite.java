@@ -1,5 +1,6 @@
 package at.htl.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,11 +12,13 @@ public class RoomInvite {
     @Column(name = "RIV_ID")
     Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonbTransient
     @JoinColumn(name = "RIV_SND_ID")
     User sender;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonbTransient
     @JoinColumn(name = "RIV_RCV_ID")
     User receiver;
 

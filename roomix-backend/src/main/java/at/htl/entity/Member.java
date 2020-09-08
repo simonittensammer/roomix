@@ -1,5 +1,6 @@
 package at.htl.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 @Entity
@@ -10,11 +11,13 @@ public class Member {
     @Column(name = "MBR_ID")
     Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonbTransient
     @JoinColumn(name = "MBR_USR_ID")
     User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonbTransient
     @JoinColumn(name = "MBR_RM_ID")
     Room room;
 
