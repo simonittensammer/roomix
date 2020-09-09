@@ -36,5 +36,7 @@ Content-Type: application/json
     "picUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"
   }
 }
-
+###
+DELETE http://localhost:8080/user/delete/Jake
+Content-Type: application/json
 ###

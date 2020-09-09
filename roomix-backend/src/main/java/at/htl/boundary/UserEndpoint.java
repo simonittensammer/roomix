@@ -94,9 +94,15 @@ public class UserEndpoint {
     }
 
     @DELETE
-    @Path("/update")
-    public Response deleteUser(User user) {
+    @Path("/delete/{username}")
+    public Response deleteUser(@PathParam("username") String username) {
+        User user = userRepository.findByName(username);
 
-        return Response.ok().build();
+        if (user != null) {
+            userRepository.delete(user);
+            return Response.ok(user).build();
+        }
+
+        return Response.status(406).entity("user does not exist").build();
     }
 }
