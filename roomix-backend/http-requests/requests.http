@@ -24,3 +24,17 @@ Content-Type: application/json
   "password": "passme"
 }
 ###
+POST http://localhost:8080/user/update
+Content-Type: application/json
+
+{
+  "username": "Jake",
+  "changes": {
+    "username": "Jake21",
+    "displayname": "xX_Jake_Xx",
+    "password": "password",
+    "picUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"
+  }
+}
+
+###

@@ -50,16 +50,15 @@ public class UserEndpoint {
             userRepository.persist(user);
             return Response.status(201).entity(user).build();
         }catch (PersistenceException e) {
-            System.out.println(e.getMessage());
             return Response.status(406).entity("username is already taken").build();
         }
     }
 
     @POST
     @Path("/login")
-    public Response loginUser(JsonObject json) {
-        String username = json.getString("username");
-        String password = json.getString("password");
+    public Response loginUser(JsonObject jsonObject) {
+        String username = jsonObject.getString("username");
+        String password = jsonObject.getString("password");
 
         User user = userRepository.findByName(username);
 
@@ -71,6 +70,33 @@ public class UserEndpoint {
             }
         }
 
-        return Response.status(406).entity("this user does not exist").build();
+        return Response.status(406).entity("user does not exist").build();
+    }
+
+    @POST
+    @Path("/update")
+    public Response updateUser(JsonObject jsonObject) {
+        String username = jsonObject.getString("username");
+        JsonObject changes = jsonObject.getJsonObject("changes");
+
+        User user = userRepository.findByName(username);
+
+        if (user != null) {
+            try {
+                userRepository.updateUser(user, changes);
+                return Response.ok(user).build();
+            }catch (PersistenceException e) {
+                return Response.status(406).entity("username is already taken").build();
+            }
+        }
+
+        return Response.status(406).entity("user does not exist").build();
+    }
+
+    @DELETE
+    @Path("/update")
+    public Response deleteUser(User user) {
+
+        return Response.ok().build();
     }
 }
