@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {User} from './user/user';
+import {User} from '../models/user';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {GlobalConstants} from '../helpers/globalConstants';
@@ -24,7 +24,7 @@ export class AccountService {
   }
 
   login(username, password) {
-    return this.http.post<User>(GlobalConstants.apiUrl + '/user/' + username, null)
+    return this.http.post<User>(GlobalConstants.apiUrl + '/user/login', { username, password })
         .pipe(map(user => {
           localStorage.setItem('user', JSON.stringify(user));
           this.userSubject.next(user);
