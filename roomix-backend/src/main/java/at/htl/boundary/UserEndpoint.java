@@ -7,6 +7,8 @@ import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -51,5 +53,24 @@ public class UserEndpoint {
             System.out.println(e.getMessage());
             return Response.status(406).entity("username is already taken").build();
         }
+    }
+
+    @POST
+    @Path("/login")
+    public Response loginUser(JsonObject json) {
+        String username = json.getString("username");
+        String password = json.getString("password");
+
+        User user = userRepository.findByName(username);
+
+        if (user != null) {
+            if(user.getPassword().equals(password)) {
+                return Response.ok(user).build();
+            } else {
+                return Response.status(406).entity("password wrong").build();
+            }
+        }
+
+        return Response.status(406).entity("this user does not exist").build();
     }
 }
