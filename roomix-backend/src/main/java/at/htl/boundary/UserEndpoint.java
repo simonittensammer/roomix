@@ -1,6 +1,8 @@
 package at.htl.boundary;
 
 import at.htl.control.UserRepository;
+import at.htl.entity.Member;
+import at.htl.entity.Room;
 import at.htl.entity.User;
 import at.htl.control.UserRepository;
 import org.hibernate.Hibernate;
@@ -42,6 +44,12 @@ public class UserEndpoint {
         User user = userRepository.findByName(userName);
         System.out.println(user.toString());
         return user;
+    }
+
+    @GET
+    @Path("/{username}/rooms")
+    public List<Room> getUserRooms(@PathParam("username") String username) {
+        return userRepository.findAllRoomsOfUser(username);
     }
 
     @POST

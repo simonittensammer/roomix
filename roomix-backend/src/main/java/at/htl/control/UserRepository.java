@@ -1,5 +1,7 @@
 package at.htl.control;
 
+import at.htl.entity.Member;
+import at.htl.entity.Room;
 import at.htl.entity.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.hibernate.Hibernate;
@@ -7,12 +9,16 @@ import org.hibernate.Hibernate;
 import javax.enterprise.context.ApplicationScoped;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class UserRepository implements PanacheRepository<User> {
 
-    public User findByName(String userName) {
-        User user = find("USR_NAME", userName).firstResult();
+    public User findByName(String username) {
+        User user = find("USR_NAME", username).firstResult();
 
         if (user != null) {
             Hibernate.initialize(user);
@@ -50,5 +56,25 @@ public class UserRepository implements PanacheRepository<User> {
                     break;
             }
         });
+    }
+
+    public List<Room> findAllRoomsOfUser(String username) {
+        List<Room> roomList = new LinkedList<>();
+
+        User user = findByName(username);
+
+        if (user != null) {
+            user.getMemberList().stream().peek(o -> {
+                Hibernate.initialize(o.getRoom());
+                Hibernate.initialize(o.getRoom().getMemberList());
+                Hibernate.initialize(o.getRoom().getMessageList());
+            }).collect(Collectors.toList());
+
+            user.getMemberList().forEach(member -> {
+                roomList.add(member.getRoom());
+            });
+        }
+
+        return roomList;
     }
 }
