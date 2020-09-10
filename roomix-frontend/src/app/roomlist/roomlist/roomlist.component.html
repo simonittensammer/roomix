@@ -1,7 +1,7 @@
 <h2>Your rooms</h2>
 
 <ul>
-    <li *ngFor="let member of user.memberList">{{ member.room.name.toString() }}</li>
+    <li *ngFor="let member of user.memberList" (click)="showRoom(member.room)">{{ member.room.name }}</li>
 </ul>
 
 <a>Join Room</a>
