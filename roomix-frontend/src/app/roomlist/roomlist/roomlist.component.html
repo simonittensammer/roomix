@@ -1,5 +1,11 @@
-<p>
-  roomlist works!
-</p>
+<h2>Your rooms</h2>
+
+<ul>
+    <li *ngFor="let member of user.memberList">{{ member.room.name.toString() }}</li>
+</ul>
+
+<a>Join Room</a>
+
+<a routerLink="/roomlist/create-room">New Room</a>
 
 <button (click)="logout()">Logout</button>

@@ -12,11 +12,28 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RegisterComponent } from './account/register/register.component';
 import {LoginComponent} from './account/login/login.component';
+import {RoomComponent} from './room/room/room.component';
+import {RoomlistComponent} from './roomlist/roomlist/roomlist.component';
+import {CreateRoomComponent} from './roomlist/create-room/create-room.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  declarations: [
+      AppComponent,
+      LoginComponent,
+      RegisterComponent,
+      RoomComponent,
+      RoomlistComponent,
+      CreateRoomComponent
+  ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
+  imports: [
+      BrowserModule,
+      IonicModule.forRoot(),
+      AppRoutingModule,
+      HttpClientModule,
+      FormsModule,
+      ReactiveFormsModule,
+  ],
   providers: [
     StatusBar,
     SplashScreen,

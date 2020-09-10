@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../../account/account.service';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-roomlist',
@@ -8,9 +9,15 @@ import {AccountService} from '../../account/account.service';
 })
 export class RoomlistComponent implements OnInit {
 
-  constructor(private accountService: AccountService) { }
+  user: User;
 
-  ngOnInit() {}
+  constructor(private accountService: AccountService) {
+    this.user = this.accountService.userValue;
+  }
+
+  ngOnInit() {
+    console.log(this.accountService.userValue);
+  }
 
   logout() {
     this.accountService.logout();
