@@ -23,6 +23,11 @@ export class AccountService {
     return this.userSubject.value;
   }
 
+  public addRoom(user: User) {
+    // localStorage.setItem('user', JSON.stringify(user));
+    // this.userSubject.next(user);
+  }
+
   login(username, password) {
     return this.http.post<User>(GlobalConstants.apiUrl + '/user/login', { username, password })
         .pipe(map(user => {

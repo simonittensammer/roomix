@@ -1,0 +1,14 @@
+<h2>Create a new room</h2>
+
+<div>
+  <form [formGroup]="newRoomForm">
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name"
+             formControlName="name">
+    </div>
+    <button type="submit" (click)="onSubmit()">Create</button>
+  </form>
+</div>
+
+<a routerLink="../">Back to room list</a>

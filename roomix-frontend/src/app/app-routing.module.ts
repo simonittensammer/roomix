@@ -5,6 +5,7 @@ import {LoginComponent} from './account/login/login.component';
 import {RegisterComponent} from './account/register/register.component';
 import {RoomlistComponent} from './roomlist/roomlist/roomlist.component';
 import {RoomComponent} from './room/room/room.component';
+import {CreateRoomComponent} from './roomlist/create-room/create-room.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
   {
     path: 'room',
     component: RoomComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'roomlist/create-room',
+    component: CreateRoomComponent,
     canActivate: [AuthGuard]
   }
 ];

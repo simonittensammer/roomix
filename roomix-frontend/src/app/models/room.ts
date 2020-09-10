@@ -11,4 +11,8 @@ export class Room {
     */
     activeMemberAmount: number;
     isPrivate: boolean;
+
+    constructor(name) {
+        this.name = name;
+    }
 }
