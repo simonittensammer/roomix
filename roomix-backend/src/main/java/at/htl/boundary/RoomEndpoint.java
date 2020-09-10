@@ -1,6 +1,6 @@
 package at.htl.boundary;
 
-import at.htl.control.MemeberRepository;
+import at.htl.control.MemberRepository;
 import at.htl.control.RoomRepository;
 import at.htl.control.UserRepository;
 import at.htl.entity.Member;
@@ -12,12 +12,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
-import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -40,7 +38,7 @@ public class RoomEndpoint {
     UserRepository userRepository;
 
     @Inject
-    MemeberRepository memberRepository;
+    MemberRepository memberRepository;
 
     @GET
     public List<Room> getAll() {

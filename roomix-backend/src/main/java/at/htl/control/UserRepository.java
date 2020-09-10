@@ -1,6 +1,5 @@
 package at.htl.control;
 
-import at.htl.entity.Member;
 import at.htl.entity.Room;
 import at.htl.entity.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -8,20 +7,17 @@ import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class UserRepository implements PanacheRepository<User> {
 
     @Inject
-    MemeberRepository memeberRepository;
+    MemberRepository memberRepository;
 
     public User findByName(String username) {
         User user = find("USR_NAME", username).firstResult();
@@ -101,7 +97,7 @@ public class UserRepository implements PanacheRepository<User> {
 //            }).collect(Collectors.toList());
 
             user.getMemberList().forEach(member -> {
-                serializedMembers.add(memeberRepository.getSerializedMember(member.getId()));
+                serializedMembers.add(memberRepository.getSerializedMember(member.getId()));
             });
         }
 

@@ -16,7 +16,7 @@ import java.io.StringReader;
 
 @ApplicationScoped
 @Transactional
-public class MemeberRepository implements PanacheRepository<Member> {
+public class MemberRepository implements PanacheRepository<Member> {
 
     @Override
     public Member findById(Long id) {
