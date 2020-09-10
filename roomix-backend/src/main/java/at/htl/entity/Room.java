@@ -37,6 +37,12 @@ public class Room {
         this.messageList = new LinkedList<>();
     }
 
+    public Room(String name) {
+        this.name = name;
+        this.memberList = new LinkedList<>();
+        this.messageList = new LinkedList<>();
+    }
+
     public Room(String name, String picUrl, boolean isPrivate) {
         this.name = name;
         this.picUrl = picUrl;
@@ -45,5 +51,69 @@ public class Room {
         this.messageList = new LinkedList<>();
         this.activeMemberCount = 0;
         this.playlist = new Playlist();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public List<Member> getMemberList() {
+        return memberList;
+    }
+
+    public void setMemberList(List<Member> memberList) {
+        this.memberList = memberList;
+    }
+
+    public List<Message> getMessageList() {
+        return messageList;
+    }
+
+    public void setMessageList(List<Message> messageList) {
+        this.messageList = messageList;
+    }
+
+    public Playlist getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
+    }
+
+    public int getActiveMemberCount() {
+        return activeMemberCount;
+    }
+
+    public void setActiveMemberCount(int activeMemberCount) {
+        this.activeMemberCount = activeMemberCount;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
     }
 }
