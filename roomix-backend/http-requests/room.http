@@ -1,0 +1,24 @@
+###
+GET http://localhost:8080/room
+###
+GET http://localhost:8080/room/1
+###
+GET http://localhost:8080/room/member/1
+###
+POST http://localhost:8080/room
+Content-Type: application/json
+
+{
+  "username": "Jake",
+  "roomname": "Jake's Room"
+}
+###
+POST http://localhost:8080/room/member
+Content-Type: application/json
+
+{
+  "username": "Jake21",
+  "roomId": 1
+}
+###
+
