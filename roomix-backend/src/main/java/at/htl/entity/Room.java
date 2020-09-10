@@ -37,6 +37,12 @@ public class Room {
         this.messageList = new LinkedList<>();
     }
 
+    public Room(String name) {
+        this.name = name;
+        this.memberList = new LinkedList<>();
+        this.messageList = new LinkedList<>();
+    }
+
     public Room(String name, String picUrl, boolean isPrivate) {
         this.name = name;
         this.picUrl = picUrl;
