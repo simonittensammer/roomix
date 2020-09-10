@@ -32,6 +32,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'room/:id',
+    component: RoomComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'roomlist/create-room',
     component: CreateRoomComponent,
     canActivate: [AuthGuard]
