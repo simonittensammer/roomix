@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {GlobalConstants} from '../helpers/globalConstants';
 import {map} from 'rxjs/operators';
+import {Member} from '../models/member';
 
 @Injectable({
   providedIn: 'root'
@@ -23,16 +24,18 @@ export class AccountService {
     return this.userSubject.value;
   }
 
-  public addRoom(user: User) {
-    // localStorage.setItem('user', JSON.stringify(user));
-    // this.userSubject.next(user);
+  public updateUserValue(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user);
+  }
+
+  getProperMemberList(username) {
+    return this.http.get<Member[]>(GlobalConstants.apiUrl + '/user/' + username + '/members');
   }
 
   login(username, password) {
     return this.http.post<User>(GlobalConstants.apiUrl + '/user/login', { username, password })
         .pipe(map(user => {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.userSubject.next(user);
           return user;
         }));
   }
