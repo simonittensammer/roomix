@@ -80,7 +80,7 @@ public class RoomEndpoint {
             Member member = new Member(creator, room, "owner");
             memberRepository.persist(member);
 
-            return Response.status(201).entity(serializeMember(member)).build();
+            return Response.status(201).entity(creator).build();
         }
 
         return Response.status(406).entity("user does not exist").build();
