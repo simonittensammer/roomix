@@ -80,6 +80,8 @@ public class RoomEndpoint {
             Member member = new Member(creator, room, "owner");
             memberRepository.persist(member);
 
+            creator.getMemberList().add(member);
+
             return Response.status(201).entity(creator).build();
         }
 
