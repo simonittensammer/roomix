@@ -10,6 +10,7 @@ import org.hibernate.Hibernate;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
@@ -50,6 +51,12 @@ public class UserEndpoint {
     @Path("/{username}/rooms")
     public List<Room> getUserRooms(@PathParam("username") String username) {
         return userRepository.findAllRoomsOfUser(username);
+    }
+
+    @GET
+    @Path("/{username}/members")
+    public List<JsonObject> getUserMembers(@PathParam("username") String username) {
+        return userRepository.findAllSerializedMembers(username);
     }
 
     @POST

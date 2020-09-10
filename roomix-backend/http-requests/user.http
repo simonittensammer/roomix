@@ -6,6 +6,8 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/user/Jake/rooms
 ###
+GET http://localhost:8080/user/Jake/members
+###
 POST http://localhost:8080/user
 Content-Type: application/json
 

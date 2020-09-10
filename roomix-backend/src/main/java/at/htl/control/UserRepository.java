@@ -7,6 +7,9 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import java.util.LinkedList;
@@ -16,6 +19,9 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class UserRepository implements PanacheRepository<User> {
+
+    @Inject
+    MemeberRepository memeberRepository;
 
     public User findByName(String username) {
         User user = find("USR_NAME", username).firstResult();
@@ -76,5 +82,29 @@ public class UserRepository implements PanacheRepository<User> {
         }
 
         return roomList;
+    }
+
+    public List<JsonObject> findAllSerializedMembers(String username) {
+        List<JsonObject> serializedMembers = new LinkedList<>();
+
+        User user = findByName(username);
+
+        if(user != null) {
+//            user.getMemberList().stream().peek(o -> {
+//                Hibernate.initialize(o.getRoom());
+//                Hibernate.initialize(o.getRoom().getMemberList());
+//                Hibernate.initialize(o.getRoom().getMessageList());
+//                Hibernate.initialize(o.getUser());
+//                Hibernate.initialize(o.getUser().getMemberList());
+//                Hibernate.initialize(o.getUser().getRoomInviteList());
+//                Hibernate.initialize(o.getUser().getFriendRequestList());
+//            }).collect(Collectors.toList());
+
+            user.getMemberList().forEach(member -> {
+                serializedMembers.add(memeberRepository.getSerializedMember(member.getId()));
+            });
+        }
+
+        return serializedMembers;
     }
 }
