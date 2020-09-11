@@ -17,7 +17,6 @@ export class RoomComponent implements OnInit {
       private route: ActivatedRoute,
       private roomService: RoomService
   ) {
-      this.room.name = '';
   }
 
   ngOnInit() {
