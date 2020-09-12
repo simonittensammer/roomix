@@ -16,12 +16,11 @@ public class Playlist {
     @OneToMany
     List<Song> songList;
 
-    @OneToMany
-    List<Song> songQueue;
+    @OneToOne
+    Song currentSong;
 
     public Playlist() {
         this.songList = new LinkedList<>();
-        this.songQueue = new LinkedList<>();
     }
 
     public Long getId() {
@@ -40,11 +39,11 @@ public class Playlist {
         this.songList = songList;
     }
 
-    public List<Song> getSongQueue() {
-        return songQueue;
+    public Song getCurrentSong() {
+        return currentSong;
     }
 
-    public void setSongQueue(List<Song> songQueue) {
-        this.songQueue = songQueue;
+    public void setCurrentSong(Song currentSong) {
+        this.currentSong = currentSong;
     }
 }
