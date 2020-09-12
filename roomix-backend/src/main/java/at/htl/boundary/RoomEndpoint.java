@@ -1,10 +1,9 @@
 package at.htl.boundary;
 
-import at.htl.control.MemberRepository;
-import at.htl.control.RoomRepository;
-import at.htl.control.UserRepository;
+import at.htl.control.*;
 import at.htl.entity.Member;
 import at.htl.entity.Room;
+import at.htl.entity.Song;
 import at.htl.entity.User;
 import org.hibernate.Hibernate;
 
@@ -40,6 +39,12 @@ public class RoomEndpoint {
     @Inject
     MemberRepository memberRepository;
 
+    @Inject
+    SongRepository songRepository;
+
+    @Inject
+    PlaylistRepository playlistRepository;
+
     @GET
     public List<Room> getAll() {
         return roomRepository.streamAll().peek(o -> {
@@ -73,6 +78,7 @@ public class RoomEndpoint {
 
         if (creator != null) {
             Room room = new Room(jsonObject.getString("roomname"));
+            playlistRepository.persist(room.getPlaylist());
             roomRepository.persist(room);
 
             Member member = new Member(creator, room, "owner");
@@ -102,6 +108,20 @@ public class RoomEndpoint {
         }
 
         return Response.status(406).entity("user does not exist").build();
+    }
+
+    @POST
+    @Path("/song")
+    public Response addSongToPlaylist(JsonObject jsonObject) {
+        Room room = roomRepository.findById(jsonObject.getJsonNumber("roomId").longValue());
+        Song song = songRepository.findById(jsonObject.getJsonNumber("songId").longValue());
+
+        if(room != null && song != null) {
+            room.getPlaylist().getSongList().add(song);
+            return Response.ok("song added").build();
+        }
+
+        return Response.status(406).entity("room or song does not exist").build();
     }
 
     private JsonObject serializeMember(Member member) {

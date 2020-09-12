@@ -21,4 +21,12 @@ Content-Type: application/json
   "roomId": 1
 }
 ###
+POST http://localhost:8080/room/song
+Content-Type: application/json
+
+{
+  "roomId": 1,
+  "songId": 1
+}
+###
 

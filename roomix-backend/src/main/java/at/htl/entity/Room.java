@@ -35,12 +35,14 @@ public class Room {
     public Room() {
         this.memberList = new LinkedList<>();
         this.messageList = new LinkedList<>();
+        this.playlist = new Playlist();
     }
 
     public Room(String name) {
         this.name = name;
         this.memberList = new LinkedList<>();
         this.messageList = new LinkedList<>();
+        this.playlist = new Playlist();
     }
 
     public Room(String name, String picUrl, boolean isPrivate) {
