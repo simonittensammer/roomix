@@ -27,7 +27,10 @@ public class UserRepository implements PanacheRepository<User> {
             Hibernate.initialize(user.getFriendRequestList());
             Hibernate.initialize(user.getMemberList());
             Hibernate.initialize(user.getRoomInviteList());
+            Hibernate.initialize(user.getFriendList());
+            Hibernate.initialize(user.getAddUser());
         }
+
         return user;
     }
 
@@ -102,5 +105,33 @@ public class UserRepository implements PanacheRepository<User> {
         }
 
         return serializedMembers;
+    }
+
+    public List<User> findAllFriends(String username) {
+        List<User> friends = new LinkedList<>();
+
+        User user = findByName(username);
+
+        if (user != null) {
+            friends = user.getFriendList();
+        }
+
+        friends.stream().peek(o -> {
+            Hibernate.initialize(o);
+            Hibernate.initialize(o.getFriendRequestList());
+            Hibernate.initialize(o.getMemberList());
+            Hibernate.initialize(o.getRoomInviteList());
+            Hibernate.initialize(o.getFriendList());
+            Hibernate.initialize(o.getAddUser());
+        }).collect(Collectors.toList());
+
+        return friends;
+    }
+
+    public void friendUsers(User user1, User user2) {
+        user1.getAddUser().add(user2);
+        user2.getFriendList().add(user1);
+        user2.getAddUser().add(user1);
+        user1.getFriendList().add(user2);
     }
 }

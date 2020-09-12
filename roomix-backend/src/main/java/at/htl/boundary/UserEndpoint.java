@@ -36,6 +36,8 @@ public class UserEndpoint {
             Hibernate.initialize(o.getFriendRequestList());
             Hibernate.initialize(o.getMemberList());
             Hibernate.initialize(o.getRoomInviteList());
+            Hibernate.initialize(o.getFriendList());
+            Hibernate.initialize(o.getAddUser());
         }).collect(Collectors.toList());
     }
 
@@ -57,6 +59,12 @@ public class UserEndpoint {
     @Path("/{username}/members")
     public List<JsonObject> getUserMembers(@PathParam("username") String username) {
         return userRepository.findAllSerializedMembers(username);
+    }
+
+    @GET
+    @Path("/{username}/friends")
+    public List<User> findFriends(@PathParam("username") String username) {
+        return userRepository.findAllFriends(username);
     }
 
     @POST
@@ -103,6 +111,20 @@ public class UserEndpoint {
             }catch (PersistenceException e) {
                 return Response.status(406).entity("username is already taken").build();
             }
+        }
+
+        return Response.status(406).entity("user does not exist").build();
+    }
+
+    @POST
+    @Path("/friend")
+    public Response friendUsers(JsonObject jsonObject) {
+        User user1 = userRepository.findByName(jsonObject.getString("username1"));
+        User user2 = userRepository.findByName(jsonObject.getString("username2"));
+
+        if (user1 != null && user2 != null) {
+            userRepository.friendUsers(user1, user2);
+            return Response.ok().build();
         }
 
         return Response.status(406).entity("user does not exist").build();

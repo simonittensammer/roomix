@@ -8,6 +8,8 @@ GET http://localhost:8080/user/Jake/rooms
 ###
 GET http://localhost:8080/user/Jake/members
 ###
+GET http://localhost:8080/user/Jake21/friends
+###
 POST http://localhost:8080/user
 Content-Type: application/json
 
@@ -39,6 +41,15 @@ Content-Type: application/json
     "picUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"
   }
 }
+###
+POST http://localhost:8080/user/friend
+Content-Type: application/json
+
+{
+  "username1": "Jake",
+  "username2": "Jake22"
+}
+
 ###
 DELETE http://localhost:8080/user/delete/Jake
 Content-Type: application/json

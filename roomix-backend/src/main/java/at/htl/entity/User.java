@@ -3,6 +3,7 @@ package at.htl.entity;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.security.jpa.Password;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,9 +29,6 @@ public class User {
     @Column(name = "USR_PIC")
     String picUrl;
 
-//    @OneToMany
-//    List<User> firendList;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Member> memberList;
 
@@ -44,11 +42,23 @@ public class User {
     @JoinColumn(name = "USR_ACTV_MBR_ID")
     Member activeMember;
 
+    @JoinTable(name = "USR_FRIENDS", joinColumns = {
+            @JoinColumn(name = "ADDING_USER", referencedColumnName = "USR_ID", nullable =   false)}, inverseJoinColumns = {
+            @JoinColumn(name = "ADDED_USER", referencedColumnName = "USR_ID", nullable = false)})
+    @ManyToMany
+    @JsonbTransient
+    List<User> friendList;
+
+    @ManyToMany(mappedBy = "friendList")
+    @JsonbTransient
+    List<User> addUser;
+
     public User() {
-//        this.firendList = new LinkedList<>();
         this.memberList = new LinkedList<>();
         this.friendRequestList = new LinkedList<>();
         this.roomInviteList = new LinkedList<>();
+        this.friendList = new LinkedList<>();
+        this.addUser = new LinkedList<>();
     }
 
     public User(String username, String password, String displayname, String picUrl) {
@@ -56,10 +66,11 @@ public class User {
         this.password = password;
         this.displayname = displayname;
         this.picUrl = picUrl;
-//        this.firendList = new LinkedList<>();
         this.memberList = new LinkedList<>();
         this.friendRequestList = new LinkedList<>();
         this.roomInviteList = new LinkedList<>();
+        this.friendList = new LinkedList<>();
+        this.addUser = new LinkedList<>();
     }
 
     public Long getId() {
@@ -102,14 +113,6 @@ public class User {
         this.picUrl = picUrl;
     }
 
-//    public List<User> getFirendList() {
-//        return firendList;
-//    }
-//
-//    public void setFirendList(List<User> firendList) {
-//        this.firendList = firendList;
-//    }
-
     public List<Member> getMemberList() {
         return memberList;
     }
@@ -140,6 +143,22 @@ public class User {
 
     public void setActiveMember(Member activeMember) {
         this.activeMember = activeMember;
+    }
+
+    public List<User> getFriendList() {
+        return friendList;
+    }
+
+    public void setFriendList(List<User> friendList) {
+        this.friendList = friendList;
+    }
+
+    public List<User> getAddUser() {
+        return addUser;
+    }
+
+    public void setAddUser(List<User> addUser) {
+        this.addUser = addUser;
     }
 
     @Override
