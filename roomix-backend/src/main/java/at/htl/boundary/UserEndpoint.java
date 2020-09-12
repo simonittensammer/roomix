@@ -1,6 +1,8 @@
 package at.htl.boundary;
 
+import at.htl.control.FriendRequestRepository;
 import at.htl.control.UserRepository;
+import at.htl.entity.FriendRequest;
 import at.htl.entity.Member;
 import at.htl.entity.Room;
 import at.htl.entity.User;
@@ -29,6 +31,9 @@ public class UserEndpoint {
 
     @Inject
     UserRepository userRepository;
+
+    @Inject
+    FriendRequestRepository friendRequestRepository;
 
     @GET
     public List<User> getAll() {
@@ -65,6 +70,39 @@ public class UserEndpoint {
     @Path("/{username}/friends")
     public List<User> findFriends(@PathParam("username") String username) {
         return userRepository.findAllFriends(username);
+    }
+
+    @GET
+    @Path("/{username}/friendRequests")
+    public Response getFriendRequests(@PathParam("username") String username) {
+        User user = userRepository.findByName(username);
+
+        if (user != null) {
+            return Response.ok(user.getFriendRequestList()).build();
+        }
+
+        return Response.status(406).entity("user does not exist").build();
+    }
+
+    @GET
+    @Path("{username}/friendRequests/{id}/{response}")
+    public Response respondToFriendRequest(@PathParam("username") String username, @PathParam("id") Long id, @PathParam("response") boolean response) {
+        User receiver = userRepository.findByName(username);
+        FriendRequest friendRequest = friendRequestRepository.findById(id);
+
+        if (receiver != null && friendRequest != null && receiver.getFriendRequestList().contains(friendRequest)) {
+            if (friendRequest.getSender() != null) {
+                if (response) {
+                    userRepository.friendUsers(friendRequest.getSender(), receiver);
+
+                    return Response.ok(friendRequest.getSender().getUsername() + " and " + receiver.getUsername()+ " are now friends").build();
+                }
+
+                return Response.ok(receiver.getUsername() + " declined " + friendRequest.getSender().getUsername() + "'s friend request").build();
+            }
+        }
+
+        return Response.status(406).entity("user or friend-request does not exist").build();
     }
 
     @POST
@@ -127,7 +165,25 @@ public class UserEndpoint {
             return Response.ok().build();
         }
 
-        return Response.status(406).entity("user does not exist").build();
+        return Response.status(406).entity("user(s) do(es) not exist").build();
+    }
+
+    @POST
+    @Path("/friendRequest")
+    public Response sendFriendRequest(JsonObject jsonObject) {
+        User sender = userRepository.findByName(jsonObject.getString("sender"));
+        User receiver = userRepository.findByName(jsonObject.getString("receiver"));
+
+        if (sender != null && receiver != null) {
+            FriendRequest friendRequest = new FriendRequest(sender, receiver);
+            friendRequestRepository.persist(friendRequest);
+
+            receiver.getFriendRequestList().add(friendRequest);
+
+            return Response.ok().build();
+        }
+
+        return Response.status(406).entity("user(s) do(es) not exist").build();
     }
 
     @DELETE

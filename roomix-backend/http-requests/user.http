@@ -8,7 +8,11 @@ GET http://localhost:8080/user/Jake/rooms
 ###
 GET http://localhost:8080/user/Jake/members
 ###
-GET http://localhost:8080/user/Jake21/friends
+GET http://localhost:8080/user/Jake/friends
+###
+GET http://localhost:8080/user/Jake21/friendRequests
+###
+GET http://localhost:8080/user/Jake21/friendRequests/1/false
 ###
 POST http://localhost:8080/user
 Content-Type: application/json
@@ -49,7 +53,14 @@ Content-Type: application/json
   "username1": "Jake",
   "username2": "Jake22"
 }
+###
+POST http://localhost:8080/user/friendRequest
+Content-Type: application/json
 
+{
+  "sender": "Jake",
+  "receiver": "Jake21"
+}
 ###
 DELETE http://localhost:8080/user/delete/Jake
 Content-Type: application/json

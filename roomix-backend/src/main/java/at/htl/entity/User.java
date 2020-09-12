@@ -33,9 +33,11 @@ public class User {
     List<Member> memberList;
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @JsonbTransient
     List<FriendRequest> friendRequestList;
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @JsonbTransient
     List<RoomInvite> roomInviteList;
 
     @OneToOne
