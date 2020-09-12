@@ -1,0 +1,18 @@
+###
+GET http://localhost:8080/song
+###
+GET http://localhost:8080/song/1
+###
+POST http://localhost:8080/song
+Content-Type: application/json
+
+{
+  "title": "Never Gonna Give You Up",
+  "artist": "Rick Astley",
+  "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO",
+  "picUrl": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+  "length": 212
+}
+###
+DELETE http://localhost:8080/song/1
+###
