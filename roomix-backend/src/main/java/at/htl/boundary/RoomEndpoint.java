@@ -1,10 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.*;
-import at.htl.entity.Member;
-import at.htl.entity.Room;
-import at.htl.entity.Song;
-import at.htl.entity.User;
+import at.htl.entity.*;
 import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -72,6 +69,24 @@ public class RoomEndpoint {
         return Response.status(406).entity("member does not exist").build();
     }
 
+    @GET
+    @Path("/{id}/song")
+    public Response getCurrentSong(@PathParam("id") Long id) {
+        Room room = roomRepository.findById(id);
+
+        if (room != null) {
+            Song song = room.getPlaylist().getCurrentSong();
+
+            if (song != null) {
+                return Response.ok(song).build();
+            }
+
+            return Response.noContent().build();
+        }
+
+        return Response.status(406).entity("room does not exist").build();
+    }
+
     @POST
     public Response createRoom(JsonObject jsonObject) {
         User creator = userRepository.findByName(jsonObject.getString("username"));
@@ -117,7 +132,13 @@ public class RoomEndpoint {
         Song song = songRepository.findById(jsonObject.getJsonNumber("songId").longValue());
 
         if(room != null && song != null) {
-            room.getPlaylist().getSongList().add(song);
+            Playlist playlist = room.getPlaylist();
+            playlist.getSongList().add(song);
+
+            if(playlist.getSongList().size() == 1) {
+                playlist.setCurrentSong(song);
+            }
+
             return Response.ok("song added").build();
         }
 

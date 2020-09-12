@@ -5,6 +5,8 @@ GET http://localhost:8080/room/1
 ###
 GET http://localhost:8080/room/member/1
 ###
+GET http://localhost:8080/room/1/song
+###
 POST http://localhost:8080/room
 Content-Type: application/json
 
