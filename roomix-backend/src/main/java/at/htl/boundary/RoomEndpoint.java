@@ -129,7 +129,17 @@ public class RoomEndpoint {
     @Path("/song")
     public Response addSongToPlaylist(JsonObject jsonObject) {
         Room room = roomRepository.findById(jsonObject.getJsonNumber("roomId").longValue());
-        Song song = songRepository.findById(jsonObject.getJsonNumber("songId").longValue());
+        Song song;
+
+        if (jsonObject.containsKey("songId")) {
+            song = songRepository.findById(jsonObject.getJsonNumber("songId").longValue());
+        } else {
+            song = songRepository.findByUrl(jsonObject.getJsonObject("song").getString("url"));
+            if (song == null) {
+                song = new Song(jsonObject.getJsonObject("song"));
+                songRepository.persist(song);
+            }
+        }
 
         if(room != null && song != null) {
             Playlist playlist = room.getPlaylist();

@@ -7,4 +7,8 @@ import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class SongRepository implements PanacheRepository<Song> {
+
+    public Song findByUrl(String url) {
+        return find("SNG_URL", url).firstResult();
+    }
 }

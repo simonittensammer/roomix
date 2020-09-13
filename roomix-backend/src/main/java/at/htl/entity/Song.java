@@ -1,5 +1,6 @@
 package at.htl.entity;
 
+import javax.json.JsonObject;
 import javax.persistence.*;
 
 @Entity
@@ -33,6 +34,14 @@ public class Song {
         this.url = url;
         this.picUrl = picUrl;
         this.length = length;
+    }
+
+    public Song(JsonObject jsonObject) {
+        this.title = jsonObject.getString("title");
+        this.artist = jsonObject.getString("artist");
+        this.url = jsonObject.getString("url");
+        this.picUrl = jsonObject.getString("picUrl");
+        this.length = jsonObject.getInt("length");
     }
 
     public Long getId() {

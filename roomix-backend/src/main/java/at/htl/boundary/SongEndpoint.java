@@ -34,8 +34,12 @@ public class SongEndpoint {
 
     @POST
     public Response addSong(Song song) {
-        songRepository.persist(song);
-        return Response.ok(song).build();
+        if (songRepository.findByUrl(song.getUrl()) == null) {
+            songRepository.persist(song);
+            return Response.ok(song).build();
+        }
+
+        return Response.status(406).entity("song already exists").build();
     }
 
     @DELETE
