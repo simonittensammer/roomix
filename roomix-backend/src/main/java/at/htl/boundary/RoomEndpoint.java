@@ -48,6 +48,7 @@ public class RoomEndpoint {
             Hibernate.initialize(o.getMessageList());
             Hibernate.initialize(o.getMemberList());
             Hibernate.initialize(o.getPlaylist());
+            Hibernate.initialize(o.getPlaylist().getSongList());
         }).collect(Collectors.toList());
     }
 
