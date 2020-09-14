@@ -1,11 +1,7 @@
 package at.htl.boundary;
 
-import at.htl.control.FriendRequestRepository;
-import at.htl.control.UserRepository;
-import at.htl.entity.FriendRequest;
-import at.htl.entity.Member;
-import at.htl.entity.Room;
-import at.htl.entity.User;
+import at.htl.control.*;
+import at.htl.entity.*;
 import at.htl.control.UserRepository;
 import org.hibernate.Hibernate;
 
@@ -33,7 +29,17 @@ public class UserEndpoint {
     UserRepository userRepository;
 
     @Inject
+    RoomRepository roomRepository;
+
+    @Inject
     FriendRequestRepository friendRequestRepository;
+
+    @Inject
+    RoomInviteRepository roomInviteRepository;
+
+    @Inject
+    MemberRepository memberRepository;
+
 
     @GET
     public List<User> getAll() {
@@ -85,6 +91,18 @@ public class UserEndpoint {
     }
 
     @GET
+    @Path("/{username}/roomInvites")
+    public Response getRoomInvites(@PathParam("username") String username) {
+        User user = userRepository.findByName(username);
+
+        if (user != null) {
+            return Response.ok(userRepository.getAllRoomInvites(username)).build();
+        }
+
+        return Response.status(406).entity("user does not exist").build();
+    }
+
+    @GET
     @Path("{username}/friendRequests/{id}/{response}")
     public Response respondToFriendRequest(@PathParam("username") String username, @PathParam("id") Long id, @PathParam("response") boolean response) {
         User receiver = userRepository.findByName(username);
@@ -103,6 +121,28 @@ public class UserEndpoint {
         }
 
         return Response.status(406).entity("user or friend-request does not exist").build();
+    }
+
+    @GET
+    @Path("{username}/roomInvites/{id}/{response}")
+    public Response respondToRoomInvite(@PathParam("username") String username, @PathParam("id") Long id, @PathParam("response") boolean response) {
+        User receiver = userRepository.findByName(username);
+        RoomInvite roomInvite = roomInviteRepository.findById(id);
+
+        if (receiver != null && roomInvite != null && receiver.getRoomInviteList().contains(roomInvite)) {
+            if (roomInvite.getSender() != null) {
+                if (response) {
+                    Member member = new Member(receiver, roomInvite.getRoom(), "member");
+                    memberRepository.persist(member);
+
+                    return Response.ok(member).build();
+                }
+
+                return Response.ok(receiver.getUsername() + " declined " + roomInvite.getSender().getUsername() + "'s invite to " + roomInvite.getRoom().getName()).build();
+            }
+        }
+
+        return Response.status(406).entity("user or room-invite does not exist").build();
     }
 
     @POST
@@ -180,10 +220,33 @@ public class UserEndpoint {
 
             receiver.getFriendRequestList().add(friendRequest);
 
-            return Response.ok().build();
+            return Response.ok(friendRequest).build();
         }
 
         return Response.status(406).entity("user(s) do(es) not exist").build();
+    }
+
+    @POST
+    @Path("/roomInvite")
+    public Response sendRoomInvite(JsonObject jsonObject) {
+        User sender = userRepository.findByName(jsonObject.getString("sender"));
+        User receiver = userRepository.findByName(jsonObject.getString("receiver"));
+        Room room = roomRepository.findById(jsonObject.getJsonNumber("roomId").longValue());
+
+        if(sender != null && receiver != null && room != null) {
+            if (userRepository.findAllRoomsOfUser(sender.getUsername()).contains(room)) {
+                RoomInvite roomInvite = new RoomInvite(sender, receiver, room);
+                roomInviteRepository.persist(roomInvite);
+
+                receiver.getRoomInviteList().add(roomInvite);
+
+                return Response.ok(roomInvite).build();
+            }
+
+            return Response.status(406).entity("user " + sender.getUsername() + " is not a member of " + room.getName()).build();
+        }
+
+        return Response.status(406).entity("user(s) or room do(es) not exist").build();
     }
 
     @DELETE

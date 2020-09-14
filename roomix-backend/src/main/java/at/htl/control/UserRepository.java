@@ -1,6 +1,7 @@
 package at.htl.control;
 
 import at.htl.entity.Room;
+import at.htl.entity.RoomInvite;
 import at.htl.entity.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.hibernate.Hibernate;
@@ -71,6 +72,8 @@ public class UserRepository implements PanacheRepository<User> {
         if (user != null) {
             user.getMemberList().stream().peek(o -> {
                 Hibernate.initialize(o.getRoom());
+                Hibernate.initialize(o.getRoom().getPlaylist());
+                Hibernate.initialize(o.getRoom().getPlaylist().getSongList());
                 Hibernate.initialize(o.getRoom().getMemberList());
                 Hibernate.initialize(o.getRoom().getMessageList());
             }).collect(Collectors.toList());
@@ -126,6 +129,28 @@ public class UserRepository implements PanacheRepository<User> {
         }).collect(Collectors.toList());
 
         return friends;
+    }
+
+    public List<RoomInvite> getAllRoomInvites(String username) {
+        List<RoomInvite> roomInviteList = new LinkedList<>();
+        User user = findByName(username);
+
+        if (user != null) {
+            user.getRoomInviteList().stream().peek(o -> {
+                Hibernate.initialize(o.getSender());
+                Hibernate.initialize(o.getReceiver());
+                Hibernate.initialize(o.getRoom());
+                Hibernate.initialize(o.getRoom().getMemberList());
+                Hibernate.initialize(o.getRoom().getMessageList());
+                Hibernate.initialize(o.getRoom().getPlaylist());
+                Hibernate.initialize(o.getRoom().getPlaylist().getSongList());
+            }).collect(Collectors.toList());
+
+            roomInviteList = user.getRoomInviteList();
+        }
+
+        return roomInviteList;
+
     }
 
     public void friendUsers(User user1, User user2) {

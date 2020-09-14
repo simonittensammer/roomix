@@ -12,7 +12,11 @@ GET http://localhost:8080/user/Jake/friends
 ###
 GET http://localhost:8080/user/Jake21/friendRequests
 ###
-GET http://localhost:8080/user/Jake21/friendRequests/1/false
+GET http://localhost:8080/user/Jake21/friendRequests/1/true
+###
+GET http://localhost:8080/user/Jake21/roomInvites
+###
+GET http://localhost:8080/user/Jake21/roomInvites/1/true
 ###
 POST http://localhost:8080/user
 Content-Type: application/json
@@ -60,6 +64,15 @@ Content-Type: application/json
 {
   "sender": "Jake",
   "receiver": "Jake21"
+}
+###
+POST http://localhost:8080/user/roomInvite
+Content-Type: application/json
+
+{
+  "sender": "Jake",
+  "receiver": "Jake21",
+  "roomId": 1
 }
 ###
 DELETE http://localhost:8080/user/delete/Jake
