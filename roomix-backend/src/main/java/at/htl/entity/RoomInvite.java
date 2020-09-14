@@ -23,6 +23,7 @@ public class RoomInvite {
     User receiver;
 
     @OneToOne
+    @JsonbTransient
     @JoinColumn(name = "RIV_RM_ID")
     Room room;
 
