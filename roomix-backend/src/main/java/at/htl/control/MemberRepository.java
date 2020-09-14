@@ -34,11 +34,17 @@ public class MemberRepository implements PanacheRepository<Member> {
         Member member = findById(id);
 
         Jsonb jsonb = JsonbBuilder.create();
-        JsonReader jsonReader = Json.createReader(new StringReader(jsonb.toJson(member.getRoom())));
-        JsonObject roomJson = jsonReader.readObject();
-        jsonReader = Json.createReader(new StringReader(jsonb.toJson(member.getUser())));
-        JsonObject userJson = jsonReader.readObject();
-        jsonReader.close();
+
+        JsonReader jsonReaderRoom = Json.createReader(new StringReader(jsonb.toJson(member.getRoom())));
+        JsonObject roomJson = jsonReaderRoom.readObject();
+        jsonReaderRoom.close();
+
+        JsonReader jsonReaderUser = Json.createReader(new StringReader(jsonb.toJson(member.getUser())));
+        JsonObject userJson = jsonReaderUser.readObject();
+        jsonReaderUser.close();
+
+        System.out.println("####################################################");
+        System.out.println(jsonb.toJson(member.getUser().toString()));
 
         return Json.createObjectBuilder()
                 .add("id", member.getId())

@@ -64,7 +64,7 @@ public class RoomEndpoint {
         Member member = memberRepository.findById(id);
 
         if (member != null) {
-            return Response.ok(serializeMember(member)).build();
+            return Response.ok(memberRepository.getSerializedMember(member.getId())).build();
         }
 
         return Response.status(406).entity("member does not exist").build();
@@ -120,7 +120,7 @@ public class RoomEndpoint {
             Member member = new Member(user, room, "member");
             memberRepository.persist(member);
 
-            return Response.status(201).entity(serializeMember(member)).build();
+            return Response.status(201).entity(memberRepository.getSerializedMember(member.getId())).build();
         }
 
         return Response.status(406).entity("user does not exist").build();
@@ -155,24 +155,4 @@ public class RoomEndpoint {
 
         return Response.status(406).entity("room or song does not exist").build();
     }
-
-    private JsonObject serializeMember(Member member) {
-        JsonbConfig config = new JsonbConfig().withStrictIJSON(true);
-        Jsonb jsonb = JsonbBuilder.create(config);
-
-        JsonReader jsonReaderRoom = Json.createReader(new StringReader(jsonb.toJson(member.getRoom())));
-        JsonReader jsonReaderUser = Json.createReader(new StringReader(jsonb.toJson(member.getRoom())));
-        JsonObject roomJson = jsonReaderRoom.readObject();
-        JsonObject userJson = jsonReaderUser.readObject();
-        jsonReaderRoom.close();
-        jsonReaderUser.close();
-
-        return Json.createObjectBuilder()
-                .add("id", member.getId())
-                .add("role", member.getRole())
-                .add("user", userJson)
-                .add("room", roomJson)
-                .build();
-    }
-
 }
