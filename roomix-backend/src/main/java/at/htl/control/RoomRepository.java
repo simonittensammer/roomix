@@ -1,12 +1,16 @@
 package at.htl.control;
 
 import at.htl.entity.Room;
+import at.htl.entity.Song;
 import at.htl.entity.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Transactional
@@ -25,5 +29,24 @@ public class RoomRepository implements PanacheRepository<Room> {
             Hibernate.initialize(room.getPlaylist().getCurrentSong());
         }
         return room;
+    }
+
+    public List<Room> findAllRoomsWithSong(Song song) {
+        List<Room> rooms = new LinkedList<>();
+
+        List<Room> allRooms = streamAll().peek(o -> {
+            Hibernate.initialize(o.getMessageList());
+            Hibernate.initialize(o.getMemberList());
+            Hibernate.initialize(o.getPlaylist());
+            Hibernate.initialize(o.getPlaylist().getSongList());
+        }).collect(Collectors.toList());
+
+        allRooms.forEach(room -> {
+            if (room.getPlaylist().getSongList().contains(song)) {
+                rooms.add(room);
+            }
+        });
+
+        return rooms;
     }
 }

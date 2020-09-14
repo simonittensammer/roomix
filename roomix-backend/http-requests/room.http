@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
   "username": "Jake",
-  "roomname": "Jake's Room"
+  "roomname": "Jake's Room 2"
 }
 ###
 POST http://localhost:8080/room/member
@@ -27,7 +27,7 @@ POST http://localhost:8080/room/song
 Content-Type: application/json
 
 {
-  "roomId": 1,
+  "roomId": 2,
   "songId": 1
 }
 ###
@@ -44,5 +44,7 @@ Content-Type: application/json
     "length": 212
   }
 }
+###
+DELETE http://localhost:8080/room/2/song/delete/1
 ###
 

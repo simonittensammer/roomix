@@ -155,4 +155,35 @@ public class RoomEndpoint {
 
         return Response.status(406).entity("room or song does not exist").build();
     }
+
+    @DELETE
+    @Path("{roomId}/song/delete/{songId}")
+    public Response deleteSongFromRoomPlaylist(@PathParam("roomId") Long roomId, @PathParam("songId") Long songId) {
+        Room room = roomRepository.findById(roomId);
+        Song song = songRepository.findById(songId);
+
+        if (room != null && song != null) {
+            if (room.getPlaylist().getSongList().contains(song)) {
+                room.getPlaylist().getSongList().remove(song);
+
+                if (room.getPlaylist().getCurrentSong().equals(song)) {
+                    if (room.getPlaylist().getSongList().size() > 0) {
+                        room.getPlaylist().setCurrentSong(room.getPlaylist().getSongList().get(0));
+                    } else {
+                        room.getPlaylist().setCurrentSong(null);
+                    }
+                }
+
+                if (roomRepository.findAllRoomsWithSong(song).size() == 0) {
+                    songRepository.delete(song);
+                }
+
+                return Response.ok(song).build();
+            }
+
+            return Response.status(406).entity("song is not in the playlist").build();
+        }
+
+        return Response.status(406).entity("room or song does not exist").build();
+    }
 }
