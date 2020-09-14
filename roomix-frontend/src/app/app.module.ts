@@ -15,6 +15,8 @@ import {LoginComponent} from './account/login/login.component';
 import {RoomComponent} from './room/room/room.component';
 import {RoomlistComponent} from './roomlist/roomlist/roomlist.component';
 import {CreateRoomComponent} from './roomlist/create-room/create-room.component';
+import {PlaylistComponent} from './room/playlist/playlist/playlist.component';
+import {AddSongComponent} from './room/playlist/add-song/add-song.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import {CreateRoomComponent} from './roomlist/create-room/create-room.component'
       RegisterComponent,
       RoomComponent,
       RoomlistComponent,
-      CreateRoomComponent
+      CreateRoomComponent,
+      PlaylistComponent,
+      AddSongComponent
   ],
   entryComponents: [],
   imports: [
