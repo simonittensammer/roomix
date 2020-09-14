@@ -13,7 +13,7 @@ public class Playlist {
     @Column(name = "PLL_ID")
     Long id;
 
-    @OneToMany
+    @ManyToMany
     List<Song> songList;
 
     @OneToOne
