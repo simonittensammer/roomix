@@ -1,0 +1,13 @@
+<div *ngIf="room != null">
+  <h2>Playlist of {{ room.name }} </h2>
+
+  <ul>
+    <li *ngFor="let song of room.playlist.songList">{{ song.title }} --- {{ song.url }} <button (click)="deleteFromPlaylist(song)">Delete</button></li>
+  </ul>
+
+  <a (click)="showAddSong()">Add song</a>
+
+</div>
+
+
+
