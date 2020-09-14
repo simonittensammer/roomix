@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Room} from '../../models/room';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RoomService} from '../room.service';
 import {first} from 'rxjs/operators';
+import {PlaylistService} from '../playlist/playlist.service';
 
 @Component({
   selector: 'app-room',
@@ -14,8 +15,10 @@ export class RoomComponent implements OnInit {
   room: Room;
 
   constructor(
+      private playlistService: PlaylistService,
       private route: ActivatedRoute,
-      private roomService: RoomService
+      private roomService: RoomService,
+      private router: Router,
   ) {
   }
 
@@ -31,4 +34,7 @@ export class RoomComponent implements OnInit {
     );
   }
 
+  showPlaylist() {
+      this.router.navigate(['playlist', this.room.id], {relativeTo: this.route});
+  }
 }
