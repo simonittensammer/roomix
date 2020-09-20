@@ -1,14 +1,13 @@
-<h2>Create a new room</h2>
-
 <div>
-  <form [formGroup]="newRoomForm">
-    <div>
-      <label for="name">Name</label>
-      <input type="text" id="name"
-             formControlName="name">
+  <form [formGroup]="newRoomForm" class="form centerXY">
+    <h2 class="formHeadline formElement">Create a new room</h2>
+
+    <input type="text" id="name" class="formElement" formControlName="name" placeholder="Name">
+    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Create</button>
+
+    <div class="formElement">
+      <a href="../roomlist">Back to room list</a> <!-- REMINDER href or routerlink -->
     </div>
-    <button type="submit" (click)="onSubmit()">Create</button>
   </form>
 </div>
 
-<a href="../roomlist">Back to room list</a> <!-- REMINDER href or routerlink -->
