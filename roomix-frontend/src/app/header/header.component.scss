@@ -1,0 +1,23 @@
+#navBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 12.5vw;
+  padding-top: 30px;
+  background: var(--ion-card-background);
+
+  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+}
+
+#userText {
+  position: absolute;
+  bottom: 75px;
+  left: 0;
+}
+
+#logoutButton {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+}
