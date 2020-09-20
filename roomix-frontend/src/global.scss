@@ -24,3 +24,119 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+// GENERAL
+
+* {
+  color: var(--ion-text-color);
+}
+
+.centerX {
+  position: absolute;
+  left: 50vw;
+  transform: translate(-50%, 0);
+}
+
+.centerY {
+  position: absolute;
+  top: 50vh;
+  transform: translate(0, -50%);
+}
+
+.centerXY {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}
+
+.content {
+  padding: 30px;
+  width: 87.5vw;
+  position: absolute;
+  top: 0;
+  left: 12.5vw;
+}
+
+// FORMS, INPUTS, BUTTONS, LINKS
+
+a {
+  text-decoration: none;
+  color: var(--ion-color-primary)
+}
+
+input {
+  background: var(--ion-background-color);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+button {
+  background: var(--ion-color-primary);
+  margin-right: 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.buttonLink {
+  color: var(--ion-text-color);
+}
+
+.form {
+  width: 30vw;
+  background: var(--ion-card-background);
+  padding: 30px 0;
+  border-radius: 5px;
+
+  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+}
+
+.formHeadline {
+  text-align: center;
+}
+
+.formElement {
+  width: 80%;
+  margin: 10px 10%;
+}
+
+#formSubmit {
+  margin-top: 30px;
+}
+
+// CARDS
+.cardWrapper {
+
+}
+
+.card {
+  background: var(--ion-card-background);
+  margin-right: 30px;
+  margin-bottom: 30px;
+  width: 10vw;
+  float: left;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+
+  transition: all .2s ease-in-out;
+}
+
+.card:hover {
+  cursor: pointer;
+
+  transform: rotate(2deg) scale(1.05);
+}
+
+.cardImage {
+  width: 80%;
+  margin: 10%;
+  height: auto;
+}
+
+.cardText {
+  width: 100%;
+  margin-top: 0;
+  font-weight: bolder;
+  text-align: center;
+}
