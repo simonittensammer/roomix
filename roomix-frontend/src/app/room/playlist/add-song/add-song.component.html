@@ -1,7 +1,11 @@
-<h2>Search on Youtube</h2>
+<div class="content">
+    <h2>Search a Song</h2>
 
-<input #input type="text" placeholder="Search for a video...">
+    <input #input class="searchBar" type="text" placeholder="Search for a song">
 
-<ul *ngIf="songs != null">
-    <li *ngFor="let song of songs">{{ song.title }} <button (click)="addToPlaylist(song)">Add to playlist</button></li>
-</ul>
+    <ul *ngIf="songs != null">
+        <li *ngFor="let song of songs">{{ song.title }}
+            <button (click)="addToPlaylist(song)">Add to playlist</button>
+        </li>
+    </ul>
+</div>
