@@ -17,18 +17,20 @@ import {RoomlistComponent} from './roomlist/roomlist/roomlist.component';
 import {CreateRoomComponent} from './roomlist/create-room/create-room.component';
 import {PlaylistComponent} from './room/playlist/playlist/playlist.component';
 import {AddSongComponent} from './room/playlist/add-song/add-song.component';
+import {HeaderComponent} from './header/header.component';
 
 @NgModule({
-  declarations: [
-      AppComponent,
-      LoginComponent,
-      RegisterComponent,
-      RoomComponent,
-      RoomlistComponent,
-      CreateRoomComponent,
-      PlaylistComponent,
-      AddSongComponent
-  ],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        RegisterComponent,
+        RoomComponent,
+        RoomlistComponent,
+        CreateRoomComponent,
+        PlaylistComponent,
+        AddSongComponent,
+        HeaderComponent
+    ],
   entryComponents: [],
   imports: [
       BrowserModule,

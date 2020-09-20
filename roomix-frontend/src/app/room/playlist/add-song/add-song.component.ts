@@ -81,8 +81,8 @@ export class AddSongComponent implements OnInit, AfterViewInit {
                             this.songs.push(new Song(
                                 video.snippet.title,
                                 video.snippet.channelTitle,
-                                'https://www.youtube.com/watch?v=' + video.id.videoId,
-                                video.snippet.thumbnails.medium.url,
+                                video.id.videoId,
+                                video.snippet.thumbnails.high.url,
                                 duration
                             ));
                           });

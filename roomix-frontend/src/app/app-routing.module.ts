@@ -8,6 +8,8 @@ import {RoomComponent} from './room/room/room.component';
 import {CreateRoomComponent} from './roomlist/create-room/create-room.component';
 import {PlaylistComponent} from './room/playlist/playlist/playlist.component';
 import {AddSongComponent} from './room/playlist/add-song/add-song.component';
+import {FriendlistComponent} from './friendlist/friendlist/friendlist.component';
+import {ProfileComponent} from './profile/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -61,6 +63,16 @@ const routes: Routes = [
   {
     path: 'roomlist/create-room',
     component: CreateRoomComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'friendlist',
+    component: FriendlistComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard]
   }
 ];

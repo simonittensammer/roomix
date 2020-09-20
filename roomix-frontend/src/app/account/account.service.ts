@@ -12,6 +12,7 @@ import {Member} from '../models/member';
 })
 export class AccountService {
   private userSubject: BehaviorSubject<User>;
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(
       private router: Router,
@@ -20,11 +21,17 @@ export class AccountService {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
   }
 
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
+  }
+
   public get userValue(): User {
     return this.userSubject.value;
   }
 
   public updateUserValue(user: User) {
+    this.loggedIn.next(true);
+
     localStorage.setItem('user', JSON.stringify(user));
     this.userSubject.next(user);
   }
@@ -36,6 +43,7 @@ export class AccountService {
   login(username, password) {
     return this.http.post<User>(GlobalConstants.apiUrl + '/user/login', { username, password })
         .pipe(map(user => {
+          this.loggedIn.next(true);
           return user;
         }));
   }
@@ -43,6 +51,7 @@ export class AccountService {
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem('user');
+    this.loggedIn.next(false);
     this.userSubject.next(null);
     this.router.navigate(['/login']);
   }
