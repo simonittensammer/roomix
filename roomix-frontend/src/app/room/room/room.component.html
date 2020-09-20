@@ -1,6 +1,11 @@
-<h2 *ngIf="room != null" >{{ room.name }}</h2>
+<div class="content">
+    <h2 *ngIf="room != null">{{ room.name }}</h2>
 
-<iframe width="560" height="315" (ended)="requestNextSong()" src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&amp&autoplay=1;start=87" frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" (ended)="requestNextSong()"
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&amp&autoplay=1;start=87" frameborder="0"
+            allowfullscreen></iframe>
 
-<a (click)="showPlaylist()">Show playlist</a>
-
+    <button>
+        <a class="buttonLink" (click)="showPlaylist()">Show playlist</a>
+    </button>
+</div>
