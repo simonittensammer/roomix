@@ -1,24 +1,15 @@
-<h2>Registration</h2>
-
 <div>
-  <form [formGroup]="regForm">
-    <div>
-      <label for="username">Username</label>
-      <input type="text" id="username" class="form-control"
-             formControlName="username">
+  <form [formGroup]="regForm" class="form centerXY">
+    <h2 class="formHeadline formElement">Create an account!</h2>
+
+    <input type="text" id="username" class="formElement" formControlName="username" placeholder="Username">
+    <input type="text" id="displayname" class="formElement" formControlName="displayname" placeholder="Display name">
+    <input type="password" id="password" class="formElement" formControlName="password" placeholder="Password">
+
+    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Register</button>
+
+    <div class="formElement">
+      Back to <a routerLink="/login">login</a>
     </div>
-    <div>
-      <label for="displayname">Displayname</label>
-      <input type="text" id="displayname"
-             formControlName="displayname">
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password"
-             formControlName="password">
-    </div>
-    <button type="submit" (click)="onSubmit()">Register</button>
   </form>
 </div>
-
-<a routerLink="/login">To the login page</a>

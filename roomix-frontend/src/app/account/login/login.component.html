@@ -1,19 +1,14 @@
-<h2>Login</h2>
-
 <div>
-  <form [formGroup]="loginForm">
-    <div>
-      <label for="username">Username</label>
-      <input type="text" id="username"
-             formControlName="username">
+  <form [formGroup]="loginForm" class="form centerXY">
+    <h2 class="formHeadline formElement">Welcome back!</h2>
+
+    <input type="text" id="username" class="formElement" formControlName="username" placeholder="Username">
+    <input type="password" id="password" class="formElement" formControlName="password" placeholder="Password">
+
+    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Login</button>
+
+    <div class="formElement">
+      Need an account? <a routerLink="/register">Register</a>
     </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password"
-             formControlName="password">
-    </div>
-    <button type="submit" (click)="onSubmit()">Login</button>
   </form>
 </div>
-
-<a routerLink="/register">Create an account</a>
