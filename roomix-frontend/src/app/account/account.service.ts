@@ -25,6 +25,10 @@ export class AccountService {
     return this.loggedIn.asObservable();
   }
 
+  public updateIsLoggedIn(loggedIn: boolean) {
+    this.loggedIn.next(loggedIn);
+  }
+
   public get userValue(): User {
     return this.userSubject.value;
   }

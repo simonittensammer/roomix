@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AccountService} from '../account.service';
 import {first} from 'rxjs/operators';
@@ -24,11 +24,22 @@ export class LoginComponent implements OnInit {
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
+
+    const user = this.accountService.userValue;
+    if (user) {
+        console.log(user.username + ' | ' + user.password);
+        this.login(user.username, user.password);
+    }
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.accountService.login(this.loginForm.value.username, this.loginForm.value.password)
+      this.login(this.loginForm.value.username, this.loginForm.value.password);
+    }
+  }
+
+  login(username: string, password: string) {
+      this.accountService.login(username, password)
           .pipe(first())
           .subscribe(data => {
               this.accountService.getProperMemberList(data.username)
@@ -36,10 +47,10 @@ export class LoginComponent implements OnInit {
                   .subscribe(data2 => {
                       data.memberList = data2;
                       this.accountService.updateUserValue(data);
+                      this.accountService.updateIsLoggedIn(true);
+                      this.router.navigate(['roomlist']);
                   });
-              this.router.navigate(['roomlist']);
-      });
-    }
+          });
   }
 
 }
