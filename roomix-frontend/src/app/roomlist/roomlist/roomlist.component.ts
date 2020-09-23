@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../../account/account.service';
 import {User} from '../../models/user';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Room} from '../../models/room';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-roomlist',
@@ -16,7 +17,6 @@ export class RoomlistComponent implements OnInit {
   constructor(
       private accountService: AccountService,
       private router: Router,
-      private route: ActivatedRoute,
   ) {
     this.user = this.accountService.userValue;
   }
