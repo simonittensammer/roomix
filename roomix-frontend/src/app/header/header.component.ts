@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {AccountService} from '../account/account.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {User} from '../models/user';
 
@@ -16,7 +16,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
       private accountService: AccountService,
-      private router: Router
+      private router: Router,
+      private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    this.user = null;
     this.accountService.logout();
   }
 
