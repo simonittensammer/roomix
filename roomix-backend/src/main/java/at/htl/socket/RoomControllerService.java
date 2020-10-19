@@ -43,7 +43,7 @@ public class RoomControllerService implements PlaylistObserver {
                 rooms.put(roomId, room);
                 members.put(roomId, new ConcurrentHashMap<>());
                 playlistControllers.put(roomId, new PlaylistController(roomId, room.getPlaylist()));
-                playlistControllers.get(roomId).addBidObserver(this);
+                playlistControllers.get(roomId).addObserver(this);
             }
 
             members.get(roomId).put(username, user);
@@ -62,6 +62,14 @@ public class RoomControllerService implements PlaylistObserver {
 
         members.get(roomId).remove(username);
         sessions.remove(username);
+
+        if (members.get(roomId).size() == 0) {
+            members.remove(roomId);
+            rooms.remove(roomId);
+            playlistControllers.get(roomId).getSongTimer().cancel();
+            playlistControllers.get(roomId).removeObserver(this);
+            playlistControllers.remove(roomId);
+        }
     }
 
     private void broadcast(String message) {

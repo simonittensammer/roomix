@@ -86,15 +86,19 @@ public class PlaylistController {
                 .build().toString();
     }
 
-    public void addBidObserver(PlaylistObserver observer) {
+    public void addObserver(PlaylistObserver observer) {
         observerList.add(observer);
     }
 
-    public void removeBidObserver(PlaylistObserver observer) {
+    public void removeObserver(PlaylistObserver observer) {
         observerList.remove(observer);
     }
 
     private void notifyObservers() {
         observerList.forEach(observer -> observer.newSong(roomId));
+    }
+
+    public Timer getSongTimer() {
+        return songTimer;
     }
 }
