@@ -144,7 +144,7 @@ public class RoomEndpoint {
 
         if(room != null && song != null) {
             Playlist playlist = room.getPlaylist();
-            playlist.getSongList().add(song);
+            playlistRepository.addSong(playlist.getId(), song);
 
             if(playlist.getSongList().size() == 1) {
                 playlist.setCurrentSong(song);
@@ -161,10 +161,12 @@ public class RoomEndpoint {
     public Response deleteSongFromRoomPlaylist(@PathParam("roomId") Long roomId, @PathParam("songId") Long songId) {
         Room room = roomRepository.findById(roomId);
         Song song = songRepository.findById(songId);
+        System.out.println(room);
+        Playlist playlist = room.getPlaylist();
 
         if (room != null && song != null) {
             if (room.getPlaylist().getSongList().contains(song)) {
-                room.getPlaylist().getSongList().remove(song);
+                playlistRepository.removeSong(playlist.getId(), song);
 
                 if (room.getPlaylist().getCurrentSong().equals(song)) {
                     if (room.getPlaylist().getSongList().size() > 0) {

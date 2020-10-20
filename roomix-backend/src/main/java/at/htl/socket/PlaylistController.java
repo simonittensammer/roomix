@@ -35,23 +35,24 @@ public class PlaylistController {
 
     private List<PlaylistObserver> observerList;
 
+    private Random rn;
+
     public PlaylistController(Long roomId, Playlist playlist) {
         this.roomId = roomId;
         this.playlist = playlist;
         songQueue = new LinkedList<>();
         songTimer = new Timer("Song-Timer");
         observerList = new ArrayList<>();
+        rn = new Random();
 
-        for (int i = 0; i < 5; i++) {
-            songQueue.add(playlist.getSongList().get((int) Math.random() * playlist.getSongList().size()));
+        for (int i = 0; i < 1; i++) {
+            songQueue.add(playlist.getSongList().get(rn.nextInt(playlist.getSongList().size())));
         }
 
         startSong();
     }
 
     private void startSong() {
-        System.out.println("now playing " + playlist.getCurrentSong().getTitle());
-
         songStartTime = LocalDateTime.now();
         songTimer.schedule(new TimerTask() {
             @Override
@@ -64,8 +65,9 @@ public class PlaylistController {
     }
 
     private void nextSong() {
+        System.out.println(playlist.getSongList().size());
         playlist.setCurrentSong(songQueue.poll());
-        songQueue.add(playlist.getSongList().get((int) Math.random() * playlist.getSongList().size()));
+        songQueue.add(playlist.getSongList().get(rn.nextInt(playlist.getSongList().size())));
         startSong();
     }
 
@@ -100,5 +102,14 @@ public class PlaylistController {
 
     public Timer getSongTimer() {
         return songTimer;
+    }
+
+    public Playlist getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
+        System.out.println("playlist updated " + playlist.getSongList().size());
     }
 }

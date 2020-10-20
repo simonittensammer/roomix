@@ -1,8 +1,11 @@
 package at.htl.socket;
 
+import at.htl.control.PlaylistRepository;
 import at.htl.control.RoomRepository;
 import at.htl.control.UserRepository;
+import at.htl.entity.Playlist;
 import at.htl.entity.Room;
+import at.htl.entity.Song;
 import at.htl.entity.User;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -16,13 +19,21 @@ import java.util.concurrent.*;
 
 @Transactional
 @ApplicationScoped
-public class RoomControllerService implements PlaylistObserver {
+public class RoomControllerService implements PlaylistObserver, PlaylistSongObserver {
 
     @Inject
     private UserRepository userRepository;
 
     @Inject
     private RoomRepository roomRepository;
+
+    @Inject
+    private PlaylistRepository playlistRepository;
+
+    @Inject
+    public void init() {
+        playlistRepository.addObserver(this);
+    }
 
     private static ExecutorService executor = Executors.newSingleThreadExecutor();
 
@@ -93,5 +104,10 @@ public class RoomControllerService implements PlaylistObserver {
     @Override
     public void newSong(Long roomId) {
         broadcast(playlistControllers.get(roomId).getCurrentSong());
+    }
+
+    @Override
+    public void updatePlaylist(Long id, Playlist playlist) {
+        playlistControllers.get(id).setPlaylist(playlist);
     }
 }
