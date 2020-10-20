@@ -31,6 +31,7 @@ public class PlaylistController {
     private Song previousSong;
 
     private Timer songTimer;
+    private boolean timerIsRunning;
     private LocalDateTime songStartTime;
 
     private List<PlaylistObserver> observerList;
@@ -44,7 +45,9 @@ public class PlaylistController {
         observerList = new ArrayList<>();
         rn = new Random();
 
-        startSong();
+        if (playlist.getSongList().size() > 0) {
+            startSong();
+        }
     }
 
     private void startSong() {
@@ -65,7 +68,7 @@ public class PlaylistController {
         Song nextSong;
         do {
             nextSong = playlist.getSongList().get(rn.nextInt(playlist.getSongList().size()));
-        } while (nextSong == previousSong);
+        } while (nextSong == previousSong && playlist.getSongList().size() > 1);
 
         playlist.setCurrentSong(nextSong);
 
@@ -112,5 +115,12 @@ public class PlaylistController {
     public void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
         System.out.println("playlist updated " + playlist.getSongList().size());
+
+        if (timerIsRunning && this.playlist.getSongList().size() == 0) {
+            songTimer.cancel();
+        } else if (!timerIsRunning && this.playlist.getSongList().size() > 0) {
+            songTimer = new Timer("Song-Timer");
+            nextSong();
+        }
     }
 }
