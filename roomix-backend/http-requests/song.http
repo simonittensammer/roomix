@@ -11,7 +11,7 @@ Content-Type: application/json
   "artist": "Rick Astley",
   "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO",
   "picUrl": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-  "length": 212
+  "length": 5
 }
 ###
 DELETE http://localhost:8080/song/1
