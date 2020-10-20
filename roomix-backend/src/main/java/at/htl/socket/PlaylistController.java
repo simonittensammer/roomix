@@ -28,7 +28,7 @@ public class PlaylistController {
     private Long roomId;
 
     private Playlist playlist;
-    private Queue<Song> songQueue;
+    private Song previousSong;
 
     private Timer songTimer;
     private LocalDateTime songStartTime;
@@ -40,14 +40,9 @@ public class PlaylistController {
     public PlaylistController(Long roomId, Playlist playlist) {
         this.roomId = roomId;
         this.playlist = playlist;
-        songQueue = new LinkedList<>();
         songTimer = new Timer("Song-Timer");
         observerList = new ArrayList<>();
         rn = new Random();
-
-        for (int i = 0; i < 1; i++) {
-            songQueue.add(playlist.getSongList().get(rn.nextInt(playlist.getSongList().size())));
-        }
 
         startSong();
     }
@@ -65,9 +60,15 @@ public class PlaylistController {
     }
 
     private void nextSong() {
-        System.out.println(playlist.getSongList().size());
-        playlist.setCurrentSong(songQueue.poll());
-        songQueue.add(playlist.getSongList().get(rn.nextInt(playlist.getSongList().size())));
+        previousSong = playlist.getCurrentSong();
+
+        Song nextSong;
+        do {
+            nextSong = playlist.getSongList().get(rn.nextInt(playlist.getSongList().size()));
+        } while (nextSong == previousSong);
+
+        playlist.setCurrentSong(nextSong);
+
         startSong();
     }
 
