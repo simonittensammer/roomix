@@ -1,27 +1,17 @@
 package at.htl.socket;
 
-import at.htl.control.PlaylistRepository;
-import at.htl.control.SongRepository;
 import at.htl.entity.Playlist;
 import at.htl.entity.Song;
+import at.htl.observers.PlaylistControllerObserver;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
-import javax.transaction.Transactional;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.StringReader;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class PlaylistController {
 
@@ -34,7 +24,7 @@ public class PlaylistController {
     private boolean timerIsRunning;
     private LocalDateTime songStartTime;
 
-    private List<PlaylistObserver> observerList;
+    private List<PlaylistControllerObserver> observerList;
 
     private Random rn;
 
@@ -92,11 +82,11 @@ public class PlaylistController {
                 .build().toString();
     }
 
-    public void addObserver(PlaylistObserver observer) {
+    public void addObserver(PlaylistControllerObserver observer) {
         observerList.add(observer);
     }
 
-    public void removeObserver(PlaylistObserver observer) {
+    public void removeObserver(PlaylistControllerObserver observer) {
         observerList.remove(observer);
     }
 

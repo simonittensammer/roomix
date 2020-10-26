@@ -2,8 +2,7 @@ package at.htl.control;
 
 import at.htl.entity.Playlist;
 import at.htl.entity.Song;
-import at.htl.socket.PlaylistObserver;
-import at.htl.socket.PlaylistSongObserver;
+import at.htl.observers.PlaylistRepositoryObserver;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -13,13 +12,13 @@ import java.util.List;
 @ApplicationScoped
 public class PlaylistRepository implements PanacheRepository<Playlist> {
 
-    private List<PlaylistSongObserver> observerList = new ArrayList<>();
+    private List<PlaylistRepositoryObserver> observerList = new ArrayList<>();
 
-    public void addObserver(PlaylistSongObserver observer) {
+    public void addObserver(PlaylistRepositoryObserver observer) {
         observerList.add(observer);
     }
 
-    public void removeObserver(PlaylistSongObserver observer) {
+    public void removeObserver(PlaylistRepositoryObserver observer) {
         observerList.remove(observer);
     }
 

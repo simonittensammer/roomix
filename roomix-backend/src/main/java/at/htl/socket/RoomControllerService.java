@@ -5,21 +5,20 @@ import at.htl.control.RoomRepository;
 import at.htl.control.UserRepository;
 import at.htl.entity.Playlist;
 import at.htl.entity.Room;
-import at.htl.entity.Song;
 import at.htl.entity.User;
+import at.htl.observers.PlaylistControllerObserver;
+import at.htl.observers.PlaylistRepositoryObserver;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.websocket.Session;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Map;
 import java.util.concurrent.*;
 
 @Transactional
 @ApplicationScoped
-public class RoomControllerService implements PlaylistObserver, PlaylistSongObserver {
+public class RoomControllerService implements PlaylistControllerObserver, PlaylistRepositoryObserver {
 
     @Inject
     private UserRepository userRepository;
