@@ -37,7 +37,7 @@ Content-Type: application/json
 {
   "roomId": 1,
   "song": {
-    "title": "Never Gonna Give You Down",
+    "title": "Never Gonna Give You Up",
     "artist": "Rick Astley",
     "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO",
     "picUrl": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
@@ -45,6 +45,20 @@ Content-Type: application/json
   }
 }
 ###
-DELETE http://localhost:8080/room/2/song/delete/1
+POST http://localhost:8080/room/song
+Content-Type: application/json
+
+{
+  "roomId": 1,
+  "song": {
+    "title": "Never Gonna Give You Left",
+    "artist": "Rick Astley",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEV",
+    "picUrl": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    "length": 5
+  }
+}
+###
+DELETE http://localhost:8080/room/1/song/delete/1
 ###
 
