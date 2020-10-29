@@ -1,19 +1,19 @@
 <div id="navBar" *ngIf="user != null">
-    <button class="formElement">
-        <a class="buttonLink" routerLink="/roomlist">Rooms</a>
-    </button>
+    <a class="buttonLink" routerLink="/roomlist">
+        <button class="formElement">Rooms</button>
+    </a>
 
-    <button class="formElement">
-        <a class="buttonLink" routerLink="/">Room</a>
-    </button>
+    <a class="buttonLink" routerLink="/">
+        <button class="formElement">Room</button>
+    </a>
 
-    <button class="formElement">
-        <a class="buttonLink" routerLink="/friendlist">Friends</a>
-    </button>
+    <a class="buttonLink" routerLink="/friendlist">
+        <button class="formElement">Friends</button>
+    </a>
 
-    <button class="formElement">
-        <a class="buttonLink" routerLink="/profile">Profile</a>
-    </button>
+    <a class="buttonLink" routerLink="/profile">
+        <button class="formElement">Profile</button>
+    </a>
 
     <div id="userText" class="formElement">Logged in as <br><b>{{ user.displayname }}</b></div>
     <button id="logoutButton" class="formElement" (click)="logout()">Logout</button>
