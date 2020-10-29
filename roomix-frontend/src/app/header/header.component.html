@@ -3,19 +3,31 @@
     <img id="logo" src="assets/logo/logo-light.svg" alt="logo">
 
     <a class="buttonLink" routerLink="/roomlist">
-        <button class="formElement">Rooms</button>
+        <button class="formElement">
+            <ion-icon name="list"></ion-icon>
+            <div class="linkText">Your Rooms</div>
+        </button>
     </a>
 
     <a class="buttonLink" routerLink="/">
-        <button class="formElement">Room</button>
+        <button class="formElement">
+            <ion-icon name="musical-notes"></ion-icon>
+            <div class="linkText">Current Room</div>
+        </button>
     </a>
 
     <a class="buttonLink" routerLink="/friendlist">
-        <button class="formElement">Friends</button>
+        <button class="formElement">
+            <ion-icon name="people"></ion-icon>
+            <div class="linkText">Your Friends</div>
+        </button>
     </a>
 
     <a class="buttonLink" routerLink="/profile">
-        <button class="formElement">Profile</button>
+        <button class="formElement">
+            <ion-icon name="person"></ion-icon>
+            <div class="linkText">Your Profile</div>
+        </button>
     </a>
 
     <div id="userText" class="formElement">Logged in as <br><b>{{ user.displayname }}</b></div>
