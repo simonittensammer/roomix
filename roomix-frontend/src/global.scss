@@ -29,6 +29,8 @@
 
 * {
   color: var(--ion-text-color);
+  font-family: 'Source Sans Pro';
+  font-size: 1em;
 }
 
 .centerX {
@@ -77,6 +79,12 @@ button {
   margin-right: 10px;
   padding: 10px 20px;
   border-radius: 5px;
+
+  transition: all .1s ease-in-out;
+}
+
+button:hover {
+  background: var(--ion-color-primary-shade);
 }
 
 .buttonLink {
@@ -121,13 +129,13 @@ button {
   border-radius: 5px;
   box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
 
-  transition: all .2s ease-in-out;
+  transition: all .1s ease-in-out;
 }
 
 .card:hover {
   cursor: pointer;
 
-  transform: rotate(2deg) scale(1.05);
+  transform: scale(1.025);
 }
 
 .cardImage {
