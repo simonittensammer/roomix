@@ -1,19 +1,34 @@
 <div id="navBar" *ngIf="user != null">
-    <button class="formElement">
-        <a class="buttonLink" routerLink="/roomlist">Rooms</a>
-    </button>
 
-    <button class="formElement">
-        <a class="buttonLink" routerLink="/">Room</a>
-    </button>
+    <img id="logo" src="assets/logo/logo-light.svg" alt="logo">
 
-    <button class="formElement">
-        <a class="buttonLink" routerLink="/friendlist">Friends</a>
-    </button>
+    <a class="buttonLink" routerLink="/roomlist">
+        <button class="formElement">
+            <ion-icon name="list"></ion-icon>
+            <div class="linkText">Your Rooms</div>
+        </button>
+    </a>
 
-    <button class="formElement">
-        <a class="buttonLink" routerLink="/profile">Profile</a>
-    </button>
+    <a class="buttonLink" routerLink="/">
+        <button class="formElement">
+            <ion-icon name="musical-notes"></ion-icon>
+            <div class="linkText">Current Room</div>
+        </button>
+    </a>
+
+    <a class="buttonLink" routerLink="/friendlist">
+        <button class="formElement">
+            <ion-icon name="people"></ion-icon>
+            <div class="linkText">Your Friends</div>
+        </button>
+    </a>
+
+    <a class="buttonLink" routerLink="/profile">
+        <button class="formElement">
+            <ion-icon name="person"></ion-icon>
+            <div class="linkText">Your Profile</div>
+        </button>
+    </a>
 
     <div id="userText" class="formElement">Logged in as <br><b>{{ user.displayname }}</b></div>
     <button id="logoutButton" class="formElement" (click)="logout()">Logout</button>

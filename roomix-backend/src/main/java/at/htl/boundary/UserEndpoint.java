@@ -80,26 +80,14 @@ public class UserEndpoint {
 
     @GET
     @Path("/{username}/friendRequests")
-    public Response getFriendRequests(@PathParam("username") String username) {
-        User user = userRepository.findByName(username);
-
-        if (user != null) {
-            return Response.ok(user.getFriendRequestList()).build();
-        }
-
-        return Response.status(406).entity("user does not exist").build();
+    public JsonArray getFriendRequests(@PathParam("username") String username) {
+        return friendRequestRepository.getSerializedFriendRequestList(username);
     }
 
     @GET
     @Path("/{username}/roomInvites")
-    public Response getRoomInvites(@PathParam("username") String username) {
-        User user = userRepository.findByName(username);
-
-        if (user != null) {
-            return Response.ok(userRepository.getAllRoomInvites(username)).build();
-        }
-
-        return Response.status(406).entity("user does not exist").build();
+    public JsonArray getRoomInvites(@PathParam("username") String username) {
+        return roomInviteRepository.getSerializedRoomInviteList(username);
     }
 
     @GET

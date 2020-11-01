@@ -5,9 +5,9 @@
             [src]="sanitize(this.playSongService.currentSongUrl, this.playSongService.currentSongTimer)" frameborder="0"
             allowfullscreen></iframe>
 
-    <button>
-        <a class="buttonLink" (click)="showPlaylist()">Show playlist</a>
-    </button>
+    <a class="buttonLink" (click)="showPlaylist()">
+        <button>Show playlist</button>
+    </a>
 
     <div>
         <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
@@ -19,4 +19,8 @@
     <!--<div class="card" *ngFor="let member of room.memberList" >
         <p class="cardText">{{ member.user.displayname }}</p>
     </div> -->
+
+    <a class="buttonLink" (click)="showPlaylist()">
+        <button>Show playlist</button>
+    </a>
 </div>

@@ -10,6 +10,7 @@ import javax.json.JsonReader;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import java.io.StringReader;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -76,9 +77,11 @@ public class PlaylistController {
         JsonObject songJson = jsonReader.readObject();
         jsonReader.close();
 
+        String timeStamp = String.valueOf(Duration.between(songStartTime, LocalDateTime.now()).toSeconds());
+
         return Json.createObjectBuilder()
                 .add("song", songJson)
-                .add("time", songStartTime.toString())
+                .add("time", timeStamp)
                 .build().toString();
     }
 
