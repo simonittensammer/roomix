@@ -1,0 +1,17 @@
+<div class="content">
+
+  <p>
+    join-room works!
+  </p>
+
+  <div class="card" *ngFor="let invite of user.roomInviteList">
+    <p class="cardText">{{ invite.sender.username }} {{ invite.sender.displayname }}</p>
+    <button>
+      <a class="buttonLink" (click)="response(invite, true)">Accept</a>
+    </button>
+    <button>
+      <a class="buttonLink" (click)="response(invite, false)">Decline</a>
+    </button>
+  </div>
+
+</div>
