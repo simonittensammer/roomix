@@ -46,9 +46,24 @@ export class LoginComponent implements OnInit {
                   .pipe(first())
                   .subscribe(data2 => {
                       data.memberList = data2;
-                      this.accountService.updateUserValue(data);
-                      this.accountService.updateIsLoggedIn(true);
-                      this.router.navigate(['roomlist']);
+                      this.accountService.getProperFriendRequestList(data.username)
+                          .pipe(first())
+                          .subscribe( data3 => {
+                              data.friendRequestList = data3;
+                              this.accountService.getProperFriendList(data.username)
+                                  .pipe(first())
+                                  .subscribe( data4 => {
+                                      data.friendList = data4;
+                                      this.accountService.getProperRoomInviteList(data.username)
+                                          .pipe(first())
+                                          .subscribe( data5 => {
+                                              data.roomInviteList = data5;
+                                              this.accountService.updateUserValue(data);
+                                              this.accountService.updateIsLoggedIn(true);
+                                              this.router.navigate(['roomlist']);
+                                          });
+                                  });
+                          });
                   });
           });
   }
