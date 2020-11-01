@@ -1,0 +1,19 @@
+<div class="content">
+
+  <p>
+    friend-requests works!
+  </p>
+
+  <div class="card" *ngFor="let request of user.friendRequestList">
+    <p class="cardText">{{ request.sender.username }} {{ request.sender.displayname }}</p>
+    <button>
+      <a class="buttonLink" (click)="response(request, true)">Accept</a>
+    </button>
+    <button>
+      <a class="buttonLink" (click)="response(request, false)">Decline</a>
+    </button>
+  </div>
+
+</div>
+
+
