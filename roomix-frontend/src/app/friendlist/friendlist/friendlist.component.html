@@ -1,3 +1,18 @@
-<p>
-  friendlist works!
-</p>
+<div class="content">
+  <h2>Your Friends</h2>
+
+  <div class="card" *ngFor="let friends of user.friendList">
+    <p class="cardText">{{ friends.displayname }}</p>
+  </div>
+
+  <div>
+    <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
+    <button>
+      <a class="buttonLink" (click)="sendFriendRequest()">Add Friend</a>
+    </button>
+  </div>
+
+  <button>
+    <a class="buttonLink" (click)="showRequests()">Friend Requests</a>
+  </button>
+</div>

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {AccountService} from '../../account/account.service';
+import {User} from '../../models/user';
+import {ActivatedRoute, Router} from '@angular/router';
+import {RoomService} from '../../room/room.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-friendlist',
@@ -7,8 +12,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FriendlistComponent implements OnInit {
 
-  constructor() { }
+  user: User;
+  friendUserName: string;
 
-  ngOnInit() {}
+  constructor(
+      private accountService: AccountService,
+      private route: ActivatedRoute,
+      private router: Router
+  ) { }
+
+  ngOnInit() {
+    this.user = this.accountService.userValue;
+  }
+
+  sendFriendRequest() {
+    this.accountService.sendFriendRequest(this.user.username, this.friendUserName)
+        .pipe(first())
+        .subscribe(data => {
+          console.log(data);
+        });
+  }
+
+  showRequests() {
+    this.router.navigate(['requests'], {relativeTo: this.route});
+  }
 
 }
