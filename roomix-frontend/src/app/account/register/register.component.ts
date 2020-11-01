@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
                       .subscribe(data2 => {
                         data.memberList = data2;
                         this.accountService.updateUserValue(data);
-                        this.router.navigate(['roomlist', true]);
+                        this.router.navigate(['roomlist']);
                       });
                 });
           });
