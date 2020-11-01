@@ -1,11 +1,22 @@
 <div class="content">
     <h2 *ngIf="room != null">{{ room.name }}</h2>
 
-    <iframe width="560" height="315" (ended)="requestNextSong()"
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&amp&autoplay=1;start=87" frameborder="0"
+    <iframe *ngIf="this.playSongService.currentSong != null" width="560" height="315"
+            [src]="sanitize(this.playSongService.currentSongUrl, this.playSongService.currentSongTimer)" frameborder="0"
             allowfullscreen></iframe>
 
     <button>
         <a class="buttonLink" (click)="showPlaylist()">Show playlist</a>
     </button>
+
+    <div>
+        <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
+        <button>
+            <a class="buttonLink" (click)="sendRoomInvite()">Invite to room</a>
+        </button>
+    </div>
+
+    <!--<div class="card" *ngFor="let member of room.memberList" >
+        <p class="cardText">{{ member.user.displayname }}</p>
+    </div> -->
 </div>
