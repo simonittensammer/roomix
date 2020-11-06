@@ -1,0 +1,10 @@
+#controlBar {
+  width: 85vw;
+  height: 10vh;
+  position: absolute;
+  left: 15vw;
+  bottom: 0;
+  z-index: 800;
+
+  background: var(--ion-color-primary);
+}

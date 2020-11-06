@@ -18,6 +18,7 @@ import {CreateRoomComponent} from './roomlist/create-room/create-room.component'
 import {PlaylistComponent} from './room/playlist/playlist/playlist.component';
 import {AddSongComponent} from './room/playlist/add-song/add-song.component';
 import {HeaderComponent} from './header/header.component';
+import {ControlBarComponent} from './control-bar/control-bar.component';
 import {FriendlistComponent} from './friendlist/friendlist/friendlist.component';
 import {FriendRequestsComponent} from './friendlist/friend-requests/friend-requests.component';
 import {ProfileComponent} from './profile/profile/profile.component';
@@ -35,6 +36,7 @@ import {JoinRoomComponent} from './roomlist/join-room/join-room.component';
         PlaylistComponent,
         AddSongComponent,
         HeaderComponent,
+        ControlBarComponent,
         FriendlistComponent,
         FriendRequestsComponent,
         ProfileComponent
