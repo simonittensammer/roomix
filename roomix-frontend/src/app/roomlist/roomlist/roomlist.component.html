@@ -1,19 +1,21 @@
 <div class="content">
     <h2>Your rooms</h2>
 
-    <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)">
-        <img class="cardImage" src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg"
-             alt="cover">
-        <p class="cardText">{{ member.room.name }}</p>
+    <div class="cardContainer">
+        <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)">
+            <img class="cardImage" src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg"
+                 alt="cover">
+            <p class="cardText">{{ member.room.name }}</p>
+        </div>
+        <div class="cardButtons">
+            <a class="buttonLink" routerLink="/roomlist/join-room">
+                <button>Join Room</button>
+            </a>
+
+            <a class="buttonLink" routerLink="/roomlist/create-room">
+                <button>New Room</button>
+            </a>
+        </div>
     </div>
 
-    <div>
-        <a class="buttonLink" routerLink="/roomlist/join-room">
-            <button>Join Room</button>
-        </a>
-
-        <a class="buttonLink" routerLink="/roomlist/create-room">
-            <button>New Room</button>
-        </a>
-    </div>
 </div>

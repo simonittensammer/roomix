@@ -1,0 +1,17 @@
+.cardButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-auto-columns: auto;
+  grid-gap: 1rem;
+
+  padding: 10%;
+}
+
+.buttonLink {
+  height: 100%;
+
+  button {
+    height: 100%;
+    width: 80%;
+  }
+}
