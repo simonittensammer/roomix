@@ -5,7 +5,8 @@
         <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)">
             <img class="cardImage" src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg"
                  alt="cover">
-            <p class="cardText">{{ member.room.name }}</p>
+            <p class="cardHeadline">{{ member.room.name }}</p>
+            <p class="cardText">Members: {{ member.room.memberList.length }}</p>
         </div>
         <div class="cardButtons">
             <a class="buttonLink" routerLink="/roomlist/join-room">

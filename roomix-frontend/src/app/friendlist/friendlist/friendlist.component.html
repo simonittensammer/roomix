@@ -1,10 +1,6 @@
 <div class="content">
   <h2>Your Friends</h2>
 
-  <div class="card" *ngFor="let friends of user.friendList">
-    <p class="cardText">{{ friends.displayname }}</p>
-  </div>
-
   <div>
     <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
     <button>
@@ -15,4 +11,15 @@
   <button>
     <a class="buttonLink" (click)="showRequests()">Friend Requests</a>
   </button>
+
+  <ul>
+    <li class="listEntry" *ngFor="let friend of user.friendList">
+      <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
+
+      <div class="listTextContainer">
+        <p class="listHeadline">{{ friend.displayname }}</p>
+        <p class="listText">@{{ friend.username }}</p>
+      </div>
+    </li>
+  </ul>
 </div>

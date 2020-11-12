@@ -1,17 +1,26 @@
 <div class="content">
+  <h2>Join a room</h2>
 
-  <p>
-    join-room works!
-  </p>
+  <ul>
+    <li class="listEntry" *ngFor="let invite of user.roomInviteList">
+      <img src="{{ invite.room.picUrl }}" alt="" class="listImage">
 
-  <div class="card" *ngFor="let invite of user.roomInviteList">
-    <p class="cardText">{{ invite.sender.username }} {{ invite.sender.displayname }}</p>
-    <button>
-      <a class="buttonLink" (click)="response(invite, true)">Accept</a>
-    </button>
-    <button>
-      <a class="buttonLink" (click)="response(invite, false)">Decline</a>
-    </button>
-  </div>
+      <div class="listTextContainer">
+        <p class="listHeadline">{{ invite.room.name }}</p>
+        <p class="listText">From: {{ invite.sender.displayname }}</p>
+      </div>
+
+
+      <div class="listButtonContainer">
+        <a class="buttonLink" (click)="response(invite, true)">
+          <button>Accept</button>
+        </a>
+
+        <a class="buttonLink" (click)="response(invite, false)">
+          <button>Decline</button>
+        </a>
+      </div>
+    </li>
+  </ul>
 
 </div>

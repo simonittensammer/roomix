@@ -5,10 +5,6 @@
             [src]="sanitize(this.playSongService.currentSongUrl, this.playSongService.currentSongTimer)" frameborder="0"
             allowfullscreen></iframe>
 
-    <a class="buttonLink" (click)="showPlaylist()">
-        <button>Show playlist</button>
-    </a>
-
     <div>
         <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
         <button>

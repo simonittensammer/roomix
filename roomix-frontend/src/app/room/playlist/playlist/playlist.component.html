@@ -11,5 +11,16 @@
         <a class="buttonLink" (click)="showAddSong()">
             <button>Add song</button>
         </a>
+
+        <ul>
+            <li class="listEntry" *ngFor="let song of room.playlist.songList">
+                <img src="{{ song.picUrl }}" alt="" class="listImage">
+
+                <div class="listTextContainer">
+                    <p class="listHeadline">{{ song.title }}</p>
+                    <p class="listText">{{ song.artist }}</p>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>

@@ -31,6 +31,8 @@
   color: var(--ion-text-color);
   font-family: 'Source Sans Pro';
   font-size: 1em;
+  padding: 0;
+  margin: 0;
 }
 
 h2 {
@@ -83,6 +85,12 @@ input {
   border-radius: 5px;
 }
 
+.content {
+  input {
+    background: var(--ion-card-background);
+  }
+}
+
 button {
   background: var(--ion-color-primary);
   padding: 10px 20px;
@@ -105,7 +113,7 @@ button:active {
   display: block;
 }
 
-.form {
+.popup {
   width: 30vw;
   background: var(--ion-card-background);
   padding: 30px 0;
@@ -141,6 +149,7 @@ button:active {
   background: var(--ion-card-background);
   border-radius: 5px;
   box-shadow: 0 0 15px -5px var(--ion-color-dark-contrast);
+  padding: 10%;
 
   transition: all .1s ease-in-out;
 }
@@ -152,20 +161,81 @@ button:active {
 }
 
 .cardImage {
-  width: 80%;
-  margin: 10%;
-  margin-bottom: 5%;
+  width: 100%;
   height: auto;
 
   border-radius: 5px;
 }
 
-.cardText {
+.cardHeadline {
   width: 100%;
-  margin-top: 0;
+  margin-top: 5px;
   font-weight: bolder;
   text-align: center;
 }
+
+.cardText {
+  width: 100%;
+  text-align: center;
+}
+
+// LISTS
+ul {
+  width: 500px;
+  list-style: none;
+}
+
+.listEntry {
+  display: inline-block;
+  width: 100%;
+  background: var(--ion-card-background);
+  border-radius: 5px;
+  box-shadow: 0 0 15px -5px var(--ion-color-dark-contrast);
+  padding: 2.5%;
+  margin-bottom: 1.5%;
+
+  transition: all .1s ease-in-out;
+}
+
+.listEntry:hover {
+  cursor: pointer;
+
+  transform: scale(1.025);
+}
+
+.listImage {
+  height: 50px;
+  float: left;
+  margin-right: 2.5%;
+  border-radius: 5px;
+}
+
+.listTextContainer {
+  float: left;
+}
+
+.listHeadline, .listText {
+  line-height: 25px;
+}
+
+.listHeadline {
+  font-weight: bolder;
+  font-size: 1.25em;
+}
+
+.listButtonContainer {
+  float: right;
+
+  * {
+    float: left;
+    height: 40px;
+
+    button {
+      margin: 5px;
+    }
+  }
+}
+
 
 // PLAYER
 

@@ -1,18 +1,28 @@
 <div class="content">
 
-  <p>
-    friend-requests works!
-  </p>
+  <h2>Friend Requests</h2>
 
-  <div class="card" *ngFor="let request of user.friendRequestList">
-    <p class="cardText">{{ request.sender.username }} {{ request.sender.displayname }}</p>
-    <button>
-      <a class="buttonLink" (click)="response(request, true)">Accept</a>
-    </button>
-    <button>
-      <a class="buttonLink" (click)="response(request, false)">Decline</a>
-    </button>
-  </div>
+  <ul>
+    <li class="listEntry" *ngFor="let request of user.friendRequestList">
+      <img src="./assets/icon/icon-light.svg" alt="" class="listImage">
+
+      <div class="listTextContainer">
+          <p class="listHeadline">{{ request.sender.displayname }}</p>
+          <p class="listText">@{{ request.sender.username }}</p>
+      </div>
+
+
+      <div class="listButtonContainer">
+        <a class="buttonLink" (click)="response(request, true)">
+          <button>Accept</button>
+        </a>
+
+        <a class="buttonLink" (click)="response(request, false)">
+          <button>Decline</button>
+        </a>
+      </div>
+    </li>
+  </ul>
 
 </div>
 
