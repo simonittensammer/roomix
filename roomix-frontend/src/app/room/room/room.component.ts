@@ -42,6 +42,7 @@ export class RoomComponent implements OnInit {
                 this.playSongService.connect(this.accountService.userValue.username, this.room.id);
                 console.log(this.playSongService.currentSong);
                 this.user = this.accountService.userValue;
+                this.roomService.updateRoomValue(this.room);
               });
         }
     );

@@ -1,4 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {RoomService} from "../room/room.service";
+import {Room} from "../models/room";
 
 @Component({
     selector: 'app-control-bar',
@@ -7,12 +9,18 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 })
 export class ControlBarComponent implements OnInit {
 
+    room: Room;
     volumePercentage = 100;
+    volumeStage: string;
 
-    constructor() {
+    constructor(
+        private roomService: RoomService
+    ) {
     }
 
     ngOnInit() {
+        this.room = this.roomService.roomValue;
+        this.volumeStage = 'h';
     }
 
     adjustVolume(value) {
@@ -21,13 +29,13 @@ export class ControlBarComponent implements OnInit {
 
         // tslint:disable-next-line:triple-equals
         if (this.volumePercentage == 0) {
-            console.log('mute');
+            this.volumeStage = 'x';
         } else if (this.volumePercentage <= 33) {
-            console.log('low');
+            this.volumeStage = 'l';
         } else if (this.volumePercentage <= 66) {
-            console.log('medium');
+            this.volumeStage = 'm';
         } else {
-            console.log('high');
+            this.volumeStage = 'h';
         }
     }
 }

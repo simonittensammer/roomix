@@ -8,3 +8,84 @@
 
   background: var(--ion-color-primary);
 }
+
+#roomImage {
+  width: 10vw;
+  position: absolute;
+  bottom: 15px;
+  margin-left: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+}
+
+#roomName {
+  position: absolute;
+  left: 12.5vw;
+  width: 12.5vw;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+ion-icon {
+  margin-bottom: -5px;
+  font-size: 1.25em;
+}
+
+#currentSongName {
+  position: absolute;
+  left: 12.5vw;
+  bottom: 30px;
+  width: 12.5vw;
+  font-size: 1.1em;
+
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#volumeRangeBox {
+  position: absolute;
+  right: 30px;
+  bottom: 15px;
+
+  padding: 2.5px;
+  border-radius: 20px;
+  background: var(--ion-card-background);
+
+  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+}
+
+#volumeRange[type=range][orient=vertical] {
+  writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical;
+
+  height: 15vh;
+  outline: none;
+  background: transparent;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+#volumeRange::-moz-range-thumb, #volumeRange::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: var(--ion-color-primary);
+  cursor: pointer;
+}
+
+#volumeRange::-moz-range-track {
+  background: var(--ion-color-dark);
+  width: 5px;
+  border-radius: 2.5px;
+}
+
+.volumeIcon {
+  font-size: 2em;
+
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, -25%);
+}
