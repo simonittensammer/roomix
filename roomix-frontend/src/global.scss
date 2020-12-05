@@ -234,6 +234,9 @@ ul {
 
 .listTextContainer {
   float: left;
+  width: 45%;
+  overflow-x: hidden;
+  white-space: nowrap;
 }
 
 .listHeadline, .listText {
