@@ -1,15 +1,29 @@
 <div>
-  <form [formGroup]="regForm" class="popup centerXY">
-    <h2 class="formHeadline formElement">Create an account!</h2>
+    <form [formGroup]="regForm" class="popup centerXY">
+        <h2 class="formHeadline formElement">Create an account!</h2>
 
-    <input type="text" id="username" class="formElement" formControlName="username" placeholder="Username">
-    <input type="text" id="displayname" class="formElement" formControlName="displayname" placeholder="Display name">
-    <input type="password" id="password" class="formElement" formControlName="password" placeholder="Password">
+        <label for="username">Username</label>
+        <input type="text" id="username" class="formElement" formControlName="username" placeholder="Username">
+        <p class="errorMsg" *ngIf="regForm.controls['username'].hasError('required') && regForm.controls['username'].dirty">
+            Username is required
+        </p>
 
-    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Register</button>
+        <label for="displayname">Display name</label>
+        <input type="text" id="displayname" class="formElement" formControlName="displayname" placeholder="Display name">
+        <p class="errorMsg" *ngIf="regForm.controls['displayname'].hasError('required') && regForm.controls['displayname'].dirty">
+            Displayname is required
+        </p>
 
-    <div class="formElement">
-      Back to <a routerLink="/login">login</a>
-    </div>
-  </form>
+        <label for="password">Password</label>
+        <input type="password" id="password" class="formElement" formControlName="password" placeholder="Password">
+        <p class="errorMsg" *ngIf="regForm.controls['password'].hasError('required')  && regForm.controls['password'].dirty">
+            Password is required
+        </p>
+
+        <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()" [disabled]="!regForm.valid || !regForm.dirty">Register</button>
+
+        <div class="formElement">
+            Back to <a routerLink="/login">login</a>
+        </div>
+    </form>
 </div>

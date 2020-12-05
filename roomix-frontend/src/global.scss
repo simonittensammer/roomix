@@ -135,6 +135,24 @@ button:active {
   margin-top: 30px;
 }
 
+label {
+  margin: 0 10%;
+}
+
+.errorMsg {
+  color: var(--ion-color-danger);
+  font-size: .9em;
+  margin: -5px 10% 5px 10%;
+}
+
+.errorBorder {
+  border: 1px solid var(--ion-color-danger);
+}
+
+button[disabled] {
+  opacity: .5;
+}
+
 // CARDS
 .cardContainer {
   width: 100%;

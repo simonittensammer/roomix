@@ -2,10 +2,19 @@
   <form [formGroup]="loginForm" class="popup centerXY">
     <h2 class="formHeadline formElement">Welcome back!</h2>
 
+    <label for="username">Username</label>
     <input type="text" id="username" class="formElement" formControlName="username" placeholder="Username">
-    <input type="password" id="password" class="formElement" formControlName="password" placeholder="Password">
+    <p class="errorMsg" *ngIf="loginForm.controls['username'].hasError('required')  && loginForm.controls['username'].dirty">
+      Username is required
+    </p>
 
-    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Login</button>
+    <label for="username">Password</label>
+    <input type="password" id="password" class="formElement" formControlName="password" placeholder="Password">
+    <p class="errorMsg" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].dirty">
+      Password is required
+    </p>
+
+    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()" [disabled]="!loginForm.valid || !loginForm.dirty">Login</button>
 
     <div class="formElement">
       Need an account? <a routerLink="/register">Register</a>
