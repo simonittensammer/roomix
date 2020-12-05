@@ -1,4 +1,21 @@
 <div id="controlBar">
+    <div id="roomInfoWrapper" *ngIf="room">
+        <img src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg" id="roomImage"
+             alt="roomImage">
+        <h3 id="roomName">{{ room.name }}</h3>
+        <p id="roomInfo">
+            Members: {{ room.memberList.length }}
+        </p>
+    </div>
+
+    <p id="currentSongName">
+        <ion-icon name="musical-notes"></ion-icon>
+        Placeholder Song Name Some Text
+    </p>
+    <div id="songProgressBar">
+        <div id="songProgress"></div>
+    </div>
+
     <div id="volumeRangeBox">
         <input type="range" orient="vertical" #volumeRange id="volumeRange" name="volumeRange" min="0" max="100" value="100"
         (input)="adjustVolume(volumeRange.value)">
@@ -9,15 +26,5 @@
         <ion-icon class="volumeIcon" name="volume-low-outline" *ngIf="volumeStage == 'l'"></ion-icon>
         <ion-icon class="volumeIcon" name="volume-medium-outline" *ngIf="volumeStage == 'm'"></ion-icon>
         <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="volumeStage == 'h'"></ion-icon>
-    </div>
-
-    <div id="roomInfoWrapper" *ngIf="room">
-        <img src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg" id="roomImage"
-             alt="roomImage">
-        <h3 id="roomName">{{ room.name }}</h3>
-        <p id="currentSongName">
-            <ion-icon name="musical-notes"></ion-icon>
-            Placeholder Song Name Some Text
-        </p>
     </div>
 </div>

@@ -21,9 +21,20 @@
 #roomName {
   position: absolute;
   left: 12.5vw;
-  width: 12.5vw;
+  width: 10vw;
   overflow: hidden;
   white-space: nowrap;
+}
+
+#roomInfo {
+  position: absolute;
+  left: 12.5vw;
+  bottom: 30px;
+
+  width: 10vw;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.1em;
 }
 
 ion-icon {
@@ -33,18 +44,36 @@ ion-icon {
 
 #currentSongName {
   position: absolute;
-  left: 12.5vw;
-  bottom: 30px;
-  width: 12.5vw;
+  left: 25vw;
+  bottom: 5.5vh;
+  width: 50%;
   font-size: 1.1em;
 
   white-space: nowrap;
   overflow: hidden;
 }
 
+#songProgressBar {
+  position: absolute;
+  left: 25vw;
+  bottom: 3.5vh;
+  height: 1vh;
+  width: 50%;
+  border-radius: .5vh;
+
+  background: var(--ion-color-dark);
+
+  #songProgress {
+    width: 15%;
+    height: 100%;
+    border-radius: .5vh;
+    background: var(--ion-card-background);
+  }
+}
+
 #volumeRangeBox {
   position: absolute;
-  right: 30px;
+  right: 50px;
   bottom: 15px;
 
   padding: 2.5px;
@@ -79,6 +108,11 @@ input[type=range]:focus {
 #volumeRange::-moz-range-track {
   background: var(--ion-color-dark);
   width: 5px;
+  border-radius: 2.5px;
+}
+
+#volumeRange::-ms-fill-lower {
+  background-color: var(--ion-color-primary);
   border-radius: 2.5px;
 }
 
