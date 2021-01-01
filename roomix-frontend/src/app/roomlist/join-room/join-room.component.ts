@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../models/user';
-import {AccountService} from '../../account/account.service';
+import {AccountService} from '../../services/account.service';
 import {FriendRequest} from '../../models/friend-request';
 import {first} from 'rxjs/operators';
 import {RoomInvite} from '../../models/room-invite';

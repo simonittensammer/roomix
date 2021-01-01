@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AccountService} from '../account.service';
+import {AccountService} from '../../services/account.service';
 import {first} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {User} from '../../models/user';

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Room} from '../../models/room';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {RoomService} from '../room.service';
+import {RoomService} from '../../services/room.service';
 import {first} from 'rxjs/operators';
-import {PlaylistService} from '../playlist/playlist.service';
+import {PlaylistService} from '../../services/playlist.service';
 import {Song} from '../../models/song';
-import {AccountService} from '../../account/account.service';
-import {PlaySongService} from './play-song.service';
+import {AccountService} from '../../services/account.service';
+import {PlaySongService} from '../../services/play-song.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {User} from '../../models/user';
 

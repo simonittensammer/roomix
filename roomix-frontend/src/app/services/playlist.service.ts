@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {User} from '../../models/user';
-import {GlobalConstants} from '../../helpers/globalConstants';
-import {Song} from '../../models/song';
+import {User} from '../models/user';
+import {GlobalConstants} from '../helpers/globalConstants';
+import {Song} from '../models/song';
 import {toNumbers} from '@angular/compiler-cli/src/diagnostics/typescript_version';
 
 @Injectable({

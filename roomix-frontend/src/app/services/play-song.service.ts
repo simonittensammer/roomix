@@ -1,5 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {Song} from '../../models/song';
+import {Song} from '../models/song';
 import {WebSocketSubject} from 'rxjs/internal-compatibility';
 import {webSocket} from 'rxjs/webSocket';
 import {DomSanitizer} from '@angular/platform-browser';

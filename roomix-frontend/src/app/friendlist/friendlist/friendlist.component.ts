@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountService} from '../../account/account.service';
+import {AccountService} from '../../services/account.service';
 import {User} from '../../models/user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RoomService} from '../../room/room.service';
+import {RoomService} from '../../services/room.service';
 import {first} from 'rxjs/operators';
 
 @Component({

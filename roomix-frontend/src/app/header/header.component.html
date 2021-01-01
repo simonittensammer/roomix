@@ -1,4 +1,4 @@
-<div id="navBar" *ngIf="user != null">
+<div id="navBar" *ngIf="(isLoggedIn$ | async) === true || user != null">
 
     <img id="logo" src="assets/logo/logo-light.svg" alt="logo">
 

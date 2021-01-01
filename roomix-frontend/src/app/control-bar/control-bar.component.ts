@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {RoomService} from "../room/room.service";
+import {RoomService} from "../services/room.service";
 import {Room} from "../models/room";
 
 @Component({

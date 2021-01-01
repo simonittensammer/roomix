@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {RoomlistService} from '../roomlist.service';
+import {RoomlistService} from '../../services/roomlist.service';
 import {first} from 'rxjs/operators';
 import {LoginComponent} from '../../account/login/login.component';
-import {AccountService} from '../../account/account.service';
+import {AccountService} from '../../services/account.service';
 
 @Component({
   selector: 'app-create-room',

@@ -1,10 +1,10 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
-import {AccountService} from '../account/account.service';
+import {AccountService} from '../services/account.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {User} from '../models/user';
-import {RoomService} from "../room/room.service";
-import {Room} from "../models/room";
+import {RoomService} from '../services/room.service';
+import {Room} from '../models/room';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +13,7 @@ import {Room} from "../models/room";
 })
 export class HeaderComponent implements OnInit {
 
-  isLoggedIn: Observable<boolean>;
+  isLoggedIn$: Observable<boolean>;
   user: User;
   room: Room;
 
@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isLoggedIn = this.accountService.isLoggedIn;
+    this.isLoggedIn$ = this.accountService.isLoggedIn;
     this.user = this.accountService.userValue;
     this.room = this.roomService.roomValue;
   }
