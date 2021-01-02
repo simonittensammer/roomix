@@ -1,4 +1,5 @@
-<div id="controlBar" *ngIf="(isLoggedIn$ | async) || room != null">
+<div id="controlBar" *ngIf="room != null">
+
     <div id="roomInfoWrapper" *ngIf="room">
         <img src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg" id="roomImage"
              alt="roomImage">
@@ -10,7 +11,7 @@
 
     <p id="currentSongName">
         <ion-icon name="musical-notes"></ion-icon>
-        Placeholder Song Name Some Text
+        {{ playSongService.currentSong.title }}
     </p>
     <div id="songProgressBar">
         <div id="songProgress"></div>
@@ -27,4 +28,8 @@
         <ion-icon class="volumeIcon" name="volume-medium-outline" *ngIf="volumeStage == 'm'"></ion-icon>
         <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="volumeStage == 'h'"></ion-icon>
     </div>
+
+    <iframe *ngIf="this.playSongService.currentSong != null" width="0" height="0"
+            [src]="this.playSongService.completeUrl" frameborder="0"
+            allowfullscreen></iframe>
 </div>

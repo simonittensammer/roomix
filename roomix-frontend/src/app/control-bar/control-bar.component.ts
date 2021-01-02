@@ -4,6 +4,8 @@ import {Room} from '../models/room';
 import {Observable} from 'rxjs';
 import {AccountService} from '../services/account.service';
 import {User} from '../models/user';
+import {PlaySongService} from '../services/play-song.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-control-bar',
@@ -19,7 +21,9 @@ export class ControlBarComponent implements OnInit {
 
     constructor(
         private roomService: RoomService,
-        private accountService: AccountService
+        private accountService: AccountService,
+        public playSongService: PlaySongService,
+        private sanitizer: DomSanitizer
     ) {
     }
 
@@ -27,11 +31,15 @@ export class ControlBarComponent implements OnInit {
         this.roomService.roomValue.subscribe(
             value => {
                 this.room = value;
-            }
-        );
-        this.accountService.userValue.subscribe(
-            value => {
-                this.user = value;
+                this.accountService.userValue.subscribe(
+                    value2 => {
+                        this.user = value2;
+                        console.log(this.room);
+
+                        this.playSongService.connect(this.user.username, this.room.id);
+                        console.log(this.playSongService.currentSong);
+                    }
+                );
             }
         );
 

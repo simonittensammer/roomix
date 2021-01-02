@@ -26,9 +26,7 @@ export class RoomComponent implements OnInit {
       private route: ActivatedRoute,
       private roomService: RoomService,
       private router: Router,
-      private accountService: AccountService,
-      private playSongService: PlaySongService,
-      private sanitizer: DomSanitizer
+      private accountService: AccountService
   ) {}
 
   ngOnInit() {
@@ -44,18 +42,14 @@ export class RoomComponent implements OnInit {
                           this.user = value;
                       }
                 );
-                this.playSongService.connect(this.user.username, this.room.id);
-                console.log(this.playSongService.currentSong);
-                this.roomService.updateRoomValue(this.room);
+                
+                if (!this.roomService.oldRoom || this.room.id !== this.roomService.oldRoom.id) {
+                   this.roomService.oldRoom = this.room;
+                   this.roomService.updateRoomValue(this.room);
+                }
               });
         }
     );
-    console.log(this.playSongService.currentSong);
-  }
-
-  sanitize(songUrl: string, songStart: number) {
-      console.log('https://www.youtube.com/embed/' + songUrl + '?start=' + songStart + '&controls=1&amp&autoplay=1');
-      return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + songUrl + '?start=' + songStart + '&controls=1&amp&autoplay=1');
   }
 
   showPlaylist() {

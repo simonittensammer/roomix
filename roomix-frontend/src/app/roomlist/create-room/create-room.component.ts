@@ -5,6 +5,7 @@ import {first} from 'rxjs/operators';
 import {LoginComponent} from '../../account/login/login.component';
 import {AccountService} from '../../services/account.service';
 import {User} from '../../models/user';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-room',
@@ -18,7 +19,8 @@ export class CreateRoomComponent implements OnInit {
 
   constructor(
       private roomlistService: RoomlistService,
-      private accountService: AccountService
+      private accountService: AccountService,
+      private router: Router
   ) { }
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class CreateRoomComponent implements OnInit {
                 .subscribe(data2 => {
                   data.memberList = data2;
                   this.accountService.updateUserValue(data);
+                  this.router.navigate(['../']);
                 });
             console.log('done!');
           });

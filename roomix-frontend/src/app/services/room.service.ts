@@ -11,6 +11,7 @@ import {BehaviorSubject} from "rxjs";
 })
 export class RoomService {
     private roomSubject: BehaviorSubject<Room>;
+    oldRoom: Room = null;
 
     constructor(
         private http: HttpClient,

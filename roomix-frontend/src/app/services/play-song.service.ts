@@ -2,7 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {Song} from '../models/song';
 import {WebSocketSubject} from 'rxjs/internal-compatibility';
 import {webSocket} from 'rxjs/webSocket';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class PlaySongService {
   currentSong: Song;
   currentSongUrl: string;
   currentSongTimer: number;
+  completeUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer) { }
 
@@ -30,6 +31,7 @@ export class PlaySongService {
             this.currentSongTimer = data.time;
             console.log(this.currentSong);
             console.log(data);
+            this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + this.currentSongUrl + '?start=' + this.currentSongTimer + '&controls=1&amp&autoplay=1');
         }, error => {
           console.log(error);
         }
@@ -39,5 +41,4 @@ export class PlaySongService {
   disconnect() {
     this.songSocket.complete();
   }
-
 }
