@@ -87,6 +87,22 @@ h3 {
 .half-content {
   width: 50%;
   height: 100%;
+
+  overflow-y: scroll;
+  overflow-x: visible;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.half-content:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 17.5vh;
+}
+
+.half-content::-webkit-scrollbar {
+  display: none;
 }
 
 // FORMS, INPUTS, BUTTONS, LINKS
@@ -203,7 +219,8 @@ button[disabled] {
 .card:hover {
   cursor: pointer;
 
-  transform: scale(1.025);
+  //transform: scale(1.025);
+  background: var(--ion-card-hover);
 }
 
 .cardImage {
@@ -252,7 +269,8 @@ ul {
 .listEntry:hover {
   cursor: pointer;
 
-  transform: scale(1.015);
+  //transform: scale(1.015);
+  background: var(--ion-card-hover);
 }
 
 .listImage {
