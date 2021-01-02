@@ -1,12 +1,12 @@
-<div class="content">
+<!--<div class="content">-->
     <div *ngIf="room != null">
-        <h2>Playlist of {{ room.name }} </h2>
+        <h3 class="ulHeadline" (click)="collapseList()">Playlist</h3>
 
-        <a class="buttonLink" (click)="showAddSong()">
+        <a class="buttonLink buttonRight" (click)="showAddSong()">
             <button>Add song</button>
         </a>
 
-        <ul>
+        <ul *ngIf="!collapsed">
             <li class="listEntry" *ngFor="let song of room.playlist.songList">
                 <img src="{{ song.picUrl }}" alt="" class="listImage">
 
@@ -22,5 +22,14 @@
                 </div>
             </li>
         </ul>
+
+        <ul *ngIf="collapsed">
+            <li class="listEntry" (click)="collapseList()">
+                <div class="listTextContainer">
+                    <p class="listHeadline">Show Playlist</p>
+                    <p class="listText">Click here or on the headline, to show the list!</p>
+                </div>
+            </li>
+        </ul>
     </div>
-</div>
+<!--</div>-->

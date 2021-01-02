@@ -20,6 +20,7 @@ export class RoomComponent implements OnInit {
   user: User;
   room: Room;
   friendUserName: string;
+  collapsed: boolean;
 
   constructor(
       private playlistService: PlaylistService,
@@ -63,4 +64,8 @@ export class RoomComponent implements OnInit {
               console.log(data);
           });
   }
+
+    collapseList() {
+        this.collapsed = !this.collapsed;
+    }
 }

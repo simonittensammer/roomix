@@ -14,6 +14,7 @@ import {PlaylistService} from '../../../services/playlist.service';
 export class PlaylistComponent implements OnInit {
 
   room: Room;
+  collapsed: boolean;
 
   constructor(
       private playlistService: PlaylistService,
@@ -23,15 +24,11 @@ export class PlaylistComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(
-        (params: Params) => {
-          this.roomService.getRoom(params.id2)
-              .pipe(first())
-              .subscribe(data => {
-                this.room = data;
-              });
-        }
-    );
+      this.roomService.roomValue.subscribe(
+          value => {
+              this.room = value;
+          }
+      );
   }
 
   showAddSong() {
@@ -46,5 +43,9 @@ export class PlaylistComponent implements OnInit {
                 // this.room.playlist.songList.splice(this.room.playlist.songList.indexOf(data));
                 location.reload();
             });
+    }
+
+    collapseList() {
+        this.collapsed = !this.collapsed;
     }
 }

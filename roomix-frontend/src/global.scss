@@ -45,6 +45,7 @@ h2 {
 }
 
 h3 {
+  font-size: 1.75em;
   font-weight: bolder;
 }
 
@@ -128,6 +129,16 @@ button:active {
   color: var(--ion-text-color);
 
   display: block;
+}
+
+.buttonRight {
+  float: right;
+  margin-top: 10px;
+  line-height: 1.5em;
+}
+
+.plusSign {
+  font-size: 1.5em;
 }
 
 .popup {
@@ -215,18 +226,24 @@ button[disabled] {
 }
 
 // LISTS
+.ulHeadline {
+  float: left;
+  cursor: pointer;
+}
+
 ul {
-  width: 500px;
+  width: 100%;
   list-style: none;
 }
 
 .listEntry {
   display: inline-block;
   width: 100%;
+  max-width: 960px;
   background: var(--ion-card-background);
   border-radius: 5px;
   box-shadow: 0 0 15px -5px var(--ion-color-dark-contrast);
-  padding: 2.5%;
+  padding: 1.5%;
   margin-bottom: 1.5%;
 
   transition: all .1s ease-in-out;
@@ -235,7 +252,7 @@ ul {
 .listEntry:hover {
   cursor: pointer;
 
-  transform: scale(1.025);
+  transform: scale(1.015);
 }
 
 .listImage {
@@ -247,13 +264,14 @@ ul {
 
 .listTextContainer {
   float: left;
-  width: 45%;
+  width: 60%;
   overflow-x: hidden;
   white-space: nowrap;
 }
 
 .listHeadline, .listText {
   line-height: 25px;
+  width: 100%;
 }
 
 .listHeadline {
