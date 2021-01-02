@@ -12,6 +12,7 @@ import {FriendRequest} from '../../models/friend-request';
 export class FriendRequestsComponent implements OnInit {
 
   user: User;
+  collapsed: boolean;
 
   constructor(
       private accountService: AccountService,
@@ -33,4 +34,7 @@ export class FriendRequestsComponent implements OnInit {
         });
   }
 
+    collapseList() {
+        this.collapsed = !this.collapsed;
+    }
 }

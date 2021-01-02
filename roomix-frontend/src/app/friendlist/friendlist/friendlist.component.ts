@@ -14,6 +14,7 @@ export class FriendlistComponent implements OnInit {
 
   user: User;
   friendUserName: string;
+  collapsed: boolean;
 
   constructor(
       private accountService: AccountService,
@@ -41,4 +42,7 @@ export class FriendlistComponent implements OnInit {
     this.router.navigate(['requests'], {relativeTo: this.route});
   }
 
+  collapseList() {
+    this.collapsed = !this.collapsed;
+  }
 }

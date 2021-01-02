@@ -1,4 +1,4 @@
-<div class="content">
+<!--<div class="content">-->
   <h2>Your Friends</h2>
 
   <div>
@@ -8,11 +8,20 @@
     </button>
   </div>
 
-  <button>
-    <a class="buttonLink" (click)="showRequests()">Friend Requests</a>
-  </button>
+<!--  <button>-->
+<!--    <a class="buttonLink" (click)="showRequests()">Friend Requests</a>-->
+<!--  </button>-->
 
-  <ul>
+  <app-friend-requests></app-friend-requests>
+
+  <h3 class="ulHeadline" (click)="collapseList()">
+    Your Friends
+  </h3>
+  <a class="buttonLink buttonRight">
+    <button>Add Friends</button>
+  </a>
+
+  <ul *ngIf="!collapsed">
     <li class="listEntry" *ngFor="let friend of user.friendList">
       <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
 
@@ -22,4 +31,12 @@
       </div>
     </li>
   </ul>
-</div>
+  <ul *ngIf="collapsed">
+    <li class="listEntry" (click)="collapseList()">
+      <div class="listTextContainer">
+        <p class="listHeadline">Show Friendlist</p>
+        <p class="listText">Click here or on the headline, to show the list!</p>
+      </div>
+    </li>
+  </ul>
+<!--</div>-->
