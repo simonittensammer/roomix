@@ -21,7 +21,8 @@ export class CreateRoomComponent implements OnInit {
 
   ngOnInit() {
     this.newRoomForm = new FormGroup({
-      name: new FormControl('', Validators.required),
+      roomPic: new FormControl(null),
+      name: new FormControl('', Validators.required)
     });
   }
 

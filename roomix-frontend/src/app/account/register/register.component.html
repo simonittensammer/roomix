@@ -2,6 +2,9 @@
     <form [formGroup]="regForm" class="popup centerXY">
         <h2 class="formHeadline formElement">Create an account!</h2>
 
+        <label for="img">Profile Picture:</label>
+        <input class="formElement" formControlName="profilePic" type="file" id="img" name="img" accept="image/*">
+
         <label for="username">Username</label>
         <input type="text" id="username" class="formElement" formControlName="username" placeholder="Username">
         <p class="errorMsg" *ngIf="regForm.controls['username'].hasError('required') && regForm.controls['username'].dirty">
