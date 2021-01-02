@@ -30,7 +30,6 @@ export class AccountService {
   }
 
   public updateIsLoggedIn(loggedIn: boolean) {
-    this.loggedIn.next(loggedIn);
   }
 
   public get userValue() {
@@ -63,17 +62,17 @@ export class AccountService {
   login(username, password) {
     return this.http.post<User>(GlobalConstants.apiUrl + '/user/login', { username, password })
         .pipe(map(user => {
-          this.loggedIn.next(true);
           return user;
         }));
   }
 
   logout() {
     // remove user from local storage and set current user to null
-    localStorage.removeItem('user');
-    this.loggedIn.next(false);
-    this.userSubject.next(null);
+    // localStorage.removeItem('user');
+    // localStorage.removeItem('room');
     this.roomService.updateRoomValue(null);
+    // this.userSubject.next(null);
+    this.updateUserValue(null);
     this.router.navigate(['/login']);
   }
 

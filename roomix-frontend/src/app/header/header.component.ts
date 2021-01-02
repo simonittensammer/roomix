@@ -13,7 +13,6 @@ import {Room} from '../models/room';
 })
 export class HeaderComponent implements OnInit {
 
-  isLoggedIn$: Observable<boolean>;
   user: User;
   room: Room;
 
@@ -25,7 +24,6 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isLoggedIn$ = this.accountService.isLoggedIn;
     this.roomService.roomValue.subscribe(
         value => {
           this.room = value;
@@ -42,5 +40,4 @@ export class HeaderComponent implements OnInit {
     this.user = null;
     this.accountService.logout();
   }
-
 }

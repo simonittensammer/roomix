@@ -1,4 +1,4 @@
-<div id="navBar" *ngIf="(isLoggedIn$ | async) === true || user != null">
+<div id="navBar" *ngIf="user != null">
 
     <img id="logo" src="assets/logo/logo-light.svg" alt="logo">
 
@@ -10,7 +10,7 @@
     </a>
 
     <a class="buttonLink" routerLink="/room/{{ room.id }}">
-        <button class="formElement">
+        <button class="formElement" [disabled]="!room">
             <ion-icon name="musical-notes"></ion-icon>
             <div class="linkText">Current Room</div>
         </button>
@@ -30,5 +30,6 @@
         </button>
     </a>
 
+    <div id="userText" class="formElement">Logged in as <br><b>{{ user.username }}</b></div>
     <button id="logoutButton" class="formElement" (click)="logout()">Logout</button>
 </div>
