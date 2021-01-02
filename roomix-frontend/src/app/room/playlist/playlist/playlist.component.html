@@ -2,12 +2,6 @@
     <div *ngIf="room != null">
         <h2>Playlist of {{ room.name }} </h2>
 
-        <ul>
-            <li *ngFor="let song of room.playlist.songList">{{ song.title }} --- {{ song.url }}
-                <button (click)="deleteFromPlaylist(song)">Delete</button>
-            </li>
-        </ul>
-
         <a class="buttonLink" (click)="showAddSong()">
             <button>Add song</button>
         </a>
@@ -19,6 +13,12 @@
                 <div class="listTextContainer">
                     <p class="listHeadline">{{ song.title }}</p>
                     <p class="listText">{{ song.artist }}</p>
+                </div>
+
+                <div class="listButtonContainer">
+                    <a class="buttonLink" (click)="deleteFromPlaylist(song)">
+                        <button>Delete</button>
+                    </a>
                 </div>
             </li>
         </ul>
