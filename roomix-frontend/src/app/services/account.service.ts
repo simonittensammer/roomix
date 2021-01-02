@@ -8,6 +8,7 @@ import {map} from 'rxjs/operators';
 import {Member} from '../models/member';
 import {FriendRequest} from '../models/friend-request';
 import {RoomInvite} from '../models/room-invite';
+import {RoomService} from './room.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AccountService {
 
   constructor(
       private router: Router,
-      private http: HttpClient
+      private http: HttpClient,
+      private roomService: RoomService
   ) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
   }
@@ -31,8 +33,8 @@ export class AccountService {
     this.loggedIn.next(loggedIn);
   }
 
-  public get userValue(): User {
-    return this.userSubject.value;
+  public get userValue() {
+    return this.userSubject.asObservable();
   }
 
   public updateUserValue(user: User) {
@@ -71,6 +73,7 @@ export class AccountService {
     localStorage.removeItem('user');
     this.loggedIn.next(false);
     this.userSubject.next(null);
+    this.roomService.updateRoomValue(null);
     this.router.navigate(['/login']);
   }
 

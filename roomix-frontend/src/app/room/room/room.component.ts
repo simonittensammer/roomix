@@ -39,9 +39,13 @@ export class RoomComponent implements OnInit {
               .subscribe(data => {
                 this.room = data;
                 console.log(this.room);
-                this.playSongService.connect(this.accountService.userValue.username, this.room.id);
+                this.accountService.userValue.subscribe(
+                      value => {
+                          this.user = value;
+                      }
+                );
+                this.playSongService.connect(this.user.username, this.room.id);
                 console.log(this.playSongService.currentSong);
-                this.user = this.accountService.userValue;
                 this.roomService.updateRoomValue(this.room);
               });
         }

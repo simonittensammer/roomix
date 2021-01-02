@@ -1,4 +1,4 @@
-<div id="controlBar">
+<div id="controlBar" *ngIf="(isLoggedIn$ | async) || room != null">
     <div id="roomInfoWrapper" *ngIf="room">
         <img src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg" id="roomImage"
              alt="roomImage">

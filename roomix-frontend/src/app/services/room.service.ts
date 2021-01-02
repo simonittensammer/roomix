@@ -25,8 +25,8 @@ export class RoomService {
             }));
     }
 
-    public get roomValue(): Room {
-        return this.roomSubject.value;
+    public get roomValue() {
+        return this.roomSubject.asObservable();
     }
 
     public updateRoomValue(room: Room) {

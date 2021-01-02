@@ -17,12 +17,14 @@ export class RoomlistComponent implements OnInit {
   constructor(
       private accountService: AccountService,
       private router: Router,
-  ) {
-    this.user = this.accountService.userValue;
-  }
+  ) { }
 
   ngOnInit() {
-    console.log(this.accountService.userValue);
+    this.accountService.userValue.subscribe(
+        value => {
+          this.user = value;
+        }
+    );
   }
 
   logout() {

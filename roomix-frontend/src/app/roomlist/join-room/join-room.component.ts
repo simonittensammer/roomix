@@ -17,7 +17,11 @@ export class JoinRoomComponent implements OnInit {
   constructor(private accountService: AccountService) { }
 
   ngOnInit() {
-    this.user = this.accountService.userValue;
+    this.accountService.userValue.subscribe(
+        value => {
+          this.user = value;
+        }
+    );
   }
 
   response(roomInvite: RoomInvite, accept: boolean) {

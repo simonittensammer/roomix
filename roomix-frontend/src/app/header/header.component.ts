@@ -26,8 +26,16 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn$ = this.accountService.isLoggedIn;
-    this.user = this.accountService.userValue;
-    this.room = this.roomService.roomValue;
+    this.roomService.roomValue.subscribe(
+        value => {
+          this.room = value;
+        }
+    );
+    this.accountService.userValue.subscribe(
+        value => {
+          this.user = value;
+        }
+    );
   }
 
   logout() {

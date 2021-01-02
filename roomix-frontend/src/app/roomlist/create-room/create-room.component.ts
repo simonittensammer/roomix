@@ -4,6 +4,7 @@ import {RoomlistService} from '../../services/roomlist.service';
 import {first} from 'rxjs/operators';
 import {LoginComponent} from '../../account/login/login.component';
 import {AccountService} from '../../services/account.service';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-create-room',
@@ -12,6 +13,7 @@ import {AccountService} from '../../services/account.service';
 })
 export class CreateRoomComponent implements OnInit {
 
+  user: User;
   newRoomForm: FormGroup;
 
   constructor(
@@ -21,15 +23,20 @@ export class CreateRoomComponent implements OnInit {
 
   ngOnInit() {
     this.newRoomForm = new FormGroup({
-      roomPic: new FormControl(null),
+      // roomPic: new FormControl(null),
       name: new FormControl('', Validators.required)
     });
+    this.accountService.userValue.subscribe(
+          value => {
+              this.user = value;
+          }
+    );
   }
 
   onSubmit() {
     if (this.newRoomForm.valid) {
       console.log(this.newRoomForm.value);
-      this.roomlistService.createNewRoom(this.newRoomForm.value)
+      this.roomlistService.createNewRoom(this.user.username, this.newRoomForm.value)
           .pipe(first())
           .subscribe(data => {
             this.accountService.getProperMemberList(data.username)

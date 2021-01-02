@@ -1,6 +1,9 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {RoomService} from "../services/room.service";
-import {Room} from "../models/room";
+import {RoomService} from '../services/room.service';
+import {Room} from '../models/room';
+import {Observable} from 'rxjs';
+import {AccountService} from '../services/account.service';
+import {User} from '../models/user';
 
 @Component({
     selector: 'app-control-bar',
@@ -9,17 +12,29 @@ import {Room} from "../models/room";
 })
 export class ControlBarComponent implements OnInit {
 
+    user: User;
     room: Room;
     volumePercentage = 100;
     volumeStage: string;
 
     constructor(
-        private roomService: RoomService
+        private roomService: RoomService,
+        private accountService: AccountService
     ) {
     }
 
     ngOnInit() {
-        this.room = this.roomService.roomValue;
+        this.roomService.roomValue.subscribe(
+            value => {
+                this.room = value;
+            }
+        );
+        this.accountService.userValue.subscribe(
+            value => {
+                this.user = value;
+            }
+        );
+
         this.volumeStage = 'h';
     }
 

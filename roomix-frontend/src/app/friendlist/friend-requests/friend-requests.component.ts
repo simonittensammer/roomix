@@ -18,7 +18,11 @@ export class FriendRequestsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = this.accountService.userValue;
+    this.accountService.userValue.subscribe(
+        value => {
+          this.user = value;
+        }
+    );
   }
 
   response(friendRequest: FriendRequest, accept: boolean) {

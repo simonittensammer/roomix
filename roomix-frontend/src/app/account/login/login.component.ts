@@ -12,6 +12,7 @@ import {User} from '../../models/user';
 })
 export class LoginComponent implements OnInit {
 
+  user: User;
   loginForm: FormGroup;
 
   constructor(
@@ -25,10 +26,15 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required)
     });
 
-    const user = this.accountService.userValue;
-    if (user) {
-        console.log(user.username + ' | ' + user.password);
-        this.login(user.username, user.password);
+    this.accountService.userValue.subscribe(
+      value => {
+        this.user = value;
+      }
+    );
+
+    if (this.user) {
+        console.log(this.user.username + ' | ' + this.user.password);
+        this.login(this.user.username, this.user.password);
     }
   }
 

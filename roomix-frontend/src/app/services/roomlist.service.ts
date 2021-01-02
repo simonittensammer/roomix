@@ -13,15 +13,16 @@ import {map} from 'rxjs/operators';
 })
 export class RoomlistService {
 
+  user: User;
+
   constructor(
       private router: Router,
       private http: HttpClient,
       private accountService: AccountService
   ) { }
 
-  createNewRoom(roomname) {
-    const username = this.accountService.userValue.username;
-    return this.http.post<User>(GlobalConstants.apiUrl + '/room', { username, roomname: roomname.name })
+  createNewRoom(username, roomInput) {
+    return this.http.post<User>(GlobalConstants.apiUrl + '/room', { username: username, roomname: roomInput.name })
         .pipe(map(user => {
           return user;
         }));

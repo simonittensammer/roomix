@@ -22,7 +22,11 @@ export class FriendlistComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = this.accountService.userValue;
+    this.accountService.userValue.subscribe(
+        value => {
+          this.user = value;
+        }
+    );
   }
 
   sendFriendRequest() {
