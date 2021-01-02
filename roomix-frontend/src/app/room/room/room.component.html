@@ -1,18 +1,24 @@
-<div class="content">
-    <h2 *ngIf="room != null">{{ room.name }}</h2>
+<div class="content half-content-wrapper">
+    <div class="half-content">
+        <h2 *ngIf="room != null">{{ room.name }}</h2>
 
-    <div>
-        <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
-        <button>
-            <a class="buttonLink" (click)="sendRoomInvite()">Invite to room</a>
-        </button>
+        <div>
+            <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
+            <button>
+                <a class="buttonLink" (click)="sendRoomInvite()">Invite to room</a>
+            </button>
+        </div>
+
+        <!--<div class="card" *ngFor="let member of room.memberList" >
+            <p class="cardText">{{ member.user.displayname }}</p>
+        </div> -->
+
+        <a class="buttonLink" (click)="showPlaylist()">
+            <button>Show playlist</button>
+        </a>
     </div>
 
-    <!--<div class="card" *ngFor="let member of room.memberList" >
-        <p class="cardText">{{ member.user.displayname }}</p>
-    </div> -->
-
-    <a class="buttonLink" (click)="showPlaylist()">
-        <button>Show playlist</button>
-    </a>
+    <div class="half-content">
+        <h2>Chat</h2>
+    </div>
 </div>

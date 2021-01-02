@@ -70,9 +70,22 @@ h3 {
 .content {
   padding: 50px;
   width: 85vw;
+  height: 100vh;
   position: absolute;
   top: 0;
   left: 15vw;
+}
+
+.half-content-wrapper {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  grid-gap: 50px;
+}
+
+.half-content {
+  width: 50%;
+  height: 100%;
 }
 
 // FORMS, INPUTS, BUTTONS, LINKS
