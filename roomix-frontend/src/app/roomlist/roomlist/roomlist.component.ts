@@ -4,6 +4,7 @@ import {User} from '../../models/user';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Room} from '../../models/room';
 import {first} from 'rxjs/operators';
+import {RoomlistService} from '../../services/roomlist.service';
 
 @Component({
   selector: 'app-roomlist',
@@ -17,6 +18,7 @@ export class RoomlistComponent implements OnInit {
   constructor(
       private accountService: AccountService,
       private router: Router,
+      private roomListService: RoomlistService
   ) { }
 
   ngOnInit() {

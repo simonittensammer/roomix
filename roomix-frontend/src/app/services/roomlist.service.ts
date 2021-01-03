@@ -14,6 +14,7 @@ import {map} from 'rxjs/operators';
 export class RoomlistService {
 
   user: User;
+  createRoomVisible: boolean;
 
   constructor(
       private router: Router,
@@ -26,5 +27,9 @@ export class RoomlistService {
         .pipe(map(user => {
           return user;
         }));
+  }
+
+  showCreateRoom() {
+      this.createRoomVisible = !this.createRoomVisible;
   }
 }

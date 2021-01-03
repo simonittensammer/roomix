@@ -46,11 +46,11 @@ export class CreateRoomComponent implements OnInit {
                 .subscribe(data2 => {
                   data.memberList = data2;
                   this.accountService.updateUserValue(data);
-                  this.router.navigate(['../']);
                 });
             console.log('done!');
           });
     }
+    this.roomlistService.showCreateRoom();
   }
 
 }

@@ -13,10 +13,12 @@
                 <button>Join Room</button>
             </a>
 
-            <a class="buttonLink" routerLink="/roomlist/create-room">
+            <a class="buttonLink" (click)="roomListService.showCreateRoom()">
                 <button>New Room</button>
             </a>
         </div>
     </div>
 
 </div>
+
+<app-create-room *ngIf="roomListService.createRoomVisible"></app-create-room>

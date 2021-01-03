@@ -14,7 +14,7 @@
     <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Create</button>
 
     <div class="formElement">
-      <a routerLink="../">Cancel</a>
+      <a (click)="roomlistService.showCreateRoom()">Cancel</a>
     </div>
   </form>
 </div>
