@@ -41,13 +41,12 @@ export class RoomComponent implements OnInit {
                 this.accountService.userValue.subscribe(
                       value => {
                           this.user = value;
+                          if (!this.roomService.oldRoom || this.room.id !== this.roomService.oldRoom.id) {
+                              this.roomService.oldRoom = this.room;
+                              this.roomService.updateRoomValue(this.room);
+                          }
                       }
                 );
-
-                if (!this.roomService.oldRoom || this.room.id !== this.roomService.oldRoom.id) {
-                   this.roomService.oldRoom = this.room;
-                   this.roomService.updateRoomValue(this.room);
-                }
               });
         }
     );

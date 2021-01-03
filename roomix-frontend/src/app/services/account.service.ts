@@ -15,7 +15,6 @@ import {RoomService} from './room.service';
 })
 export class AccountService {
   private userSubject: BehaviorSubject<User>;
-  private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(
       private router: Router,
@@ -23,10 +22,6 @@ export class AccountService {
       private roomService: RoomService
   ) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
-  }
-
-  get isLoggedIn() {
-    return this.loggedIn.asObservable();
   }
 
   public updateIsLoggedIn(loggedIn: boolean) {
@@ -37,7 +32,6 @@ export class AccountService {
   }
 
   public updateUserValue(user: User) {
-    this.loggedIn.next(true);
 
     localStorage.setItem('user', JSON.stringify(user));
     this.userSubject.next(user);

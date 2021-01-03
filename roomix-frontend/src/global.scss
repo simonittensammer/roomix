@@ -33,6 +33,11 @@
   font-size: 1em;
   padding: 0;
   margin: 0;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }
 
 h2 {
@@ -62,7 +67,7 @@ h3 {
 }
 
 .centerXY {
-  position: absolute;
+  position: fixed;
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
@@ -91,7 +96,6 @@ h3 {
   overflow-y: scroll;
   overflow-x: visible;
   -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 .half-content:after {
@@ -101,15 +105,12 @@ h3 {
   height: 17.5vh;
 }
 
-.half-content::-webkit-scrollbar {
-  display: none;
-}
-
 // FORMS, INPUTS, BUTTONS, LINKS
 
 a {
   text-decoration: none;
-  color: var(--ion-color-primary)
+  color: var(--ion-color-primary);
+  cursor: pointer;
 }
 
 input {
@@ -117,12 +118,6 @@ input {
   border: none;
   padding: 10px;
   border-radius: 5px;
-}
-
-.content {
-  input {
-    background: var(--ion-card-background);
-  }
 }
 
 button {
@@ -154,7 +149,10 @@ button:active {
 }
 
 .popup {
-  width: 30vw;
+  min-width: 540px;
+  width: 35vw;
+  max-height: 75vh;
+  overflow: scroll;
   background: var(--ion-card-background);
   padding: 30px 0;
   border-radius: 5px;

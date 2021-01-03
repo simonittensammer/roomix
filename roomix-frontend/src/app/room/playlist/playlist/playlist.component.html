@@ -1,8 +1,8 @@
 <!--<div class="content">-->
-    <div *ngIf="room != null">
+    <div *ngIf="room">
         <h3 class="ulHeadline" (click)="collapseList()">Playlist</h3>
 
-        <a class="buttonLink buttonRight" (click)="showAddSong()">
+        <a class="buttonLink buttonRight" (click)="playlistService.showAddSong()">
             <button>Add song</button>
         </a>
 
@@ -33,4 +33,6 @@
             </li>
         </ul>
     </div>
+
+    <app-add-song *ngIf="playlistService.addSongVisible"></app-add-song>
 <!--</div>-->

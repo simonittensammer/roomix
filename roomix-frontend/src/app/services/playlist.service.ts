@@ -14,11 +14,12 @@ export class PlaylistService {
 
   private API_URL = 'https://www.googleapis.com/youtube/v3/';
   private API_TOKEN = 'AIzaSyBQ4OBlQ9v34aLeJxrimhMt7PKrO4uxaDw';
+  public addSongVisible: boolean;
 
   constructor(private http: HttpClient) {}
 
   getVideos(query: string): Observable <any> {
-    const url = `${this.API_URL}search?q=${query}&key=${this.API_TOKEN}&part=snippet&type=video&maxResults=10`;
+    const url = `${this.API_URL}search?q=${query}&key=${this.API_TOKEN}&part=snippet&type=video&maxResults=5`;
     return this.http.get(url)
         .pipe(
             map((response: any) => response.items)
@@ -39,5 +40,9 @@ export class PlaylistService {
 
   deleteSongFromPlaylist(roomId: number, songId: number) {
     return this.http.delete<Song>(GlobalConstants.apiUrl + '/room/' + roomId + '/song/delete/' + songId);
+  }
+
+  showAddSong() {
+    this.addSongVisible = !this.addSongVisible;
   }
 }

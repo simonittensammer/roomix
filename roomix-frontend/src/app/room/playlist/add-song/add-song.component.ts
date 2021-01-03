@@ -4,6 +4,8 @@ import {fromEvent} from 'rxjs';
 import {Song} from '../../../models/song';
 import {PlaylistService} from '../../../services/playlist.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {RoomService} from '../../../services/room.service';
+import {Room} from '../../../models/room';
 
 @Component({
   selector: 'app-add-song',
@@ -14,18 +16,17 @@ export class AddSongComponent implements OnInit, AfterViewInit {
 
   @ViewChild('input') inputElement: ElementRef;
   songs: Array<Song>;
-  roomId: number;
+  room: Room;
 
   constructor(
       private playlistService: PlaylistService,
-      private route: ActivatedRoute,
-      private router: Router
+      private roomService: RoomService
   ) {}
 
   ngOnInit() {
-      this.route.params.subscribe(
-          (params: Params) => {
-              this.roomId = parseInt(params.id3);
+      this.roomService.roomValue.subscribe(
+          value => {
+              this.room = value;
           }
       );
   }
@@ -92,7 +93,7 @@ export class AddSongComponent implements OnInit, AfterViewInit {
   }
 
   addToPlaylist(song: Song) {
-      this.playlistService.addSong(this.roomId, song)
+      this.playlistService.addSong(this.room.id, song)
           .pipe(first())
           .subscribe(data => {
               console.log(data);

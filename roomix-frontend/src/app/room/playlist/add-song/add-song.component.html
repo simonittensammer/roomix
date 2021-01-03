@@ -1,11 +1,26 @@
-<div class="content">
-    <h2>Search a Song</h2>
+<div class="popup centerXY">
+    <h2 class="formElement formHeadline">Search a Song</h2>
 
-    <input #input class="searchBar" type="text" placeholder="Search for a song">
+    <input #input class="searchBar formElement" type="text" placeholder="Search for a song">
 
-    <ul *ngIf="songs != null">
-        <li *ngFor="let song of songs">{{ song.title }}
-            <button (click)="addToPlaylist(song)">Add to playlist</button>
+    <ul *ngIf="songs != null" class="formElement">
+        <li class="listEntry" *ngFor="let song of songs">
+            <img src="{{ song.picUrl }}" alt="" class="listImage">
+
+            <div class="listTextContainer">
+                <p class="listHeadline">{{ song.title }}</p>
+                <p class="listText">{{ song.artist }}</p>
+            </div>
+
+            <div class="listButtonContainer">
+                <a class="buttonLink" (click)="addToPlaylist(song)">
+                    <button>Add</button>
+                </a>
+            </div>
         </li>
     </ul>
+
+    <div class="formElement">
+        <a (click)="playlistService.showAddSong()">Cancel</a>
+    </div>
 </div>

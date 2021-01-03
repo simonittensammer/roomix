@@ -19,8 +19,7 @@ export class PlaylistComponent implements OnInit {
   constructor(
       private playlistService: PlaylistService,
       private route: ActivatedRoute,
-      private roomService: RoomService,
-      private router: Router,
+      private roomService: RoomService
   ) { }
 
   ngOnInit() {
@@ -29,10 +28,6 @@ export class PlaylistComponent implements OnInit {
               this.room = value;
           }
       );
-  }
-
-  showAddSong() {
-    this.router.navigate(['add-song', this.room.id], {relativeTo: this.route});
   }
 
     deleteFromPlaylist(song: Song) {
