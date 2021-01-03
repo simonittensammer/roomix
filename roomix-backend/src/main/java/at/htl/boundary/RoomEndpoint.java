@@ -150,7 +150,7 @@ public class RoomEndpoint {
                 playlist.setCurrentSong(song);
             }
 
-            return Response.ok("song added").build();
+            return Response.ok(songRepository.findByUrl(song.getUrl())).build();
         }
 
         return Response.status(406).entity("room or song does not exist").build();
