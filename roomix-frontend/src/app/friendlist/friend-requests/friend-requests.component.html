@@ -4,8 +4,7 @@
 
   <ul *ngIf="!collapsed && user.friendRequestList.length != 0">
     <li class="listEntry" *ngFor="let request of user.friendRequestList">
-      <img src="./assets/icon/icon-light.svg" alt="" class="listImage">
-
+      <img src="" alt="" class="listImage">
       <div class="listTextContainer">
           <p class="listHeadline">{{ request.sender.displayname }}</p>
           <p class="listText">@{{ request.sender.username }}</p>
@@ -25,6 +24,7 @@
   </ul>
   <ul *ngIf="collapsed">
     <li class="listEntry" (click)="collapseList()">
+      <img src="" alt="" class="listImage"> <!-- add info icon -->
       <div class="listTextContainer">
         <p class="listHeadline">Show Friendlist</p>
         <p class="listText">Click here or on the headline, to show the list!</p>

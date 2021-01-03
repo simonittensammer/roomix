@@ -27,41 +27,14 @@
             <li class="listEntry">
                 <img src="" alt="" class="listImage">
                 <div class="listTextContainer">
-                    <p class="listHeadline">Placeholder</p>
-                    <p class="listText">1</p>
-                </div>
-            </li>
-            <li class="listEntry">
-                <img src="" alt="" class="listImage">
-                <div class="listTextContainer">
-                    <p class="listHeadline">Placeholder</p>
-                    <p class="listText">2</p>
-                </div>
-            </li>
-            <li class="listEntry">
-                <img src="" alt="" class="listImage">
-                <div class="listTextContainer">
-                    <p class="listHeadline">Placeholder</p>
-                    <p class="listText">3</p>
-                </div>
-            </li>
-            <li class="listEntry">
-                <img src="" alt="" class="listImage">
-                <div class="listTextContainer">
-                    <p class="listHeadline">Placeholder</p>
-                    <p class="listText">4</p>
-                </div>
-            </li>
-            <li class="listEntry">
-                <img src="" alt="" class="listImage">
-                <div class="listTextContainer">
-                    <p class="listHeadline">Placeholder</p>
-                    <p class="listText">5</p>
+                    <p class="listHeadline">{{ user.displayname }}</p>
+                    <p class="listText">{{ user.username }}</p>
                 </div>
             </li>
         </ul>
         <ul *ngIf="collapsed">
             <li class="listEntry" (click)="collapseList()">
+                <img src="" alt="" class="listImage"> <!-- add info icon -->
                 <div class="listTextContainer">
                     <p class="listHeadline">Show Memberlist</p>
                     <p class="listText">Click here or on the headline, to show the list!</p>
