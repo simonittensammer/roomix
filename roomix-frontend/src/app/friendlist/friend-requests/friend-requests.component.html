@@ -1,8 +1,8 @@
 <!--<div class="content">-->
 
-  <h3 class="ulHeadline" (click)="collapseList()">Friend Requests</h3>
+  <h3 class="ulHeadline" *ngIf="user.friendRequestList.length != 0" (click)="collapseList()">Friend Requests</h3>
 
-  <ul *ngIf="!collapsed">
+  <ul *ngIf="!collapsed && user.friendRequestList.length != 0">
     <li class="listEntry" *ngFor="let request of user.friendRequestList">
       <img src="./assets/icon/icon-light.svg" alt="" class="listImage">
 
