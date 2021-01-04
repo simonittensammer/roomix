@@ -24,28 +24,15 @@ public class YTSearchService {
 
     public JsonObject getVideos(String query) {
         String requestURL = API_URL + "search?q=" + query + "&key=" + API_TOKEN + "&part=snippet&type=video&maxResults=1";
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(requestURL))
-                .build();
-
-        String res = "{}";
-        try {
-            res = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        JsonReader jsonReader = Json.createReader(new StringReader(res));
-        JsonObject object = jsonReader.readObject();
-        jsonReader.close();
-
-        return object;
+        return executeRequest(requestURL);
     }
 
     public JsonObject getVideoDuration(String videoId) {
         String requestURL = API_URL + "videos?id=" + videoId + "&key=" + API_TOKEN + "&part=snippet,contentDetails";
+        return executeRequest(requestURL);
+    }
+
+    private JsonObject executeRequest(String requestURL) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURL))
                 .build();
