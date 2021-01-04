@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.SongRepository;
+import at.htl.control.YTSearchService;
 import at.htl.entity.Song;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -21,6 +22,9 @@ public class SongEndpoint {
     @Inject
     SongRepository songRepository;
 
+    @Inject
+    YTSearchService ytSearchService;
+
     @GET
     public List<Song> getAll() {
         return songRepository.listAll();
@@ -30,6 +34,18 @@ public class SongEndpoint {
     @Path("/{id}")
     public Song getSong(@PathParam("id") Long id) {
         return songRepository.findById(id);
+    }
+
+    @GET
+    @Path("/YT/search/{query}")
+    public String searchYouTubeVideos(@PathParam("query") String query) {
+        return ytSearchService.getVideos(query);
+    }
+
+    @GET
+    @Path("/YT/duration/{videoId}")
+    public String getYouTubeVideoDuration(@PathParam("videoId") String videoId) {
+        return ytSearchService.getVideoDuration(videoId);
     }
 
     @POST
