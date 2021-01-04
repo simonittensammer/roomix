@@ -87,6 +87,12 @@ public class RoomEndpoint {
     }
 
     @GET
+    @Path("/popular")
+    public List<Room> getPopularPublicRooms(@QueryParam("limit") int limit) {
+        return roomRepository.findPopularPublicRooms(limit);
+    }
+
+    @GET
     @Path("/{id}/song")
     public Response getCurrentSong(@PathParam("id") Long id) {
         Room room = roomRepository.findById(id);
