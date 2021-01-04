@@ -59,6 +59,22 @@ public class RoomEndpoint {
     }
 
     @GET
+    @Path("/{id}/members")
+    public Response getAllMembers(@PathParam("id") Long id) {
+        Room room = roomRepository.findById(id);
+
+        if(room != null) {
+            List<JsonObject> serializedMembers = room.getMemberList().stream().map(member -> {
+                return memberRepository.getSerializedMember(member.getId());
+            }).collect(Collectors.toList());
+
+            return Response.ok(serializedMembers).build();
+        }
+
+        return Response.status(406).entity("room does not exist").build();
+    }
+
+    @GET
     @Path("/member/{id}")
     public Response getMember(@PathParam("id") Long id) {
         Member member = memberRepository.findById(id);

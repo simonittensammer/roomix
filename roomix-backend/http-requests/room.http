@@ -3,6 +3,8 @@ GET http://localhost:8080/room
 ###
 GET http://localhost:8080/room/1
 ###
+GET http://localhost:8080/room/1/members
+###
 GET http://localhost:8080/room/member/1
 ###
 GET http://localhost:8080/room/1/song
