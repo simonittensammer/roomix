@@ -31,12 +31,11 @@ export class PlaylistComponent implements OnInit {
   }
 
     deleteFromPlaylist(song: Song) {
-        this.playlistService.deleteSongFromPlaylist(this.room.id, song.id)
+        this.playlistService.deleteSongFromPlaylist(this.room.id, song.url)
             .pipe(first())
             .subscribe(data => {
                 console.log(data);
-                // this.room.playlist.songList.splice(this.room.playlist.songList.indexOf(data));
-                location.reload();
+                this.room.playlist.songList.splice(this.room.playlist.songList.findIndex(x => x.url === song.url), 1);
             });
     }
 

@@ -38,8 +38,8 @@ export class PlaylistService {
     return this.http.post(GlobalConstants.apiUrl + '/room/song', { roomId, song});
   }
 
-  deleteSongFromPlaylist(roomId: number, songId: number) {
-    return this.http.delete<Song>(GlobalConstants.apiUrl + '/room/' + roomId + '/song/delete/' + songId);
+  deleteSongFromPlaylist(roomId: number, songUrl: string) {
+    return this.http.delete<Song>(GlobalConstants.apiUrl + '/room/' + roomId + '/song/delete/' + songUrl);
   }
 
   showAddSong() {
