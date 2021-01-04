@@ -1,43 +1,52 @@
 <!--<div class="content">-->
-  <h2>Your Friends</h2>
+<h2>Your Friends</h2>
 
-  <div>
+<div>
     <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
     <button>
-      <a class="buttonLink" (click)="sendFriendRequest()">Add Friend</a>
+        <a class="buttonLink" (click)="sendFriendRequest()">Add Friend</a>
     </button>
-  </div>
+</div>
 
 <!--  <button>-->
 <!--    <a class="buttonLink" (click)="showRequests()">Friend Requests</a>-->
 <!--  </button>-->
 
-  <app-friend-requests></app-friend-requests>
+<app-friend-requests></app-friend-requests>
 
-  <h3 class="ulHeadline" (click)="collapseList()">
+<h3 class="ulHeadline" (click)="collapseList()">
     Your Friends
-  </h3>
-  <a class="buttonLink buttonRight">
+</h3>
+<a class="buttonLink buttonRight">
     <button>Add Friends</button>
-  </a>
+</a>
 
-  <ul *ngIf="!collapsed">
+<ul *ngIf="!collapsed">
     <li class="listEntry" *ngFor="let friend of user.friendList">
-      <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
+        <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
 
-      <div class="listTextContainer">
-        <p class="listHeadline">{{ friend.displayname }}</p>
-        <p class="listText">@{{ friend.username }}</p>
-      </div>
+        <div class="listTextContainer">
+            <p class="listHeadline">{{ friend.displayname }}</p>
+            <p class="listText">@{{ friend.username }}</p>
+        </div>
     </li>
-  </ul>
-  <ul *ngIf="collapsed">
+</ul>
+<ul *ngIf="!collapsed && user.friendList.length == 0">
+    <li class="listEntry">
+        <img src="" alt="" class="listImage"> <!-- add info icon -->
+        <div class="listTextContainer">
+            <p class="listHeadline">No Friends found :(</p>
+            <p class="listText">Tell some of your friends about roomix!</p>
+        </div>
+    </li>
+</ul>
+<ul *ngIf="collapsed">
     <li class="listEntry" (click)="collapseList()">
-      <img src="" alt="" class="listImage"> <!-- add info icon -->
-      <div class="listTextContainer">
-        <p class="listHeadline">Show Friendlist</p>
-        <p class="listText">Click here or on the headline, to show the list!</p>
-      </div>
+        <img src="" alt="" class="listImage"> <!-- add info icon -->
+        <div class="listTextContainer">
+            <p class="listHeadline">Show Friendlist</p>
+            <p class="listText">Click here or on the headline, to show the list!</p>
+        </div>
     </li>
-  </ul>
+</ul>
 <!--</div>-->
