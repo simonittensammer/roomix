@@ -1,7 +1,13 @@
 package at.htl.control;
 
+import org.eclipse.microprofile.config.ConfigProvider;
+
 import javax.enterprise.context.ApplicationScoped;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,37 +22,47 @@ public class YTSearchService {
     private String API_TOKEN = "AIzaSyBQ4OBlQ9v34aLeJxrimhMt7PKrO4uxaDw";
 
 
-    public String getVideos(String query) {
+    public JsonObject getVideos(String query) {
         String requestURL = API_URL + "search?q=" + query + "&key=" + API_TOKEN + "&part=snippet&type=video&maxResults=1";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURL))
                 .build();
 
+        String res = "{}";
         try {
-            return client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            res = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return "";
+        JsonReader jsonReader = Json.createReader(new StringReader(res));
+        JsonObject object = jsonReader.readObject();
+        jsonReader.close();
+
+        return object;
     }
 
-    public String getVideoDuration(String videoId) {
+    public JsonObject getVideoDuration(String videoId) {
         String requestURL = API_URL + "videos?id=" + videoId + "&key=" + API_TOKEN + "&part=snippet,contentDetails";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestURL))
                 .build();
 
+        String res = "{}";
         try {
-            return client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            res = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return "";
+        JsonReader jsonReader = Json.createReader(new StringReader(res));
+        JsonObject object = jsonReader.readObject();
+        jsonReader.close();
+
+        return object;
     }
 }

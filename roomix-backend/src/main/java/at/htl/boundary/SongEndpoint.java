@@ -6,6 +6,7 @@ import at.htl.entity.Song;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -38,13 +39,13 @@ public class SongEndpoint {
 
     @GET
     @Path("/YT/search/{query}")
-    public String searchYouTubeVideos(@PathParam("query") String query) {
+    public JsonObject searchYouTubeVideos(@PathParam("query") String query) {
         return ytSearchService.getVideos(query);
     }
 
     @GET
     @Path("/YT/duration/{videoId}")
-    public String getYouTubeVideoDuration(@PathParam("videoId") String videoId) {
+    public JsonObject getYouTubeVideoDuration(@PathParam("videoId") String videoId) {
         return ytSearchService.getVideoDuration(videoId);
     }
 
