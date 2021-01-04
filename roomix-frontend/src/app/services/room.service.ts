@@ -5,6 +5,7 @@ import {GlobalConstants} from '../helpers/globalConstants';
 import {map} from 'rxjs/operators';
 import {Room} from '../models/room';
 import {BehaviorSubject} from "rxjs";
+import {Member} from '../models/member';
 
 @Injectable({
     providedIn: 'root'
@@ -33,5 +34,12 @@ export class RoomService {
     public updateRoomValue(room: Room) {
         localStorage.setItem('room', JSON.stringify(room));
         this.roomSubject.next(room);
+    }
+
+    public getMembers(id) {
+        return this.http.get<Array<Member>>(GlobalConstants.apiUrl + '/room/' + id + '/members')
+            .pipe(map(members => {
+                return members;
+            }));
     }
 }

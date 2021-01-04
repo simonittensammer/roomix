@@ -7,7 +7,8 @@ export class Member {
     room: Room;
     role: string;
 
-    constructor(user, room, role) {
+    constructor(id, user, room, role) {
+        this.id = id;
         this.user = user;
         this.room = room;
         this.role = role;

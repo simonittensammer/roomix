@@ -13,22 +13,13 @@
         <a class="buttonLink buttonRight">
             <button>Invite Friends</button>
         </a>
-<!--        <ul *ngIf="!collapsed">-->
-<!--            <li class="listEntry" *ngFor="let member of room.memberList">-->
-<!--                <img src="{{ member.user.profilePicUrl }}" alt="" class="listImage">-->
-
-<!--                <div class="listTextContainer">-->
-<!--                    <p class="listHeadline">{{ member.user.displayname }}</p>-->
-<!--                    <p class="listText">@{{ member.user.username }}</p>-->
-<!--                </div>-->
-<!--            </li>-->
-<!--        </ul>-->
         <ul *ngIf="!collapsed">
-            <li class="listEntry">
-                <img src="" alt="" class="listImage">
+            <li class="listEntry" *ngFor="let member of room.memberList">
+                <img src="{{ member.user.profilePicUrl }}" alt="" class="listImage">
+
                 <div class="listTextContainer">
-                    <p class="listHeadline">{{ user.displayname }}</p>
-                    <p class="listText">{{ user.username }}</p>
+                    <p class="listHeadline">{{ member.user.displayname }}</p>
+                    <p class="listText">@{{ member.user.username }}</p>
                 </div>
             </li>
         </ul>
