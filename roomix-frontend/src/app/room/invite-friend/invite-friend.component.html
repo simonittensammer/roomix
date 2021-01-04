@@ -19,6 +19,14 @@
                     </a>
                 </div>
             </ng-container>
+
+            <ng-container *ngIf="searchQuery != '' || !(friend.username | uppercase).includes(searchQuery | uppercase) || !(friend.displayname | uppercase).includes(searchQuery | uppercase)">
+                <img src="" alt="" class="listImage"> <!-- add info icon -->
+                <div class="listTextContainer">
+                    <p class="listHeadline">No further Friends found :(</p>
+                    <p class="listText">Check your search query for typos!</p>
+                </div>
+            </ng-container>
         </li>
     </ul>
 
