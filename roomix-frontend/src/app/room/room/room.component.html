@@ -2,15 +2,8 @@
     <div class="half-content">
         <h2 *ngIf="room != null">{{ room.name }}</h2>
 
-        <div>
-            <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
-            <button>
-                <a class="buttonLink" (click)="sendRoomInvite()">Invite to room</a>
-            </button>
-        </div>
-
         <h3 class="ulHeadline" (click)="collapseList()">Members</h3>
-        <a class="buttonLink buttonRight">
+        <a class="buttonLink buttonRight" (click)="roomService.showInviteFriend()">
             <button>Invite Friends</button>
         </a>
         <ul *ngIf="!collapsed">
@@ -40,3 +33,5 @@
         <h2>Chat</h2>
     </div>
 </div>
+
+<app-invite-friend *ngIf="roomService.inviteFriendVisible"></app-invite-friend>

@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {User} from '../models/user';
 import {GlobalConstants} from '../helpers/globalConstants';
 import {map} from 'rxjs/operators';
 import {Room} from '../models/room';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject} from 'rxjs';
 import {Member} from '../models/member';
 
 @Injectable({
@@ -13,6 +12,7 @@ import {Member} from '../models/member';
 export class RoomService {
     private roomSubject: BehaviorSubject<Room>;
     oldRoom: Room = null;
+    inviteFriendVisible: boolean;
 
     constructor(
         private http: HttpClient,
@@ -41,5 +41,9 @@ export class RoomService {
             .pipe(map(members => {
                 return members;
             }));
+    }
+
+    showInviteFriend() {
+        this.inviteFriendVisible = !this.inviteFriendVisible;
     }
 }

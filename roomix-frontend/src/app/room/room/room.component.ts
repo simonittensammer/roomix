@@ -4,10 +4,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RoomService} from '../../services/room.service';
 import {first} from 'rxjs/operators';
 import {PlaylistService} from '../../services/playlist.service';
-import {Song} from '../../models/song';
 import {AccountService} from '../../services/account.service';
-import {PlaySongService} from '../../services/play-song.service';
-import {DomSanitizer} from '@angular/platform-browser';
 import {User} from '../../models/user';
 
 @Component({
@@ -19,13 +16,12 @@ export class RoomComponent implements OnInit {
 
     user: User;
     room: Room;
-    friendUserName: string;
     collapsed: boolean;
 
     constructor(
         private playlistService: PlaylistService,
         private route: ActivatedRoute,
-        private roomService: RoomService,
+        public roomService: RoomService,
         private router: Router,
         private accountService: AccountService
     ) {
@@ -58,14 +54,6 @@ export class RoomComponent implements OnInit {
 
     showPlaylist() {
         this.router.navigate(['playlist', this.room.id], {relativeTo: this.route});
-    }
-
-    sendRoomInvite() {
-        this.accountService.sendRoomInvite(this.room.id, this.user.username, this.friendUserName)
-            .pipe(first())
-            .subscribe(data => {
-                console.log(data);
-            });
     }
 
     collapseList() {

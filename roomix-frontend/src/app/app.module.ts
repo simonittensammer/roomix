@@ -23,6 +23,7 @@ import {FriendlistComponent} from './friendlist/friendlist/friendlist.component'
 import {FriendRequestsComponent} from './friendlist/friend-requests/friend-requests.component';
 import {ProfileComponent} from './profile/profile/profile.component';
 import {JoinRoomComponent} from './roomlist/join-room/join-room.component';
+import {InviteFriendComponent} from './room/invite-friend/invite-friend.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import {JoinRoomComponent} from './roomlist/join-room/join-room.component';
         ControlBarComponent,
         FriendlistComponent,
         FriendRequestsComponent,
-        ProfileComponent
+        ProfileComponent,
+        InviteFriendComponent
     ],
   entryComponents: [],
   imports: [

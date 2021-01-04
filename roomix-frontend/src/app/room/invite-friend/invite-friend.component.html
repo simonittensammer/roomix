@@ -1,3 +1,26 @@
-<p>
-  invite-friend works!
-</p>
+<div class="popup centerXY">
+    <h2 class="formElement formHeadline">Invite a friend</h2>
+
+    <input #input class="searchBar formElement" type="text" placeholder="Search">
+
+    <ul class="formElement">
+        <li class="listEntry" *ngFor="let friend of user.friendList">
+            <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
+
+            <div class="listTextContainer">
+                <p class="listHeadline">{{ friend.displayname }}</p>
+                <p class="listText">@{{ friend.username }}</p>
+            </div>
+
+            <div class="listButtonContainer">
+                <a class="buttonLink" (click)="sendRoomInvite(friend.username)">
+                    <button>Invite</button>
+                </a>
+            </div>
+        </li>
+    </ul>
+
+    <div class="formElement">
+        <a (click)="roomService.showInviteFriend()">Cancel</a>
+    </div>
+</div>
