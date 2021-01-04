@@ -14,6 +14,7 @@ export class InviteFriendComponent implements OnInit {
 
   user: User;
   room: Room;
+  searchQuery = '';
 
   constructor(
       public roomService: RoomService,

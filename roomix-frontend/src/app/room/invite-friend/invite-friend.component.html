@@ -1,22 +1,24 @@
 <div class="popup centerXY">
     <h2 class="formElement formHeadline">Invite a friend</h2>
 
-    <input #input class="searchBar formElement" type="text" placeholder="Search">
+    <input #input class="searchBar formElement" type="text" placeholder="Search" [(ngModel)]="searchQuery">
 
     <ul class="formElement">
         <li class="listEntry" *ngFor="let friend of user.friendList">
-            <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
+            <ng-container *ngIf="searchQuery == '' || (friend.username | uppercase).includes(searchQuery | uppercase) || (friend.displayname | uppercase).includes(searchQuery | uppercase)">
+                <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
 
-            <div class="listTextContainer">
-                <p class="listHeadline">{{ friend.displayname }}</p>
-                <p class="listText">@{{ friend.username }}</p>
-            </div>
+                <div class="listTextContainer">
+                    <p class="listHeadline">{{ friend.displayname }}</p>
+                    <p class="listText">@{{ friend.username }}</p>
+                </div>
 
-            <div class="listButtonContainer">
-                <a class="buttonLink" (click)="sendRoomInvite(friend.username)">
-                    <button>Invite</button>
-                </a>
-            </div>
+                <div class="listButtonContainer">
+                    <a class="buttonLink" (click)="sendRoomInvite(friend.username)">
+                        <button>Invite</button>
+                    </a>
+                </div>
+            </ng-container>
         </li>
     </ul>
 
