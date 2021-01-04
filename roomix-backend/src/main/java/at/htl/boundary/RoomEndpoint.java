@@ -179,10 +179,10 @@ public class RoomEndpoint {
     }
 
     @DELETE
-    @Path("{roomId}/song/delete/{songId}")
-    public Response deleteSongFromRoomPlaylist(@PathParam("roomId") Long roomId, @PathParam("songId") Long songId) {
+    @Path("{roomId}/song/delete/{songUrl}")
+    public Response deleteSongFromRoomPlaylist(@PathParam("roomId") Long roomId, @PathParam("songUrl") String songUrl) {
         Room room = roomRepository.findById(roomId);
-        Song song = songRepository.findById(songId);
+        Song song = songRepository.findByUrl(songUrl);
         System.out.println(room);
         Playlist playlist = room.getPlaylist();
 
