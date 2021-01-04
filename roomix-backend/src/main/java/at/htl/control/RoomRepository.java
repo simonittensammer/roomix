@@ -8,6 +8,7 @@ import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,6 +48,20 @@ public class RoomRepository implements PanacheRepository<Room> {
             }
         });
 
+        return rooms;
+    }
+
+    public List<Room> findPopularPublicRooms(int limit) {
+        List<Room> rooms = list("isprivate", false).stream()
+                .peek(o -> {
+                    Hibernate.initialize(o.getMessageList());
+                    Hibernate.initialize(o.getMemberList());
+                    Hibernate.initialize(o.getPlaylist());
+                    Hibernate.initialize(o.getPlaylist().getSongList());
+                })
+                .sorted((o1, o2) -> o2.getMemberList().size() - o1.getMemberList().size())
+                .limit(limit)
+                .collect(Collectors.toList());
         return rooms;
     }
 }
