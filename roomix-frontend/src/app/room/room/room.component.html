@@ -11,7 +11,7 @@
                 <img src="{{ member.user.profilePicUrl }}" alt="" class="listImage">
 
                 <div class="listTextContainer">
-                    <p class="listHeadline">{{ member.user.displayname }}</p>
+                    <p class="listHeadline">[{{ member.role | uppercase }}] {{ member.user.displayname }}</p>
                     <p class="listText">@{{ member.user.username }}</p>
                 </div>
             </li>
