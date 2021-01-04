@@ -38,7 +38,7 @@ export class AddSongComponent implements OnInit, AfterViewInit {
             pluck('target', 'value'),
             distinctUntilChanged(),
             filter((value: string) => value.length > 3),
-            map((value) => value)
+            map((value) => value.replace(' ', '+'))
         )
         .subscribe(value => {
           console.log(value);
