@@ -1,6 +1,10 @@
 <div class="content">
     <h2>Your rooms</h2>
 
+    <a class="buttonLink createRoomButton" (click)="roomListService.showCreateRoom()">
+        <button>Create a Room</button>
+    </a>
+
     <div class="cardContainer">
         <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)">
             <img class="cardImage" src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg"
@@ -8,17 +12,7 @@
             <p class="cardHeadline">{{ member.room.name }}</p>
             <p class="cardText">Members: {{ member.room.memberList.length }}</p>
         </div>
-        <div class="cardButtons">
-            <a class="buttonLink" routerLink="/roomlist/join-room">
-                <button>Join Room</button>
-            </a>
-
-            <a class="buttonLink" (click)="roomListService.showCreateRoom()">
-                <button>New Room</button>
-            </a>
-        </div>
     </div>
-
 </div>
 
 <app-create-room *ngIf="roomListService.createRoomVisible"></app-create-room>
