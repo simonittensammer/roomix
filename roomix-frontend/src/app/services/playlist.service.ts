@@ -19,7 +19,7 @@ export class PlaylistService {
   constructor(private http: HttpClient) {}
 
   getVideos(query: string): Observable <any> {
-    const url = `${this.API_URL}search?q=${query}&key=${this.API_TOKEN}&part=snippet&type=video&maxResults=5`;
+    const url = GlobalConstants.apiUrl + '/song/YT/search/' + query;
     return this.http.get(url)
         .pipe(
             map((response: any) => response.items)
@@ -27,7 +27,7 @@ export class PlaylistService {
   }
 
   getVideoDuration(videoId: string) {
-    const url = `${this.API_URL}videos?id=${videoId}&key=${this.API_TOKEN}&part=snippet,contentDetails`;
+    const url = GlobalConstants.apiUrl + '/song/YT/duration/' + videoId;
     return this.http.get(url)
         .pipe(
             map((response: any) => response.items)
