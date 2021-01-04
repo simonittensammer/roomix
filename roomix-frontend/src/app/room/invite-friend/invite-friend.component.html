@@ -30,6 +30,16 @@
         </li>
     </ul>
 
+    <ul class="formElement" *ngIf="user.friendList.length == 0">
+        <li class="listEntry">
+            <img src="" alt="" class="listImage"> <!-- add info icon -->
+            <div class="listTextContainer">
+                <p class="listHeadline">No Friends found :(</p>
+                <p class="listText">Tell some of your friends about roomix!</p>
+            </div>
+        </li>
+    </ul>
+
     <div class="formElement">
         <a (click)="roomService.showInviteFriend()">Cancel</a>
     </div>
