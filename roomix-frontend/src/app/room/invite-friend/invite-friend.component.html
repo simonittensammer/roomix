@@ -4,8 +4,9 @@
     <input #input class="searchBar formElement" type="text" placeholder="Search" [(ngModel)]="searchQuery">
 
     <ul class="formElement">
-        <li class="listEntry" *ngFor="let friend of user.friendList">
-            <ng-container *ngIf="searchQuery == '' || (friend.username | uppercase).includes(searchQuery | uppercase) || (friend.displayname | uppercase).includes(searchQuery | uppercase)">
+        <ng-container *ngFor="let friend of user.friendList">
+            <li class="listEntry"
+                *ngIf="(searchQuery == '' || (friend.username | uppercase).includes(searchQuery | uppercase) || (friend.displayname | uppercase).includes(searchQuery | uppercase))">
                 <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
 
                 <div class="listTextContainer">
@@ -18,16 +19,8 @@
                         <button>Invite</button>
                     </a>
                 </div>
-            </ng-container>
-
-            <ng-container *ngIf="searchQuery != '' && !(friend.username | uppercase).includes(searchQuery | uppercase) && !(friend.displayname | uppercase).includes(searchQuery | uppercase)">
-                <img src="" alt="" class="listImage"> <!-- add info icon -->
-                <div class="listTextContainer">
-                    <p class="listHeadline">No further Friends found :(</p>
-                    <p class="listText">Check your search query for typos!</p>
-                </div>
-            </ng-container>
-        </li>
+            </li>
+        </ng-container>
     </ul>
 
     <ul class="formElement" *ngIf="user.friendList.length == 0">
