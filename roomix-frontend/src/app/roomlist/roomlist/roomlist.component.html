@@ -9,10 +9,6 @@
             <p class="cardText">Members: {{ member.room.memberList.length }}</p>
         </div>
         <div class="cardButtons">
-            <a class="buttonLink" routerLink="/roomlist/join-room">
-                <button>Join Room</button>
-            </a>
-
             <a class="buttonLink" (click)="roomListService.showCreateRoom()">
                 <button>New Room</button>
             </a>
