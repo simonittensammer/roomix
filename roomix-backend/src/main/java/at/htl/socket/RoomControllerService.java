@@ -48,7 +48,6 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
     private Map<Long, PlaylistController> playlistControllers = new ConcurrentHashMap<>();
 
     public void addSession(Session session) {
-        printStatus();
         try {
             String username = session.getUserProperties().get("username").toString();
             Long roomId = Long.valueOf(session.getUserProperties().get("roomId").toString());
@@ -69,13 +68,11 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
 
             messageSesseion(session, playlistControllers.get(roomId).getCurrentSong());
 
-            System.out.println("here 3");
+            printStatus();
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            System.out.println("here 2");
         }
-        System.out.println("here 1");
     }
 
     public void removeSession(Session session) {
@@ -94,17 +91,21 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
         }
     }
 
-    private void broadcast(String message) {
+    private void broadcast(Long roomId, String message) {
         sessions.values().forEach(s -> {
-            s.getAsyncRemote().sendObject(message, result ->  {
-                if (result.getException() != null) {
-                    System.out.println("Unable to send message: " + result.getException());
-                }
-            });
+            if (s.getUserProperties().get("roomId") == roomId) {
+                LOGGER.info("messaging session(" + s.getUserProperties().get("username") + ", " + s.getUserProperties().get("roomId") + "): " + message);
+                s.getAsyncRemote().sendObject(message, result ->  {
+                    if (result.getException() != null) {
+                        System.out.println("Unable to send message: " + result.getException());
+                    }
+                });
+            }
         });
     }
 
     private void messageSesseion(Session session, String message) {
+        LOGGER.info("messaging session(" + session.getUserProperties().get("username") + ", " + session.getUserProperties().get("roomId") + "): " + message);
         session.getAsyncRemote().sendObject(message, result ->  {
             if (result.getException() != null) {
                 System.out.println("Unable to send message: " + result.getException());
@@ -137,15 +138,17 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
             playlistControllersStrings.add("key=" + o.getKey() + ", value=playlistController(roomId=" + o.getValue().getRoomId() + ", playlistId=" + o.getValue().getPlaylist().getId() + ")");
         });
 
-        LOGGER.info("\nsessions:\n" + String.join("\n\t", sessionsStrings) +
-                         "\nrooms:\n" + String.join("\n\t", roomsStrings) +
-                         "\nmembers:\n" + String.join("\n\t", membersStrings) +
-                         "\nplaylistControllers:\n" + String.join("\n\t", playlistControllersStrings));
+        LOGGER.info("\n######################" +
+                "\nsessions:\n\t" + String.join("\n\t", sessionsStrings) +
+                "\nrooms:\n\t" + String.join("\n\t", roomsStrings) +
+                "\nmembers:\n\t" + String.join("\n\t", membersStrings) +
+                "\nplaylistControllers:\n\t" + String.join("\n\t", playlistControllersStrings) +
+                "\n######################\n");
     }
 
     @Override
     public void newSong(Long roomId) {
-        broadcast(playlistControllers.get(roomId).getCurrentSong());
+        broadcast(roomId, playlistControllers.get(roomId).getCurrentSong());
     }
 
     @Override
