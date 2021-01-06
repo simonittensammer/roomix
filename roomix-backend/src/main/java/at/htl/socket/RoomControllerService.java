@@ -181,7 +181,14 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
 
             broadcast(roomId, message);
 
-            playlistControllers.get(roomId).getPlaylist().getSongList().remove(song);
+            int index = -1;
+            for (int i = 0; i < playlistControllers.get(roomId).getPlaylist().getSongList().size(); i++) {
+                if (playlistControllers.get(roomId).getPlaylist().getSongList().get(i).getId() == song.getId()) {
+                    index = i;
+                }
+            }
+            playlistControllers.get(roomId).getPlaylist().getSongList().remove(index);
+            LOGGER.info("length="+playlistControllers.get(roomId).getPlaylist().getSongList().size());
             playlistControllers.get(roomId).updatePlaylist();
         }
     }
