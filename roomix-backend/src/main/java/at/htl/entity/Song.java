@@ -1,6 +1,8 @@
 package at.htl.entity;
 
 import javax.json.JsonObject;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.persistence.*;
 
 @Entity
@@ -42,6 +44,11 @@ public class Song {
         this.url = jsonObject.getString("url");
         this.picUrl = jsonObject.getString("picUrl");
         this.length = jsonObject.getInt("length");
+    }
+
+    public String toJson() {
+        Jsonb jsonb = JsonbBuilder.create();
+        return jsonb.toJson(this);
     }
 
     public Long getId() {
