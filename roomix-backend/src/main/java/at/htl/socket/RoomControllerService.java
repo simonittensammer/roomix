@@ -5,12 +5,16 @@ import at.htl.control.RoomRepository;
 import at.htl.control.UserRepository;
 import at.htl.entity.Playlist;
 import at.htl.entity.Room;
+import at.htl.entity.Song;
 import at.htl.entity.User;
 import at.htl.observers.PlaylistControllerObserver;
 import at.htl.observers.PlaylistRepositoryObserver;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.transaction.Transactional;
 import javax.websocket.Session;
 import java.util.LinkedList;
@@ -66,7 +70,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
             members.get(roomId).put(username, user);
             sessions.put((String) session.getUserProperties().get("username"), session);
 
-            messageSesseion(session, playlistControllers.get(roomId).getCurrentSongWithStartTime());
+            messageSesseion(session, playlistControllers.get(roomId).getCurrentSongMessage());
 
             printStatus();
 
@@ -148,12 +152,37 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
 
     @Override
     public void newSong(Long roomId) {
-        broadcast(roomId, playlistControllers.get(roomId).getCurrentSongWithStartTime());
+        broadcast(roomId, playlistControllers.get(roomId).getCurrentSongMessage());
         playlistRepository.changeCurrentSong(roomId, playlistControllers.get(roomId).getCurrentSong());
     }
 
     @Override
-    public void updatePlaylist(Long id, Playlist playlist) {
-        playlistControllers.get(id).setPlaylist(playlist);
+    public void addSong(Long roomId, Song song) {
+        if (playlistControllers.get(roomId) != null) {
+            String message = Json.createObjectBuilder()
+                    .add("type", "add-song")
+                    .add("message", song.toJson())
+                    .build().toString();
+
+            broadcast(roomId, message);
+
+            playlistControllers.get(roomId).getPlaylist().getSongList().add(song);
+            playlistControllers.get(roomId).updatePlaylist();
+        }
+    }
+
+    @Override
+    public void removeSong(Long roomId, Song song) {
+        if (playlistControllers.get(roomId) != null) {
+            String message = Json.createObjectBuilder()
+                    .add("type", "remove-song")
+                    .add("message", song.toJson())
+                    .build().toString();
+
+            broadcast(roomId, message);
+
+            playlistControllers.get(roomId).getPlaylist().getSongList().remove(song);
+            playlistControllers.get(roomId).updatePlaylist();
+        }
     }
 }

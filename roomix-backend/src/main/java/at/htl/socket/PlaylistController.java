@@ -75,7 +75,7 @@ public class PlaylistController {
         nextSong();
     }
 
-    public String getCurrentSongWithStartTime() {
+    public String getCurrentSongMessage() {
 
         Jsonb jsonb = JsonbBuilder.create();
         JsonReader jsonReader = Json.createReader(new StringReader(jsonb.toJson(playlist.getCurrentSong())));
@@ -85,9 +85,12 @@ public class PlaylistController {
         String timeStamp = String.valueOf(Duration.between(songStartTime, LocalDateTime.now()).toSeconds());
 
         return Json.createObjectBuilder()
-                .add("song", songJson)
-                .add("time", timeStamp)
-                .build().toString();
+                .add("type", "new-song")
+                .add("message", Json.createObjectBuilder()
+                        .add("song", songJson)
+                        .add("time", timeStamp)
+                        .build()
+                ).build().toString();
     }
 
     public Song getCurrentSong() {
@@ -118,8 +121,7 @@ public class PlaylistController {
         return playlist;
     }
 
-    public void setPlaylist(Playlist playlist) {
-        this.playlist.setSongList(playlist.getSongList());
+    public void updatePlaylist() {
         System.out.println("playlist updated " + playlist.getSongList().size());
 
         if (timerIsRunning && this.playlist.getSongList().size() == 0) {

@@ -22,22 +22,26 @@ public class PlaylistRepository implements PanacheRepository<Playlist> {
         observerList.remove(observer);
     }
 
-    private void notifyObservers(Long id, Playlist playlist) {
-        observerList.forEach(observer -> observer.updatePlaylist(id, playlist));
+    private void notifyObserversAdd(Long id, Song song) {
+        observerList.forEach(observer -> observer.addSong(id, song));
+    }
+
+    private void notifyObserversRemove(Long id, Song song) {
+        observerList.forEach(observer -> observer.removeSong(id, song));
     }
 
     public void addSong(Long id,Song song) {
         Playlist playlist = findById(id);
         playlist.getSongList().add(song);
 
-        notifyObservers(id, playlist);
+        notifyObserversAdd(id, song);
     }
 
     public void removeSong(Long id,Song song) {
         Playlist playlist = findById(id);
         playlist.getSongList().remove(song);
 
-        notifyObservers(id, playlist);
+        notifyObserversRemove(id, song);
     }
 
     public void changeCurrentSong(Long id,Song song) {

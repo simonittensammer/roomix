@@ -5,5 +5,7 @@ import at.htl.entity.Song;
 
 public interface PlaylistRepositoryObserver {
 
-    public void updatePlaylist(Long id, Playlist playlist);
+    public void addSong(Long roomId, Song song);
+
+    public void removeSong(Long roomId, Song song);
 }
