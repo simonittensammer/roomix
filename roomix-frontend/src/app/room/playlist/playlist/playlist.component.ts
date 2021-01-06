@@ -35,7 +35,7 @@ export class PlaylistComponent implements OnInit {
             .pipe(first())
             .subscribe(data => {
                 console.log(data);
-                this.room.playlist.songList.splice(this.room.playlist.songList.findIndex(x => x.url === song.url), 1);
+                // this.room.playlist.songList.splice(this.room.playlist.songList.findIndex(x => x.url === song.url), 1);
             });
     }
 
