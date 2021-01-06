@@ -36,6 +36,7 @@ public class PlaylistController {
         this.roomId = roomId;
         this.playlist = playlist;
         songTimer = new Timer("Song-Timer");
+        timerIsRunning = false;
         observerList = new ArrayList<>();
         rn = new Random();
 
@@ -52,6 +53,7 @@ public class PlaylistController {
                 nextSong();
             }
         }, playlist.getCurrentSong().getLength() * 1000);
+        timerIsRunning = true;
 
         notifyObservers();
     }
@@ -113,14 +115,15 @@ public class PlaylistController {
     }
 
     public void setPlaylist(Playlist playlist) {
-        this.playlist = playlist;
+        this.playlist.setSongList(playlist.getSongList());
         System.out.println("playlist updated " + playlist.getSongList().size());
 
         if (timerIsRunning && this.playlist.getSongList().size() == 0) {
             songTimer.cancel();
+            timerIsRunning = false;
         } else if (!timerIsRunning && this.playlist.getSongList().size() > 0) {
             songTimer = new Timer("Song-Timer");
-            nextSong();
+            startSong();
         }
     }
 }
