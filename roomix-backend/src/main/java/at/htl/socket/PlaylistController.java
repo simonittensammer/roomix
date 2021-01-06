@@ -13,8 +13,11 @@ import java.io.StringReader;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class PlaylistController {
+
+    private static final Logger LOGGER = Logger.getLogger("PlaylistController");
 
     private Long roomId;
 
@@ -95,6 +98,10 @@ public class PlaylistController {
 
     private void notifyObservers() {
         observerList.forEach(observer -> observer.newSong(roomId));
+    }
+
+    public Long getRoomId() {
+        return roomId;
     }
 
     public Timer getSongTimer() {

@@ -11,11 +11,14 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.util.Map;
 import java.util.concurrent.*;
+import java.util.logging.Logger;
 
 @ServerEndpoint("/room/{roomId}/{username}")
 @Transactional
 @ApplicationScoped
 public class RoomSocket {
+
+    private static final Logger LOGGER = Logger.getLogger("RoomSocket");
 
     @Inject
     RoomControllerService roomControllerService;
@@ -26,6 +29,8 @@ public class RoomSocket {
 
     @OnOpen
     public void onOpen(Session session, @PathParam("roomId") Long roomId, @PathParam("username") String username) {
+        LOGGER.info("session openend with roomId=" + roomId + ", username=" + username);
+
         sessions.put(username, session);
 
         session.getUserProperties().put("roomId", roomId);
@@ -36,13 +41,15 @@ public class RoomSocket {
 
     @OnClose
     public void onClose(Session session, @PathParam("roomId") Long roomId, @PathParam("username") String username) {
+        LOGGER.info("session closed with roomId=" + roomId + ", username=" + username);
+
         sessions.remove(username);
         roomControllerService.removeSession(session);
     }
 
     @OnError
     public void onError(Session session, @PathParam("roomId") Long roomId, @PathParam("username") String username, Throwable throwable) {
-        System.out.println(throwable.toString());
+        LOGGER.throwing(this.getClass().getSimpleName(), "onError", throwable);
 
 //        sessions.remove(username);
 //        rooms.get(roomId).removeSession(session);
@@ -57,7 +64,7 @@ public class RoomSocket {
         sessions.values().forEach(s -> {
             s.getAsyncRemote().sendObject(message, result ->  {
                 if (result.getException() != null) {
-                    System.out.println("Unable to send message: " + result.getException());
+                    LOGGER.info("Unable to send message: " + result.getException());
                 }
             });
         });

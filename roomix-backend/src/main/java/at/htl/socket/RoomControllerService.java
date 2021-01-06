@@ -13,12 +13,18 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.websocket.Session;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Transactional
 @ApplicationScoped
 public class RoomControllerService implements PlaylistControllerObserver, PlaylistRepositoryObserver {
+
+    private static final Logger LOGGER = Logger.getLogger("RoomControllerService");
 
     @Inject
     private UserRepository userRepository;
@@ -42,6 +48,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
     private Map<Long, PlaylistController> playlistControllers = new ConcurrentHashMap<>();
 
     public void addSession(Session session) {
+        printStatus();
         try {
             String username = session.getUserProperties().get("username").toString();
             Long roomId = Long.valueOf(session.getUserProperties().get("roomId").toString());
@@ -54,6 +61,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
                 members.put(roomId, new ConcurrentHashMap<>());
                 playlistControllers.put(roomId, new PlaylistController(roomId, room.getPlaylist()));
                 playlistControllers.get(roomId).addObserver(this);
+                System.out.println("here 4");
             }
 
             members.get(roomId).put(username, user);
@@ -61,9 +69,13 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
 
             messageSesseion(session, playlistControllers.get(roomId).getCurrentSong());
 
+            System.out.println("here 3");
+
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
+            System.out.println("here 2");
         }
+        System.out.println("here 1");
     }
 
     public void removeSession(Session session) {
@@ -98,6 +110,37 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
                 System.out.println("Unable to send message: " + result.getException());
             }
         });
+    }
+
+    private void printStatus() {
+        List<String> sessionsStrings = new LinkedList<>();
+        List<String> roomsStrings = new LinkedList<>();
+        List<String> membersStrings = new LinkedList<>();
+        List<String> playlistControllersStrings = new LinkedList<>();
+
+        sessions.entrySet().stream().forEach(o -> {
+            sessionsStrings.add("key=" + o.getKey() + ", value=session(" + o.getValue().getUserProperties().get("username") + ", " +o.getValue().getUserProperties().get("roomId") + ")");
+        });
+
+        rooms.entrySet().stream().forEach(o -> {
+            roomsStrings.add("key=" + o.getKey() + ", value=" + o.getValue());
+        });
+
+        members.entrySet().stream().forEach(o -> {
+           List<String> usersString = o.getValue().entrySet().stream().map(o2 -> {
+               return "(key=" + o2.getKey() + ", value=" + o2.getValue().getUsername() + ")";
+           }).collect(Collectors.toList());
+           membersStrings.add("key=" + o.getKey() + ", value=" + String.join(", ", usersString));
+        });
+
+        playlistControllers.entrySet().stream().forEach(o -> {
+            playlistControllersStrings.add("key=" + o.getKey() + ", value=playlistController(roomId=" + o.getValue().getRoomId() + ", playlistId=" + o.getValue().getPlaylist().getId() + ")");
+        });
+
+        LOGGER.info("\nsessions:\n" + String.join("\n\t", sessionsStrings) +
+                         "\nrooms:\n" + String.join("\n\t", roomsStrings) +
+                         "\nmembers:\n" + String.join("\n\t", membersStrings) +
+                         "\nplaylistControllers:\n" + String.join("\n\t", playlistControllersStrings));
     }
 
     @Override
