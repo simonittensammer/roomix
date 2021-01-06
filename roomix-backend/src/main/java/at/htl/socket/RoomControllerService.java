@@ -66,7 +66,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
             members.get(roomId).put(username, user);
             sessions.put((String) session.getUserProperties().get("username"), session);
 
-            messageSesseion(session, playlistControllers.get(roomId).getCurrentSong());
+            messageSesseion(session, playlistControllers.get(roomId).getCurrentSongWithStartTime());
 
             printStatus();
 
@@ -148,7 +148,8 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
 
     @Override
     public void newSong(Long roomId) {
-        broadcast(roomId, playlistControllers.get(roomId).getCurrentSong());
+        broadcast(roomId, playlistControllers.get(roomId).getCurrentSongWithStartTime());
+        playlistRepository.changeCurrentSong(roomId, playlistControllers.get(roomId).getCurrentSong());
     }
 
     @Override

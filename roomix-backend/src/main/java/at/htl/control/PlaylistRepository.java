@@ -39,4 +39,9 @@ public class PlaylistRepository implements PanacheRepository<Playlist> {
 
         notifyObservers(id, playlist);
     }
+
+    public void changeCurrentSong(Long id,Song song) {
+        Playlist playlist = findById(id);
+        playlist.setCurrentSong(song);
+    }
 }

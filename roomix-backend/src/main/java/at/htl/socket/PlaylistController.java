@@ -75,7 +75,7 @@ public class PlaylistController {
         nextSong();
     }
 
-    public String getCurrentSong() {
+    public String getCurrentSongWithStartTime() {
 
         Jsonb jsonb = JsonbBuilder.create();
         JsonReader jsonReader = Json.createReader(new StringReader(jsonb.toJson(playlist.getCurrentSong())));
@@ -88,6 +88,10 @@ public class PlaylistController {
                 .add("song", songJson)
                 .add("time", timeStamp)
                 .build().toString();
+    }
+
+    public Song getCurrentSong() {
+        return playlist.getCurrentSong();
     }
 
     public void addObserver(PlaylistControllerObserver observer) {
