@@ -55,7 +55,9 @@ public class PlaylistController {
         }, playlist.getCurrentSong().getLength() * 1000);
         timerIsRunning = true;
 
-        notifyObservers();
+        if (timerIsRunning) {
+            notifyObservers();
+        }
     }
 
     private void nextSong() {
@@ -127,6 +129,7 @@ public class PlaylistController {
         if (timerIsRunning && this.playlist.getSongList().size() == 0) {
             songTimer.cancel();
             timerIsRunning = false;
+            LOGGER.info("\nSTOPPPIUG\n");
         } else if (!timerIsRunning && this.playlist.getSongList().size() > 0) {
             songTimer = new Timer("Song-Timer");
             startSong();

@@ -37,6 +37,7 @@ export class PlaySongService {
 
         this.songSocket.asObservable().subscribe(
             data => {
+                console.log(data);
                 // @ts-ignore
                 // console.log(data);
                 // @ts-ignore
@@ -46,8 +47,8 @@ export class PlaySongService {
                     this.currentSongUrl = this.currentSong.url;
                     // @ts-ignore
                     this.currentSongTimer = data.message.time;
-                    // console.log(this.currentSong);
-                    this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + this.currentSongUrl + '?start=' + this.currentSongTimer + '&controls=1&amp&autoplay=1');
+                    this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'
+                        + this.currentSongUrl + '?start=' + this.currentSongTimer + '&controls=1&amp&autoplay=1');
                 }
                 // @ts-ignore
                 else if (data.type === 'add-song') {
@@ -60,6 +61,13 @@ export class PlaySongService {
                     // @ts-ignore
                     const song = JSON.parse(data.message);
                     this.room.playlist.songList.splice(this.room.playlist.songList.findIndex(x => x.url === song.url), 1);
+                }
+                // @ts-ignore
+                else if (data.type === 'stop') {
+                    // @ts-ignore
+                    console.log('stop playing song');
+                    this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(null);
+
                 }
             }, error => {
                 console.log(error);
