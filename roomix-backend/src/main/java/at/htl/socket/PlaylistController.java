@@ -132,6 +132,11 @@ public class PlaylistController {
             LOGGER.info("\nSTOPPPIUG\n");
         } else if (!timerIsRunning && this.playlist.getSongList().size() > 0) {
             songTimer = new Timer("Song-Timer");
+
+            if (playlist.getCurrentSong() == null) {
+                playlist.setCurrentSong(playlist.getSongList().get(0));
+            }
+
             startSong();
         }
     }
