@@ -97,7 +97,7 @@ export class AddSongComponent implements OnInit, AfterViewInit {
           .pipe(first())
           .subscribe(data => {
               console.log(data);
-              this.room.playlist.songList.push(song);
+              // this.room.playlist.songList.push(song);
               this.roomService.updateRoomValue(this.room);
           });
     }
