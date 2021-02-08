@@ -4,6 +4,9 @@ import {AccountService} from '../../services/account.service';
 import {FriendRequest} from '../../models/friend-request';
 import {first} from 'rxjs/operators';
 import {RoomInvite} from '../../models/room-invite';
+import {RoomService} from '../../services/room.service';
+import {Room} from '../../models/room';
+import {compareNumbers} from '@angular/compiler-cli/src/diagnostics/typescript_version';
 
 @Component({
   selector: 'app-join-room',
@@ -13,13 +16,21 @@ import {RoomInvite} from '../../models/room-invite';
 export class JoinRoomComponent implements OnInit {
 
   user: User;
+  publicRooms: Array<Room>;
+  limit = 10;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService,
+              private roomService: RoomService) { }
 
   ngOnInit() {
     this.accountService.userValue.subscribe(
         value => {
           this.user = value;
+        }
+    );
+    this.roomService.getPopularPublicRooms(this.limit).subscribe(
+        publicRooms => {
+            this.publicRooms = publicRooms;
         }
     );
   }
@@ -32,4 +43,13 @@ export class JoinRoomComponent implements OnInit {
         });
   }
 
+  updatePublicRoomLimit() {
+      if (this.limit >= 1) {
+          this.roomService.getPopularPublicRooms(this.limit).subscribe(
+              publicRooms => {
+                  this.publicRooms = publicRooms;
+              }
+          );
+      }
+  }
 }
