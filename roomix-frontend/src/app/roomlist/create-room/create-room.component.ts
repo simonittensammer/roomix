@@ -26,7 +26,8 @@ export class CreateRoomComponent implements OnInit {
   ngOnInit() {
     this.newRoomForm = new FormGroup({
       // roomPic: new FormControl(null),
-      name: new FormControl('', Validators.required)
+      name: new FormControl('', Validators.required),
+      isPrivate: new FormControl(false)
     });
     this.accountService.userValue.subscribe(
           value => {
