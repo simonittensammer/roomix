@@ -1,12 +1,12 @@
 export class RoomDTO {
     username: string;
     roomname: string;
-    isPirvate: boolean;
+    isPrivate: boolean;
 
 
-    constructor(username: string, roomname: string, isPirvate: boolean) {
+    constructor(username: string, roomname: string, isPrivate: boolean) {
         this.username = username;
         this.roomname = roomname;
-        this.isPirvate = isPirvate;
+        this.isPrivate = isPrivate;
     }
 }
