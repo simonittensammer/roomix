@@ -95,6 +95,10 @@ public class PlaylistController {
                 ).build().toString();
     }
 
+    public long getCurrentSongTime() {
+        return Duration.between(songStartTime, LocalDateTime.now()).toSeconds();
+    }
+
     public Song getCurrentSong() {
         return playlist.getCurrentSong();
     }

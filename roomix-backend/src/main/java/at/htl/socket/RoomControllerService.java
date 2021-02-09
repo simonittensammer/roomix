@@ -3,6 +3,8 @@ package at.htl.socket;
 import at.htl.control.PlaylistRepository;
 import at.htl.control.RoomRepository;
 import at.htl.control.UserRepository;
+import at.htl.dto.PlaySongMessageDTO;
+import at.htl.dto.SocketMessageDTO;
 import at.htl.entity.Playlist;
 import at.htl.entity.Room;
 import at.htl.entity.Song;
@@ -15,6 +17,8 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.transaction.Transactional;
 import javax.websocket.Session;
 import java.util.LinkedList;
@@ -95,11 +99,12 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
         }
     }
 
-    private void broadcast(Long roomId, String message) {
+    private void broadcast(Long roomId, SocketMessageDTO message) {
+        Jsonb jsonb = JsonbBuilder.create();
         sessions.values().forEach(s -> {
             if (s.getUserProperties().get("roomId") == roomId) {
                 LOGGER.info("messaging session(" + s.getUserProperties().get("username") + ", " + s.getUserProperties().get("roomId") + "): " + message);
-                s.getAsyncRemote().sendObject(message, result ->  {
+                s.getAsyncRemote().sendObject(jsonb.toJson(message), result ->  {
                     if (result.getException() != null) {
                         System.out.println("Unable to send message: " + result.getException());
                     }
@@ -152,19 +157,26 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
 
     @Override
     public void newSong(Long roomId) {
-        broadcast(roomId, playlistControllers.get(roomId).getCurrentSongMessage());
+
+        broadcast(
+                roomId,
+                new SocketMessageDTO(
+                        "new-song",
+                        new PlaySongMessageDTO(
+                                playlistControllers.get(roomId).getCurrentSong(),
+                                playlistControllers.get(roomId).getCurrentSongTime()
+                        )
+                )
+        );
+
         playlistRepository.changeCurrentSong(roomId, playlistControllers.get(roomId).getCurrentSong());
     }
 
     @Override
     public void addSong(Long roomId, Song song) {
         if (playlistControllers.get(roomId) != null) {
-            String message = Json.createObjectBuilder()
-                    .add("type", "add-song")
-                    .add("message", song.toJson())
-                    .build().toString();
 
-            broadcast(roomId, message);
+            broadcast(roomId, new SocketMessageDTO("add-song", song));
 
             playlistControllers.get(roomId).getPlaylist().getSongList().add(song);
             playlistControllers.get(roomId).updatePlaylist();
@@ -174,12 +186,8 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
     @Override
     public void removeSong(Long roomId, Song song) {
         if (playlistControllers.get(roomId) != null) {
-            String message = Json.createObjectBuilder()
-                    .add("type", "remove-song")
-                    .add("message", song.toJson())
-                    .build().toString();
 
-            broadcast(roomId, message);
+            broadcast(roomId, new SocketMessageDTO("remove-song", song));
 
             int index = -1;
             for (int i = 0; i < playlistControllers.get(roomId).getPlaylist().getSongList().size(); i++) {
@@ -192,11 +200,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
             playlistControllers.get(roomId).updatePlaylist();
 
             if (playlistControllers.get(roomId).getPlaylist().getSongList().size() == 0) {
-                 String message2 = Json.createObjectBuilder()
-                        .add("type", "stop")
-                        .add("message", "")
-                        .build().toString();
-                broadcast(roomId, message2);
+                broadcast(roomId, new SocketMessageDTO("stop", null));
             }
         }
     }
