@@ -17,6 +17,7 @@ export class PlaySongService {
     currentSongTimer: number;
     completeUrl: SafeResourceUrl;
     room: Room;
+    connected = false;
 
     constructor(
         private sanitizer: DomSanitizer,
@@ -25,15 +26,15 @@ export class PlaySongService {
     }
 
     connect(username, roomid) {
-        this.roomService.roomValue.subscribe(
-            value => {
-                this.room = value;
-            }
-        );
+        this.roomService.getRoom(roomid).subscribe(value => {
+            return this.room = value;
+        });
 
         this.songSocket = webSocket(
             'ws://localhost:8080/room/'
             + roomid + '/' + username);
+
+        this.connected = true;
 
         this.songSocket.asObservable().subscribe(
             data => {
@@ -77,5 +78,6 @@ export class PlaySongService {
 
     disconnect() {
         this.songSocket.complete();
+        this.connected = false;
     }
 }

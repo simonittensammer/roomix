@@ -6,6 +6,7 @@ import {first} from 'rxjs/operators';
 import {PlaylistService} from '../../services/playlist.service';
 import {AccountService} from '../../services/account.service';
 import {User} from '../../models/user';
+import {PlaySongService} from '../../services/play-song.service';
 
 @Component({
     selector: 'app-room',
@@ -23,7 +24,8 @@ export class RoomComponent implements OnInit {
         private route: ActivatedRoute,
         public roomService: RoomService,
         private router: Router,
-        private accountService: AccountService
+        private accountService: AccountService,
+        private playSongService: PlaySongService
     ) {
     }
 

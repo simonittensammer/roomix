@@ -36,7 +36,7 @@ export class ControlBarComponent implements OnInit {
                         this.user = value2;
                         console.log(this.room);
 
-                        this.playSongService.connect(this.user.username, this.room.id);
+                        // this.playSongService.connect();
                         console.log(this.playSongService.currentSong);
                     }
                 );
