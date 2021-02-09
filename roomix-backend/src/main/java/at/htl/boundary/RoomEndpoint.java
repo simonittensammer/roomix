@@ -1,6 +1,8 @@
 package at.htl.boundary;
 
 import at.htl.control.*;
+import at.htl.dto.RoomDTO;
+import at.htl.dto.RoomUpdateDTO;
 import at.htl.entity.*;
 import org.hibernate.Hibernate;
 
@@ -111,11 +113,12 @@ public class RoomEndpoint {
     }
 
     @POST
-    public Response createRoom(JsonObject jsonObject) {
-        User creator = userRepository.findByName(jsonObject.getString("username"));
+    public Response createRoom(RoomDTO roomDTO) {
+        User creator = userRepository.findByName(roomDTO.getUsername());
 
         if (creator != null) {
-            Room room = new Room(jsonObject.getString("roomname"));
+            Room room = new Room(roomDTO.getRoomname());
+            room.setPrivate(roomDTO.isPrivate());
             playlistRepository.persist(room.getPlaylist());
             roomRepository.persist(room);
 
@@ -176,6 +179,11 @@ public class RoomEndpoint {
         }
 
         return Response.status(406).entity("room or song does not exist").build();
+    }
+
+    @PUT
+    public Response updateRoom(RoomUpdateDTO roomUpdateDTO) {
+        return Response.ok(roomRepository.update(roomUpdateDTO)).build();
     }
 
     @DELETE
