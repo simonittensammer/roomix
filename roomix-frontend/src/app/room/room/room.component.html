@@ -1,6 +1,5 @@
 <div class="content half-content-wrapper">
     <div class="half-content">
-        <h2 *ngIf="room != null">{{ room.name }}</h2>
 
         <a class="buttonLink buttonRight"
            (click)="playSongService.connect(user.username, room.id)"
@@ -14,6 +13,8 @@
                 <button>Leave</button>
             </a>
         </ng-template>
+
+        <h2 *ngIf="room != null">{{ room.name }}</h2>
 
         <h3 class="ulHeadline" (click)="collapseList()">Members</h3>
         <a class="buttonLink buttonRight" (click)="roomService.showInviteFriend()">
