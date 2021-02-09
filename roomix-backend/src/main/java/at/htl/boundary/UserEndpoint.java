@@ -56,7 +56,7 @@ public class UserEndpoint {
     @Path("/{userName}")
     public User getUser(@PathParam("userName") String userName) {
         User user = userRepository.findByName(userName);
-        System.out.println(user.toString());
+//        System.out.println(user.toString());
         return user;
     }
 

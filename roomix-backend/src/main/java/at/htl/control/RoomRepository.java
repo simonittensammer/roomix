@@ -1,5 +1,6 @@
 package at.htl.control;
 
+import at.htl.dto.RoomUpdateDTO;
 import at.htl.entity.Room;
 import at.htl.entity.Song;
 import at.htl.entity.User;
@@ -63,5 +64,16 @@ public class RoomRepository implements PanacheRepository<Room> {
                 .limit(limit)
                 .collect(Collectors.toList());
         return rooms;
+    }
+
+    public Room update(RoomUpdateDTO roomUpdateDTO) {
+        Room room = findById(roomUpdateDTO.getRoomId());
+
+        if (room == null) return null;
+
+        room.setName(roomUpdateDTO.getRoomname());
+        room.setPrivate(roomUpdateDTO.isPrivate());
+
+        return room;
     }
 }
