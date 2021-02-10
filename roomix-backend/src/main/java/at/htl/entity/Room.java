@@ -16,6 +16,7 @@ public class Room {
     String name;
 
     @Column(name = "RM_PIC")
+    @Lob
     String picUrl;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)

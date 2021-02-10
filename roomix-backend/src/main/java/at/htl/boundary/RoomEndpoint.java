@@ -119,6 +119,7 @@ public class RoomEndpoint {
         if (creator != null) {
             Room room = new Room(roomDTO.getRoomname());
             room.setPrivate(roomDTO.isPrivate());
+            room.setPicUrl(roomDTO.getPicUrl());
             playlistRepository.persist(room.getPlaylist());
             roomRepository.persist(room);
 

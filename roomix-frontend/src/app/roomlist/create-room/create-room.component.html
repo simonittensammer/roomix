@@ -2,8 +2,8 @@
   <form [formGroup]="newRoomForm" class="popup centerXY">
     <h2 class="formHeadline formElement">Create a new room</h2>
 
-<!--    <label for="img">Picture:</label>-->
-<!--    <input class="formElement" formControlName="roomPic" type="file" id="img" name="img" accept="image/*">-->
+    <label for="img">Picture:</label>
+    <input class="formElement" formControlName="picUrl" type="file" id="img" name="img" accept="image/*" (change)="handleFileSelect($event)">
 
     <label for="name">Name</label>
     <input type="text" id="name" class="formElement" formControlName="name" placeholder="Name">

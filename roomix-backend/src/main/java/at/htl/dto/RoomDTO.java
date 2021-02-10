@@ -8,15 +8,17 @@ public class RoomDTO {
     private String username;
     private String roomname;
     private boolean isPrivate;
+    private String picUrl;
 
     public RoomDTO() {
     }
 
     @JsonbCreator
-    public RoomDTO(String username, String roomname, @JsonbProperty("isPrivate") boolean isPrivate) {
+    public RoomDTO(String username, String roomname, @JsonbProperty("isPrivate") boolean isPrivate, String picUrl) {
         this.username = username;
         this.roomname = roomname;
         this.isPrivate = isPrivate;
+        this.picUrl = picUrl;
     }
 
     public String getUsername() {
@@ -41,5 +43,13 @@ public class RoomDTO {
 
     public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 }
