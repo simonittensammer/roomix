@@ -103,25 +103,11 @@ public class UserEndpoint {
     }
 
     @GET
-    @Path("{username}/roomInvites/{id}/{response}")
-    public Response respondToRoomInvite(@PathParam("username") String username, @PathParam("id") Long id, @PathParam("response") boolean response) {
-        User receiver = userRepository.findByName(username);
-        RoomInvite roomInvite = roomInviteRepository.findById(id);
+    @Path("roomInvites/{id}/{response}")
+    public Response respondToRoomInvite(@PathParam("id") Long roomInviteId, @PathParam("response") boolean response) {
+        if (roomInviteRepository.reponseToRoomInvite(roomInviteId, response)) return Response.noContent().build();
 
-        if (receiver != null && roomInvite != null && receiver.getRoomInviteList().contains(roomInvite)) {
-            if (roomInvite.getSender() != null) {
-                if (response) {
-                    Member member = new Member(receiver, roomInvite.getRoom(), "member");
-                    memberRepository.persist(member);
-
-                    return Response.ok(member).build();
-                }
-
-                return Response.ok(receiver.getUsername() + " declined " + roomInvite.getSender().getUsername() + "'s invite to " + roomInvite.getRoom().getName()).build();
-            }
-        }
-
-        return Response.status(406).entity("user or room-invite does not exist").build();
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @POST
