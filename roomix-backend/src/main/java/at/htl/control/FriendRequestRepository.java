@@ -1,5 +1,6 @@
 package at.htl.control;
 
+import at.htl.dto.FriendRequestDTO;
 import at.htl.entity.FriendRequest;
 import at.htl.entity.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -45,5 +46,22 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
         }
 
         return friendRequstsJson.build();
+    }
+
+    public FriendRequest sendFriendRequest(FriendRequestDTO friendRequestDTO) {
+        User sender = userRepository.findByName(friendRequestDTO.getSender());
+        User receiver = userRepository.findByName(friendRequestDTO.getReceiver());
+
+        if (sender == null || receiver == null) return null;
+
+        FriendRequest friendRequest = new FriendRequest(sender, receiver);
+        persist(friendRequest);
+        receiver.getFriendRequestList().add(friendRequest);
+
+        return friendRequest;
+    }
+
+    public void respondToFriendRequest(FriendRequest friendRequest) {
+
     }
 }

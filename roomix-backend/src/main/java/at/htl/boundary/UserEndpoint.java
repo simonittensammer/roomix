@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.*;
+import at.htl.dto.FriendRequestDTO;
 import at.htl.entity.*;
 import at.htl.control.UserRepository;
 import org.hibernate.Hibernate;
@@ -13,8 +14,10 @@ import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -198,20 +201,13 @@ public class UserEndpoint {
 
     @POST
     @Path("/friendRequest")
-    public Response sendFriendRequest(JsonObject jsonObject) {
-        User sender = userRepository.findByName(jsonObject.getString("sender"));
-        User receiver = userRepository.findByName(jsonObject.getString("receiver"));
+    public Response sendFriendRequest(FriendRequestDTO friendRequestDTO, @Context UriInfo uriInfo) {
 
-        if (sender != null && receiver != null) {
-            FriendRequest friendRequest = new FriendRequest(sender, receiver);
-            friendRequestRepository.persist(friendRequest);
+        FriendRequest friendRequest = friendRequestRepository.sendFriendRequest(friendRequestDTO);
 
-            receiver.getFriendRequestList().add(friendRequest);
+        if (friendRequest == null) return Response.status(Response.Status.BAD_REQUEST).build();
 
-            return Response.ok(friendRequest).build();
-        }
-
-        return Response.status(406).entity("user(s) do(es) not exist").build();
+        return Response.created(uriInfo.getAbsolutePath()).entity(friendRequest).build();
     }
 
     @POST
