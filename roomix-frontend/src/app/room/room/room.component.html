@@ -18,7 +18,7 @@
 
         <h3 class="ulHeadline" (click)="collapseList()">Members</h3>
         <a class="buttonLink buttonRight" (click)="roomService.showInviteFriend()">
-            <button>Invite Friends</button>
+            <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Invite Friends</button>
         </a>
         <ul *ngIf="!collapsed">
             <li class="listEntry" *ngFor="let member of room.memberList">

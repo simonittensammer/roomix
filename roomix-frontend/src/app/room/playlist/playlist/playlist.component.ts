@@ -5,6 +5,7 @@ import {Room} from '../../../models/room';
 import {RoomService} from '../../../services/room.service';
 import {Song} from '../../../models/song';
 import {PlaylistService} from '../../../services/playlist.service';
+import {PlaySongService} from '../../../services/play-song.service';
 
 @Component({
   selector: 'app-playlist',
@@ -14,10 +15,12 @@ import {PlaylistService} from '../../../services/playlist.service';
 export class PlaylistComponent implements OnInit {
 
   room: Room;
+  listeningRoom: Room;
   collapsed: boolean;
 
   constructor(
       private playlistService: PlaylistService,
+      private playSongService: PlaySongService,
       private route: ActivatedRoute,
       private roomService: RoomService
   ) { }
@@ -26,6 +29,9 @@ export class PlaylistComponent implements OnInit {
       this.roomService.roomValue.subscribe(
           value => {
               this.room = value;
+              this.playSongService.roomValue.subscribe( value2 => {
+                  this.listeningRoom = value2;
+              });
           }
       );
   }

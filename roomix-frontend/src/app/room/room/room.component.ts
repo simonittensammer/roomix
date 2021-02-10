@@ -17,6 +17,7 @@ export class RoomComponent implements OnInit {
 
     user: User;
     room: Room;
+    listeningRoom: Room;
     collapsed: boolean;
 
     constructor(
@@ -40,17 +41,20 @@ export class RoomComponent implements OnInit {
                             .subscribe(data2 => {
                                 data.memberList = data2;
                                 console.log(this.room);
-                                this.accountService.userValue.subscribe(
-                                    value => {
-                                        this.user = value;
-                                        this.room = data;
-                                        if (!this.roomService.oldRoom || this.room.id !== this.roomService.oldRoom.id) {
-                                            this.roomService.oldRoom = this.room;
-                                            this.roomService.updateRoomValue(this.room);
-                                        }
-                                    });
-                            });
-                    });
+                                this.playSongService.roomValue.subscribe(lRoom => {
+                                    this.listeningRoom = lRoom;
+                                    this.accountService.userValue.subscribe(
+                                        value => {
+                                            this.user = value;
+                                            this.room = data;
+                                            if (!this.roomService.oldRoom || this.room.id !== this.roomService.oldRoom.id) {
+                                                this.roomService.oldRoom = this.room;
+                                                this.roomService.updateRoomValue(this.room);
+                                            }
+                                        });
+                                });
+                        });
+                });
             });
     }
 
