@@ -41,4 +41,15 @@ export class InviteFriendComponent implements OnInit {
           console.log(data);
         });
   }
+
+    // checkUserMemberOfRoom(friend) {
+    //     this.room.memberList.forEach(member => {
+    //         console.log(member.user);
+    //         console.log(friend);
+    //         if (member.user.username === friend.username) {
+    //             return true;
+    //         }
+    //     });
+    //     return false;
+    // }
 }

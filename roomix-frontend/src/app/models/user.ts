@@ -6,7 +6,7 @@ export class User {
     id: number;
     username: string;
     displayname: string;
-    profilePicUrl: string;
+    picUrl: string;
     friendList: Array<User>;
     memberList: Array<Member>;
     friendRequestList: Array<FriendRequest>;

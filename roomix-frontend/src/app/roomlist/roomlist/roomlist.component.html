@@ -7,7 +7,7 @@
 
     <div class="cardContainer">
         <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)">
-            <img class="cardImage" src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg"
+            <img class="cardImage" [src]="accountService.sanitizeBase64(member.room.picUrl)"
                  alt="cover">
             <p class="cardHeadline">{{ member.room.name }}</p>
             <p class="cardText">Members: {{ member.room.memberList.length }}</p>

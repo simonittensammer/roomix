@@ -27,6 +27,7 @@ public class User {
     String displayname;
 
     @Column(name = "USR_PIC")
+    @Lob
     String picUrl;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -45,7 +46,7 @@ public class User {
     Member activeMember;
 
     @JoinTable(name = "USR_FRIENDS", joinColumns = {
-            @JoinColumn(name = "ADDING_USER", referencedColumnName = "USR_ID", nullable =   false)}, inverseJoinColumns = {
+            @JoinColumn(name = "ADDING_USER", referencedColumnName = "USR_ID", nullable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "ADDED_USER", referencedColumnName = "USR_ID", nullable = false)})
     @ManyToMany
     @JsonbTransient

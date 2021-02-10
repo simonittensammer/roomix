@@ -9,17 +9,20 @@ import {Member} from '../models/member';
 import {FriendRequest} from '../models/friend-request';
 import {RoomInvite} from '../models/room-invite';
 import {RoomService} from './room.service';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private userSubject: BehaviorSubject<User>;
+  addFriendVisible: boolean;
 
   constructor(
       private router: Router,
       private http: HttpClient,
-      private roomService: RoomService
+      private roomService: RoomService,
+      private sanitizer: DomSanitizer
   ) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
   }
@@ -70,7 +73,8 @@ export class AccountService {
     this.router.navigate(['/login']);
   }
 
-  register(user: User) {
+  register(user: User, base64textString: string) {
+    user.picUrl = base64textString;
     return this.http.post(GlobalConstants.apiUrl + '/user', user);
   }
 
@@ -90,4 +94,11 @@ export class AccountService {
     return this.http.get(GlobalConstants.apiUrl + '/user/' + roomInvite.receiver.username + '/roomInvites/' + roomInvite.id + '/' + accept);
   }
 
+  showAddFriend() {
+    this.addFriendVisible = !this.addFriendVisible;
+  }
+
+  public sanitizeBase64(picUrl: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + picUrl);
+  }
 }
