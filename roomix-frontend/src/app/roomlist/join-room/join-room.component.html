@@ -3,7 +3,7 @@
 
   <ul>
     <li class="listEntry" *ngFor="let invite of user.roomInviteList">
-      <img src="{{ invite.room.picUrl }}" alt="" class="listImage">
+      <img [src]="accountService.sanitizeBase64(invite.room.picUrl)" alt="roomPic" class="listImage">
 
       <div class="listTextContainer">
         <p class="listHeadline">{{ invite.room.name }}</p>
@@ -27,8 +27,8 @@
 
   <div class="cardContainer">
     <div class="card" *ngFor="let room of publicRooms">
-      <img class="cardImage" src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg"
-           alt="cover">
+      <img class="cardImage" [src]="accountService.sanitizeBase64(room.picUrl)"
+           alt="roomPic">
       <p class="cardHeadline">{{ room.name }}</p>
       <p class="cardText">Members: {{ room.memberList.length }}</p>
     </div>
