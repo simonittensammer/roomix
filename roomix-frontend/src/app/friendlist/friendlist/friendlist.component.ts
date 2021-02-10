@@ -13,7 +13,6 @@ import {first} from 'rxjs/operators';
 export class FriendlistComponent implements OnInit {
 
   user: User;
-  friendUserName: string;
   collapsed: boolean;
 
   constructor(
@@ -28,14 +27,6 @@ export class FriendlistComponent implements OnInit {
           this.user = value;
         }
     );
-  }
-
-  sendFriendRequest() {
-    this.accountService.sendFriendRequest(this.user.username, this.friendUserName)
-        .pipe(first())
-        .subscribe(data => {
-          console.log(data);
-        });
   }
 
   showRequests() {

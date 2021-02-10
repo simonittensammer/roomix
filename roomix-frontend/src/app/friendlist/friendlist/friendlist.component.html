@@ -1,16 +1,7 @@
 <!--<div class="content">-->
 <h2>Your Friends</h2>
 
-<div>
-    <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
-    <button>
-        <a class="buttonLink" (click)="sendFriendRequest()">Add Friend</a>
-    </button>
-</div>
-
-<!--  <button>-->
-<!--    <a class="buttonLink" (click)="showRequests()">Friend Requests</a>-->
-<!--  </button>-->
+<app-add-friend *ngIf="accountService.addFriendVisible"></app-add-friend>
 
 <app-friend-requests></app-friend-requests>
 
@@ -18,7 +9,7 @@
     Your Friends
 </h3>
 <a class="buttonLink buttonRight">
-    <button>Add Friends</button>
+    <button (click)="accountService.showAddFriend()">Add Friends</button>
 </a>
 
 <ul *ngIf="!collapsed">

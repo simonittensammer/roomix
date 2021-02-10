@@ -15,6 +15,7 @@ import {RoomService} from './room.service';
 })
 export class AccountService {
   private userSubject: BehaviorSubject<User>;
+  addFriendVisible: boolean;
 
   constructor(
       private router: Router,
@@ -88,6 +89,10 @@ export class AccountService {
 
   roomInviteResponse(roomInvite: RoomInvite, accept: boolean) {
     return this.http.get(GlobalConstants.apiUrl + '/user/' + roomInvite.receiver.username + '/roomInvites/' + roomInvite.id + '/' + accept);
+  }
+
+  showAddFriend() {
+    this.addFriendVisible = !this.addFriendVisible;
   }
 
 }
