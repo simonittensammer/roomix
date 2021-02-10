@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {Room} from '../models/room';
 import {BehaviorSubject} from 'rxjs';
 import {Member} from '../models/member';
+import {User} from '../models/user';
 
 @Injectable({
     providedIn: 'root'
@@ -52,5 +53,9 @@ export class RoomService {
             .pipe(map(rooms => {
                 return rooms;
             }));
+    }
+
+    addMember(username: string, roomId: number) {
+        return this.http.post(GlobalConstants.apiUrl + '/room/member', {username, roomId});
     }
 }
