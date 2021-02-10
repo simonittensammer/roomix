@@ -2,6 +2,7 @@ package at.htl.boundary;
 
 import at.htl.control.*;
 import at.htl.dto.FriendRequestDTO;
+import at.htl.dto.RoomInviteDTO;
 import at.htl.entity.*;
 import at.htl.control.UserRepository;
 import org.hibernate.Hibernate;
@@ -199,25 +200,12 @@ public class UserEndpoint {
 
     @POST
     @Path("/roomInvite")
-    public Response sendRoomInvite(JsonObject jsonObject) {
-        User sender = userRepository.findByName(jsonObject.getString("sender"));
-        User receiver = userRepository.findByName(jsonObject.getString("receiver"));
-        Room room = roomRepository.findById(jsonObject.getJsonNumber("roomId").longValue());
+    public Response sendRoomInvite(RoomInviteDTO roomInviteDTO, @Context UriInfo uriInfo) {
+        RoomInvite roomInvite = roomInviteRepository.sendRoomInvite(roomInviteDTO);
 
-        if(sender != null && receiver != null && room != null) {
-            if (userRepository.findAllRoomsOfUser(sender.getUsername()).contains(room)) {
-                RoomInvite roomInvite = new RoomInvite(sender, receiver, room);
-                roomInviteRepository.persist(roomInvite);
+        if (roomInvite == null) return Response.status(Response.Status.BAD_REQUEST).build();
 
-                receiver.getRoomInviteList().add(roomInvite);
-
-                return Response.ok(roomInvite).build();
-            }
-
-            return Response.status(406).entity("user " + sender.getUsername() + " is not a member of " + room.getName()).build();
-        }
-
-        return Response.status(406).entity("user(s) or room do(es) not exist").build();
+        return Response.created(uriInfo.getAbsolutePath()).entity(roomInvite).build();
     }
 
     @DELETE

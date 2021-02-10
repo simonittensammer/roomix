@@ -1,6 +1,9 @@
 package at.htl.control;
 
+import at.htl.dto.FriendRequestDTO;
+import at.htl.dto.RoomInviteDTO;
 import at.htl.entity.FriendRequest;
+import at.htl.entity.Room;
 import at.htl.entity.RoomInvite;
 import at.htl.entity.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -52,5 +55,19 @@ public class RoomInviteRepository implements PanacheRepository<RoomInvite> {
         }
 
         return roomInviteJson.build();
+    }
+
+    public RoomInvite sendRoomInvite(RoomInviteDTO roomInviteDTO) {
+        User sender = userRepository.findByName(roomInviteDTO.getSender());
+        User receiver = userRepository.findByName(roomInviteDTO.getReceiver());
+        Room room = roomRepository.findById(roomInviteDTO.getRoomId());
+
+        if (sender == null || receiver == null || room == null) return null;
+
+        RoomInvite roomInvite = new RoomInvite(sender, receiver, room);
+        persist(roomInvite);
+        receiver.getRoomInviteList().add(roomInvite);
+
+        return roomInvite;
     }
 }
