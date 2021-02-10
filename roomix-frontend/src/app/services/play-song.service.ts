@@ -7,6 +7,7 @@ import {RoomService} from './room.service';
 import {Room} from '../models/room';
 import {SocketMessageDTO} from '../models/dto/SocketMessageDTO';
 import {PlaySongMessageDTO} from '../models/dto/PlaySongMessageDTO';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -19,16 +20,29 @@ export class PlaySongService {
     currentSongTimer: number;
     completeUrl: SafeResourceUrl;
     room: Room;
+    private listeningRoom: BehaviorSubject<Room>;
     connected = false;
 
     constructor(
         private sanitizer: DomSanitizer,
         private roomService: RoomService
     ) {
+        this.listeningRoom = new BehaviorSubject<Room>(JSON.parse(localStorage.getItem('listeningRoom')));
+        this.room = new Room('');
+    }
+
+    public get roomValue() {
+        return this.listeningRoom.asObservable();
+    }
+
+    public updateRoomValue(room: Room) {
+        localStorage.setItem('listeningRoom', JSON.stringify(room));
+        this.listeningRoom.next(room);
     }
 
     connect(username, roomid) {
         this.roomService.getRoom(roomid).subscribe(value => {
+            this.updateRoomValue(value);
             return this.room = value;
         });
 
@@ -54,12 +68,14 @@ export class PlaySongService {
                 else if (data.type === 'add-song') {
                     const song: Song = data.message as Song;
                     this.room.playlist.songList.push(song);
+                    this.roomService.updateRoomValue(this.room);
                 }
 
                 else if (data.type === 'remove-song') {
                     console.log('removeing');
                     const song: Song = data.message as Song;
                     this.room.playlist.songList.splice(this.room.playlist.songList.findIndex(x => x.url === song.url), 1);
+                    this.roomService.updateRoomValue(this.room);
                 }
 
                 else if (data.type === 'stop') {
@@ -75,6 +91,10 @@ export class PlaySongService {
 
     disconnect() {
         this.songSocket.complete();
+        this.currentSong = new Song('', '', '', '', 0);
+        this.currentSongUrl = '';
+        this.currentSongTimer = 0;
+        this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
         this.connected = false;
     }
 }
