@@ -4,12 +4,14 @@ import at.htl.dto.FriendRequestDTO;
 import at.htl.entity.FriendRequest;
 import at.htl.entity.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.*;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
+import javax.ws.rs.core.Response;
 import java.io.StringReader;
 import java.util.List;
 
@@ -61,7 +63,20 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
         return friendRequest;
     }
 
-    public void respondToFriendRequest(FriendRequest friendRequest) {
+    public boolean respondToFriendRequest(Long friendRequestId, boolean response) {
+        FriendRequest friendRequest = findById(friendRequestId);
+        User receiver = friendRequest.getReceiver();
+        User sender = friendRequest.getSender();
 
+        if (friendRequest == null || receiver == null || sender == null) return false;
+
+        if (response) {
+            sender.getFriendList().add(receiver);
+            receiver.getFriendList().add(sender);
+        }
+
+        receiver.getFriendRequestList().remove(friendRequest);
+
+        return true;
     }
 }

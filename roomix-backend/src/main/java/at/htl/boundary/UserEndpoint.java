@@ -94,24 +94,11 @@ public class UserEndpoint {
     }
 
     @GET
-    @Path("{username}/friendRequests/{id}/{response}")
-    public Response respondToFriendRequest(@PathParam("username") String username, @PathParam("id") Long id, @PathParam("response") boolean response) {
-        User receiver = userRepository.findByName(username);
-        FriendRequest friendRequest = friendRequestRepository.findById(id);
+    @Path("friendRequests/{id}/{response}")
+    public Response respondToFriendRequest(@PathParam("id") Long friendRequestId, @PathParam("response") boolean response) {
+        if (friendRequestRepository.respondToFriendRequest(friendRequestId, response)) return Response.noContent().build();
 
-        if (receiver != null && friendRequest != null && receiver.getFriendRequestList().contains(friendRequest)) {
-            if (friendRequest.getSender() != null) {
-                if (response) {
-                    userRepository.friendUsers(friendRequest.getSender(), receiver);
-
-                    return Response.ok(friendRequest.getSender().getUsername() + " and " + receiver.getUsername()+ " are now friends").build();
-                }
-
-                return Response.ok(receiver.getUsername() + " declined " + friendRequest.getSender().getUsername() + "'s friend request").build();
-            }
-        }
-
-        return Response.status(406).entity("user or friend-request does not exist").build();
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @GET
