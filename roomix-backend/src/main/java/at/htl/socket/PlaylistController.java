@@ -134,7 +134,13 @@ public class PlaylistController {
             songTimer.cancel();
             timerIsRunning = false;
             LOGGER.info("\nSTOPPPIUG\n");
-        } else if (!timerIsRunning && this.playlist.getSongList().size() > 0) {
+        }
+        else if (!this.playlist.getSongList().contains(this.playlist.getCurrentSong())) {
+            songTimer.cancel();
+            songTimer = new Timer("Song-Timer");
+            nextSong();
+        }
+        else if (!timerIsRunning && this.playlist.getSongList().size() > 0) {
             songTimer = new Timer("Song-Timer");
 
             if (playlist.getCurrentSong() == null) {
