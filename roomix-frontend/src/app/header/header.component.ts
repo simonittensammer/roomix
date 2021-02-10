@@ -38,7 +38,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.playSongService.disconnect();
+    if (this.playSongService.connected) {
+      this.playSongService.disconnect();
+    }
     this.user = null;
     this.accountService.logout();
   }
