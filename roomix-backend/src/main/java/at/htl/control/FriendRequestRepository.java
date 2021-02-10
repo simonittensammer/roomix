@@ -3,6 +3,8 @@ package at.htl.control;
 import at.htl.dto.FriendRequestDTO;
 import at.htl.entity.FriendRequest;
 import at.htl.entity.User;
+import at.htl.observers.FriendRequestRepositoryObserver;
+import at.htl.observers.RoomInviteRepositoryObserver;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.hibernate.Hibernate;
 
@@ -13,6 +15,7 @@ import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.core.Response;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -20,6 +23,24 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
 
     @Inject
     UserRepository userRepository;
+
+    private List<FriendRequestRepositoryObserver> observerList = new ArrayList<>();
+
+    public void addObserver(FriendRequestRepositoryObserver observer) {
+        observerList.add(observer);
+    }
+
+    public void removeObserver(FriendRequestRepositoryObserver observer) {
+        observerList.remove(observer);
+    }
+
+    public void notifyObserversSend(String receiver) {
+        observerList.forEach(friendRequestRepositoryObserver -> friendRequestRepositoryObserver.sendFriendRequest(receiver));
+    }
+
+    public void notifyObserversRespond(String sender, String receiver) {
+        observerList.forEach(friendRequestRepositoryObserver -> friendRequestRepositoryObserver.respondToFriendRequest(sender, receiver));
+    }
 
     public JsonArray getSerializedFriendRequestList(String username) {
         User user = userRepository.findByName(username);
@@ -60,6 +81,8 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
         persist(friendRequest);
         receiver.getFriendRequestList().add(friendRequest);
 
+        notifyObserversSend(receiver.getUsername());
+
         return friendRequest;
     }
 
@@ -76,6 +99,8 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
         }
 
         receiver.getFriendRequestList().remove(friendRequest);
+
+        notifyObserversRespond(sender.getUsername(), receiver.getUsername());
 
         return true;
     }
