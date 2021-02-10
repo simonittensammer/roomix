@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../models/user';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
@@ -9,6 +9,7 @@ import {Member} from '../models/member';
 import {FriendRequest} from '../models/friend-request';
 import {RoomInvite} from '../models/room-invite';
 import {RoomService} from './room.service';
+import {FriendRequestDTO} from '../models/dto/friendRequestDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -74,12 +75,12 @@ export class AccountService {
     return this.http.post(GlobalConstants.apiUrl + '/user', user);
   }
 
-  sendFriendRequest(sender: string, receiver: string) {
-    return this.http.post(GlobalConstants.apiUrl + '/user/friendRequest', {sender, receiver});
+  sendFriendRequest(sender: string, receiver: string): Observable<FriendRequest> {
+    return this.http.post<FriendRequest>(GlobalConstants.apiUrl + '/user/friendRequest', new FriendRequestDTO(sender, receiver));
   }
 
   friendRequestResponse(friendRequest: FriendRequest, accept: boolean) {
-    return this.http.get(GlobalConstants.apiUrl + '/user/' + friendRequest.receiver.username + '/friendRequests/' + friendRequest.id + '/' + accept);
+    return this.http.get(GlobalConstants.apiUrl + '/user/friendRequests/' + friendRequest.id + '/' + accept);
   }
 
   sendRoomInvite(roomId: number, sender: string, receiver: string) {
