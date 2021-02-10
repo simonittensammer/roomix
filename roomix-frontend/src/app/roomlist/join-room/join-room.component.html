@@ -26,7 +26,7 @@
   <input type="number" [(ngModel)]="limit" (change)="updatePublicRoomLimit()" >
 
   <div class="cardContainer">
-    <div class="card" *ngFor="let room of publicRooms">
+    <div class="card" *ngFor="let room of publicRooms" (click)="showRoom(room)">
       <img class="cardImage" src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg"
            alt="cover">
       <p class="cardHeadline">{{ room.name }}</p>
