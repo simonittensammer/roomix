@@ -7,7 +7,7 @@
         <ng-container *ngFor="let friend of user.friendList">
             <li class="listEntry"
                 *ngIf="(searchQuery == '' || (friend.username | uppercase).includes(searchQuery | uppercase) || (friend.displayname | uppercase).includes(searchQuery | uppercase))">
-                <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
+                <img [src]="accountService.sanitizeBase64(friend.picUrl)" alt="" class="listImage">
 
                 <div class="listTextContainer">
                     <p class="listHeadline">{{ friend.displayname }}</p>

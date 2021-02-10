@@ -22,7 +22,7 @@
         </a>
         <ul *ngIf="!collapsed">
             <li class="listEntry" *ngFor="let member of room.memberList">
-                <img src="{{ member.user.profilePicUrl }}" alt="" class="listImage">
+                <img [src]="accountService.sanitizeBase64(member.user.picUrl)" alt="" class="listImage">
 
                 <div class="listTextContainer">
                     <p class="listHeadline">[{{ member.role | uppercase }}] {{ member.user.displayname }}</p>

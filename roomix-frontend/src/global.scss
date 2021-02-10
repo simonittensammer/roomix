@@ -269,7 +269,9 @@ ul {
 
 .listImage {
   height: 50px;
+  width: 50px;
   float: left;
+  object-fit: cover;
   margin-right: 2.5%;
   border-radius: 5px;
 }

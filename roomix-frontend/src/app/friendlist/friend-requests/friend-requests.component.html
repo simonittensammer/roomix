@@ -4,7 +4,7 @@
 
   <ul *ngIf="!collapsed && user.friendRequestList.length != 0">
     <li class="listEntry" *ngFor="let request of user.friendRequestList">
-      <img src="" alt="" class="listImage">
+      <img [src]="accountService.sanitizeBase64(user.picUrl)" alt="profilePic" class="listImage">
       <div class="listTextContainer">
           <p class="listHeadline">{{ request.sender.displayname }}</p>
           <p class="listText">@{{ request.sender.username }}</p>
