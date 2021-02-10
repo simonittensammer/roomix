@@ -10,6 +10,7 @@ import {FriendRequest} from '../models/friend-request';
 import {RoomInvite} from '../models/room-invite';
 import {RoomService} from './room.service';
 import {FriendRequestDTO} from '../models/dto/friendRequestDTO';
+import {RoomInviteDTO} from '../models/dto/roomInviteDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -83,12 +84,12 @@ export class AccountService {
     return this.http.get(GlobalConstants.apiUrl + '/user/friendRequests/' + friendRequest.id + '/' + accept);
   }
 
-  sendRoomInvite(roomId: number, sender: string, receiver: string) {
-    return this.http.post(GlobalConstants.apiUrl + '/user/roomInvite', {roomId, sender, receiver});
+  sendRoomInvite(roomId: number, sender: string, receiver: string): Observable<RoomInvite> {
+    return this.http.post<RoomInvite>(GlobalConstants.apiUrl + '/user/roomInvite', new RoomInviteDTO(sender, receiver, roomId));
   }
 
   roomInviteResponse(roomInvite: RoomInvite, accept: boolean) {
-    return this.http.get(GlobalConstants.apiUrl + '/user/' + roomInvite.receiver.username + '/roomInvites/' + roomInvite.id + '/' + accept);
+    return this.http.get(GlobalConstants.apiUrl + '/user/roomInvites/' + roomInvite.id + '/' + accept);
   }
 
 }
