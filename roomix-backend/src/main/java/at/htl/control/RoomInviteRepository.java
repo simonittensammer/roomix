@@ -3,6 +3,8 @@ package at.htl.control;
 import at.htl.dto.FriendRequestDTO;
 import at.htl.dto.RoomInviteDTO;
 import at.htl.entity.*;
+import at.htl.observers.PlaylistRepositoryObserver;
+import at.htl.observers.RoomInviteRepositoryObserver;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,6 +13,7 @@ import javax.json.*;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -24,6 +27,24 @@ public class RoomInviteRepository implements PanacheRepository<RoomInvite> {
 
     @Inject
     MemberRepository memberRepository;
+
+    private List<RoomInviteRepositoryObserver> observerList = new ArrayList<>();
+
+    public void addObserver(RoomInviteRepositoryObserver observer) {
+        observerList.add(observer);
+    }
+
+    public void removeObserver(RoomInviteRepositoryObserver observer) {
+        observerList.remove(observer);
+    }
+
+    public void notifyObserversSend(String receiver) {
+        observerList.forEach(roomInviteRepositoryObserver -> roomInviteRepositoryObserver.sendRoomInvite(receiver));
+    }
+
+    public void notifyObserversRespond(String sender, String receiver, Long roomId) {
+        observerList.forEach(roomInviteRepositoryObserver -> roomInviteRepositoryObserver.respontToRoomInvite(sender, receiver, roomId));
+    }
 
     public JsonArray getSerializedRoomInviteList(String username) {
         User user = userRepository.findByName(username);
@@ -68,6 +89,8 @@ public class RoomInviteRepository implements PanacheRepository<RoomInvite> {
         persist(roomInvite);
         receiver.getRoomInviteList().add(roomInvite);
 
+        notifyObserversSend(receiver.getUsername());
+
         return roomInvite;
     }
 
@@ -86,6 +109,8 @@ public class RoomInviteRepository implements PanacheRepository<RoomInvite> {
         }
 
         receiver.getRoomInviteList().remove(roomInvite);
+
+        notifyObserversRespond(sender.getUsername(), receiver.getUsername(), room.getId());
 
         return true;
     }
