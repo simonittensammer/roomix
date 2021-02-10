@@ -65,4 +65,30 @@ export class RoomComponent implements OnInit {
     collapseList() {
         this.collapsed = !this.collapsed;
     }
+
+    userIsMember() {
+        for (const member of this.room.memberList) {
+            if (member.user.id === this.user.id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    joinRoomFunc() {
+        console.log('Joined Room');
+        this.roomService.addMember(this.user.username, this.room.id).subscribe(
+            value => {
+                console.log(value);
+                /*this.accountService.getProperMemberList(this.user.username).subscribe(value2 => {
+                    this.user.memberList = value2;
+                    this.accountService.updateUserValue(this.user);
+                });*/
+            });
+    }
+
+    leaveRoomFunc() {
+        // ADD HTTP REQUEST ONCE ENDPOINT IS CREATED
+        console.log('Left Room');
+    }
 }

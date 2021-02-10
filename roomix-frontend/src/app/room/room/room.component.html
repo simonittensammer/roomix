@@ -2,17 +2,32 @@
     <div class="half-content">
 
         <a class="buttonLink buttonRight"
-           (click)="playSongService.connect(user.username, room.id)"
-           *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else leaveRoom">
+           (click)="joinRoomFunc()"
+           *ngIf="!userIsMember(); else leaveRoom">
             <button>Join</button>
         </a>
 
         <ng-template #leaveRoom>
             <a class="buttonLink buttonRight"
-               (click)="playSongService.disconnect()">
+               (click)="leaveRoomFunc()">
                 <button>Leave</button>
             </a>
         </ng-template>
+
+        <a class="buttonLink buttonRight"
+           (click)="playSongService.connect(user.username, room.id)"
+           *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else disconnect">
+            <button>Connect</button>
+        </a>
+
+        <ng-template #disconnect>
+            <a class="buttonLink buttonRight"
+               (click)="playSongService.disconnect()">
+                <button>Disconnect</button>
+            </a>
+        </ng-template>
+
+
 
         <h2 *ngIf="room != null">{{ room.name }}</h2>
 
