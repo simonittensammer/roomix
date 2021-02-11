@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.*;
+import at.htl.dto.MemberDTO;
 import at.htl.dto.RoomDTO;
 import at.htl.dto.RoomUpdateDTO;
 import at.htl.entity.*;
@@ -150,6 +151,25 @@ public class RoomEndpoint {
         }
 
         return Response.status(406).entity("user does not exist").build();
+    }
+
+    @DELETE
+    @Path("/member")
+    public Response removeMember(MemberDTO memberDTO) {
+        User user = userRepository.findByName(memberDTO.getUsername());
+        Room room = roomRepository.findById(memberDTO.getRoomId());
+
+        if (user == null || room == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        Member member = memberRepository.getMemberOfRoom(user, room);
+
+        if (member == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        room.getMemberList().remove(member);
+        user.getMemberList().remove(member);
+        memberRepository.delete(member);
+/////
+        return Response.noContent().build();
     }
 
     @POST
