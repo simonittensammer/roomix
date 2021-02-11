@@ -34,6 +34,8 @@ export class FriendRequestsComponent implements OnInit {
         .subscribe(data => {
           console.log(data);
         });
+
+    this.user.friendRequestList.splice(this.user.friendRequestList.indexOf(friendRequest), 1);
   }
 
     collapseList() {
