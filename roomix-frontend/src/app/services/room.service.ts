@@ -59,4 +59,8 @@ export class RoomService {
     addMember(username: string, roomId: number) {
         return this.http.post(GlobalConstants.apiUrl + '/room/member', new MemberDTO(username, roomId));
     }
+
+    removeMember(username: string, roomId: number) {
+        return this.http.delete(GlobalConstants.apiUrl + '/room/member?username=' + username + '&roomId=' + roomId);
+    }
 }
