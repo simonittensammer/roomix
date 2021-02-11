@@ -30,7 +30,7 @@ export class ControlBarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.roomService.roomValue.subscribe(
+        /*this.roomService.roomValue.subscribe(
             value => {
                 this.room = value;
                 this.userService.userValue.subscribe(
@@ -43,8 +43,12 @@ export class ControlBarComponent implements OnInit {
                     }
                 );
             }
+        );*/
+        this.playSongService.roomValue.subscribe(
+            value => {
+                this.room = value;
+            }
         );
-
         this.volumeStage = 'h';
     }
 

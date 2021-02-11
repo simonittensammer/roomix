@@ -1,0 +1,15 @@
+<div>
+  <div class="popup centerXY">
+    <h2 class="formHeadline formElement">Add a friend</h2>
+
+    <input class="formElement" [(ngModel)]="friendUserName" placeholder="an username" type="text">
+
+    <button id="formSubmit" class="buttonLink formElement" (click)="sendFriendRequest()">
+      Add Friend
+    </button>
+
+    <div class="formElement">
+      <a (click)="accountService.showAddFriend()">Cancel</a>
+    </div>
+  </div>
+</div>

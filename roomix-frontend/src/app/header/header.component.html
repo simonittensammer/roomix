@@ -10,7 +10,7 @@
     </a>
 
     <a class="buttonLink" routerLink="/room/{{ room.id }}">
-        <button class="formElement" [disabled]="!room">
+        <button class="formElement" [disabled]="!playSongService.connected">
             <ion-icon name="musical-notes"></ion-icon>
             <div class="linkText">Current Room</div>
         </button>

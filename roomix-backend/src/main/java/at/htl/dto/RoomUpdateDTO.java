@@ -9,15 +9,17 @@ public class RoomUpdateDTO implements Serializable {
     private Long roomId;
     private String roomname;
     private boolean isPrivate;
+    private String picUrl;
 
     public RoomUpdateDTO() {
     }
 
     @JsonbCreator
-    public RoomUpdateDTO(Long roomId, String roomname, @JsonbProperty("isPrivate") boolean isPrivate) {
+    public RoomUpdateDTO(Long roomId, String roomname, @JsonbProperty("isPrivate") boolean isPrivate, String picUrl) {
         this.roomId = roomId;
         this.roomname = roomname;
         this.isPrivate = isPrivate;
+        this.picUrl = picUrl;
     }
 
     public Long getRoomId() {
@@ -44,4 +46,11 @@ public class RoomUpdateDTO implements Serializable {
         isPrivate = aPrivate;
     }
 
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
 }

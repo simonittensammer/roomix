@@ -8,6 +8,7 @@ import {RoomService} from '../../services/room.service';
 import {Room} from '../../models/room';
 import {compareNumbers} from '@angular/compiler-cli/src/diagnostics/typescript_version';
 import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-join-room',
@@ -22,6 +23,7 @@ export class JoinRoomComponent implements OnInit {
 
   constructor(private accountService: AccountService,
               private userService: UserService,
+              private router: Router,
               private roomService: RoomService) { }
 
   ngOnInit() {
@@ -54,4 +56,8 @@ export class JoinRoomComponent implements OnInit {
           );
       }
   }
+
+    showRoom(room: Room) {
+        this.router.navigate(['room', room.id]);
+    }
 }

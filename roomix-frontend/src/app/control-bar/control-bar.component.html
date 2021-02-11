@@ -1,8 +1,8 @@
-<div id="controlBar" *ngIf="room">
+<div id="controlBar" *ngIf="playSongService.connected">
 
     <div id="roomInfoWrapper">
-        <img src="https://lastfm.freetls.fastly.net/i/u/770x0/15ee8d4b8473b5cc6862f8c7a48ddc60.jpg" id="roomImage"
-             alt="roomImage">
+        <img [src]="accountService.sanitizeBase64(room.picUrl)" id="roomImage"
+             alt="roomPic">
         <h3 id="roomName">{{ room.name }}</h3>
         <p id="roomInfo">
             Members: {{ room.memberList.length }}

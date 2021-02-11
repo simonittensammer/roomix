@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../models/user';
+import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {GlobalConstants} from '../helpers/globalConstants';
@@ -11,6 +11,7 @@ import {RoomInvite} from '../models/room-invite';
 import {RoomService} from './room.service';
 import {FriendRequestDTO} from '../models/dto/friendRequestDTO';
 import {RoomInviteDTO} from '../models/dto/roomInviteDTO';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {UserSocketService} from './user-socket.service';
 import {UserService} from './user.service';
 
@@ -18,14 +19,18 @@ import {UserService} from './user.service';
   providedIn: 'root'
 })
 export class AccountService {
+  addFriendVisible: boolean;
 
   constructor(
       private router: Router,
       private http: HttpClient,
       private roomService: RoomService,
+      private sanitizer: DomSanitizer,
       private userSocketService: UserSocketService,
       private userService: UserService
-) {}
+  ) {
+  }
+
 
   login(username, password) {
     return this.http.post<User>(GlobalConstants.apiUrl + '/user/login', { username, password })
@@ -45,7 +50,8 @@ export class AccountService {
     this.router.navigate(['/login']);
   }
 
-  register(user: User) {
+  register(user: User, base64textString: string) {
+    user.picUrl = base64textString;
     return this.http.post(GlobalConstants.apiUrl + '/user', user);
   }
 
@@ -65,4 +71,11 @@ export class AccountService {
     return this.http.get(GlobalConstants.apiUrl + '/user/roomInvites/' + roomInvite.id + '/' + accept);
   }
 
+  showAddFriend() {
+    this.addFriendVisible = !this.addFriendVisible;
+  }
+
+  public sanitizeBase64(picUrl: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + picUrl);
+  }
 }

@@ -2,27 +2,42 @@
     <div class="half-content">
 
         <a class="buttonLink buttonRight"
-           (click)="playSongService.connect(user.username, room.id)"
-           *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else leaveRoom">
+           (click)="joinRoomFunc()"
+           *ngIf="!userIsMember(); else leaveRoom">
             <button>Join</button>
         </a>
 
         <ng-template #leaveRoom>
             <a class="buttonLink buttonRight"
-               (click)="playSongService.disconnect()">
+               (click)="leaveRoomFunc()">
                 <button>Leave</button>
             </a>
         </ng-template>
+
+        <a class="buttonLink buttonRight"
+           (click)="playSongService.connect(user.username, room.id)"
+           *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else disconnect">
+            <button>Connect</button>
+        </a>
+
+        <ng-template #disconnect>
+            <a class="buttonLink buttonRight"
+               (click)="playSongService.disconnect()">
+                <button>Disconnect</button>
+            </a>
+        </ng-template>
+
+
 
         <h2 *ngIf="room != null">{{ room.name }}</h2>
 
         <h3 class="ulHeadline" (click)="collapseList()">Members</h3>
         <a class="buttonLink buttonRight" (click)="roomService.showInviteFriend()">
-            <button>Invite Friends</button>
+            <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Invite Friends</button>
         </a>
         <ul *ngIf="!collapsed">
             <li class="listEntry" *ngFor="let member of room.memberList">
-                <img src="{{ member.user.profilePicUrl }}" alt="" class="listImage">
+                <img [src]="accountService.sanitizeBase64(member.user.picUrl)" alt="" class="listImage">
 
                 <div class="listTextContainer">
                     <p class="listHeadline">[{{ member.role | uppercase }}] {{ member.user.displayname }}</p>

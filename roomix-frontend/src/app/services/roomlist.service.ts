@@ -24,8 +24,8 @@ export class RoomlistService {
     ) {
     }
 
-    createNewRoom(username, roomname, isPrivate) {
-        return this.http.post<User>(GlobalConstants.apiUrl + '/room', new RoomDTO(username, roomname, isPrivate))
+    createNewRoom(username, roomname, isPrivate, base64textString: string) {
+        return this.http.post<User>(GlobalConstants.apiUrl + '/room', new RoomDTO(username, roomname, isPrivate, base64textString))
             .pipe(map(user => {
                 return user;
             }));

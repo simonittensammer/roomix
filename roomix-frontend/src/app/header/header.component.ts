@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {User} from '../models/user';
 import {RoomService} from '../services/room.service';
 import {Room} from '../models/room';
+import {PlaySongService} from '../services/play-song.service';
 import {UserSocketService} from '../services/user-socket.service';
 import {UserService} from '../services/user.service';
 
@@ -23,19 +24,20 @@ export class HeaderComponent implements OnInit {
       private roomService: RoomService,
       private userService: UserService,
       private userSocketService: UserSocketService,
+      private playSongService: PlaySongService,
       private router: Router,
       private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.roomService.roomValue.subscribe(
+    this.playSongService.roomValue.subscribe(
         value => {
           this.room = value;
-          this.userService.userValue.subscribe(
-              value2 => {
-                this.user = value2;
-              }
-          );
+        }
+    );
+    this.userService.userValue.subscribe(
+        value => {
+          this.user = value;
         }
     );
     if (this.user.username !== null) {
@@ -44,6 +46,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    if (this.playSongService.connected) {
+      this.playSongService.disconnect();
+    }
     this.user = null;
     this.accountService.logout();
   }

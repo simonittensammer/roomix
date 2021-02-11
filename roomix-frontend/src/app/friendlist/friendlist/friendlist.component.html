@@ -1,16 +1,7 @@
 <!--<div class="content">-->
 <h2>Your Friends</h2>
 
-<div>
-    <input [(ngModel)]="friendUserName" placeholder="an username" type="text">
-    <button>
-        <a class="buttonLink" (click)="sendFriendRequest()">Add Friend</a>
-    </button>
-</div>
-
-<!--  <button>-->
-<!--    <a class="buttonLink" (click)="showRequests()">Friend Requests</a>-->
-<!--  </button>-->
+<app-add-friend *ngIf="accountService.addFriendVisible"></app-add-friend>
 
 <app-friend-requests></app-friend-requests>
 
@@ -18,12 +9,12 @@
     Your Friends
 </h3>
 <a class="buttonLink buttonRight">
-    <button>Add Friends</button>
+    <button (click)="accountService.showAddFriend()">Add Friends</button>
 </a>
 
 <ul *ngIf="!collapsed">
     <li class="listEntry" *ngFor="let friend of user.friendList">
-        <img src="{{ friend.profilePicUrl }}" alt="" class="listImage">
+        <img [src]="accountService.sanitizeBase64(friend.picUrl)" alt="" class="listImage">
 
         <div class="listTextContainer">
             <p class="listHeadline">{{ friend.displayname }}</p>
@@ -33,7 +24,6 @@
 </ul>
 <ul *ngIf="!collapsed && user.friendList.length == 0">
     <li class="listEntry">
-        <img src="" alt="" class="listImage"> <!-- add info icon -->
         <div class="listTextContainer">
             <p class="listHeadline">No Friends found :(</p>
             <p class="listText">Tell some of your friends about roomix!</p>
@@ -42,7 +32,6 @@
 </ul>
 <ul *ngIf="collapsed">
     <li class="listEntry" (click)="collapseList()">
-        <img src="" alt="" class="listImage"> <!-- add info icon -->
         <div class="listTextContainer">
             <p class="listHeadline">Show Friendlist</p>
             <p class="listText">Click here or on the headline, to show the list!</p>

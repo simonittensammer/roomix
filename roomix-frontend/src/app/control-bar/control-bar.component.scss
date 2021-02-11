@@ -21,6 +21,7 @@
 #roomName {
   position: absolute;
   left: 13vw;
+  top: 0;
   width: 10vw;
   overflow: hidden;
   white-space: nowrap;
@@ -29,7 +30,7 @@
 #roomInfo {
   position: absolute;
   left: 13vw;
-  bottom: 30px;
+  top: 50px;
 
   width: 10vw;
   overflow: hidden;
