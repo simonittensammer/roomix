@@ -4,13 +4,13 @@
         <a class="buttonLink buttonRight"
            (click)="joinRoomFunc()"
            *ngIf="!userIsMember(); else leaveRoom">
-            <button>Join</button>
+            <button class="buttonGreen">Join</button>
         </a>
 
         <ng-template #leaveRoom>
             <a class="buttonLink buttonRight"
                (click)="leaveRoomFunc()">
-                <button>Leave</button>
+                <button class="buttonRed">Leave</button>
             </a>
         </ng-template>
 
@@ -26,8 +26,6 @@
                 <button>Disconnect</button>
             </a>
         </ng-template>
-
-
 
         <h2 *ngIf="room != null">{{ room.name }}</h2>
 

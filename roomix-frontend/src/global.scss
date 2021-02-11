@@ -149,6 +149,30 @@ button:active {
   line-height: 1.5em;
 }
 
+.buttonRed {
+  background: var(--ion-color-danger) !important;
+}
+
+.buttonRed:hover {
+  background: var(--ion-color-danger-shade) !important;
+}
+
+.buttonRed:active {
+  background: var(--ion-color-danger-tint) !important;
+}
+
+.buttonGreen {
+  background: var(--ion-color-success) !important;
+}
+
+.buttonGreen:hover {
+  background: var(--ion-color-success-shade) !important;
+}
+
+.buttonGreen:active {
+  background: var(--ion-color-success-tint) !important;
+}
+
 .popup {
   min-width: 540px;
   width: 35vw;
