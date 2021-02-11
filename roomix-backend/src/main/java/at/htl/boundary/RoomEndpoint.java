@@ -21,7 +21,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.io.StringReader;
+import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -116,13 +116,21 @@ public class RoomEndpoint {
     }
 
     @POST
-    public Response createRoom(RoomDTO roomDTO) {
+    public Response createRoom(RoomDTO roomDTO) throws IOException {
         User creator = userRepository.findByName(roomDTO.getUsername());
 
         if (creator != null) {
             Room room = new Room(roomDTO.getRoomname());
             room.setPrivate(roomDTO.isPrivate());
             room.setPicUrl(roomDTO.getPicUrl());
+
+            if (room.getPicUrl().equals("")) {
+                try (InputStream inputStream = getClass().getResourceAsStream("/images/default-user-pic.txt");
+                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                    room.setPicUrl(reader.lines().collect(Collectors.joining(System.lineSeparator())));
+                }
+            }
+
             playlistRepository.persist(room.getPlaylist());
             roomRepository.persist(room);
 
