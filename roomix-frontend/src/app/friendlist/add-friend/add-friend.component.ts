@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {first} from 'rxjs/operators';
 import {AccountService} from '../../services/account.service';
 import {User} from '../../models/user';
+import {UserService} from '../../services/user.service';
 
 @Component({
     selector: 'app-add-friend',
@@ -14,12 +15,12 @@ export class AddFriendComponent implements OnInit {
     friendUserName: string;
 
     constructor(
-        private accountService: AccountService
-    ) {
-    }
+        private accountService: AccountService,
+        private userService: UserService
+    ) {}
 
     ngOnInit() {
-        this.accountService.userValue.subscribe(
+        this.userService.userValue.subscribe(
             value => {
                 this.user = value;
             }
