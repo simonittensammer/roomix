@@ -12,7 +12,8 @@ export class ProfileComponent implements OnInit {
   user: User;
 
   constructor(
-      public userService: UserService
+      public userService: UserService,
+      public accountService: AccountService
   ) { }
 
   ngOnInit() {
