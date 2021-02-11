@@ -154,9 +154,9 @@ public class RoomEndpoint {
 
     @DELETE
     @Path("/member")
-    public Response removeMember(MemberDTO memberDTO) {
-        User user = userRepository.findByName(memberDTO.getUsername());
-        Room room = roomRepository.findById(memberDTO.getRoomId());
+    public Response removeMember(@QueryParam("username") String username, @QueryParam("roomId") Long roomId) {
+        User user = userRepository.findByName(username);
+        Room room = roomRepository.findById(roomId);
 
         if (user == null || room == null) return Response.status(Response.Status.BAD_REQUEST).build();
 
