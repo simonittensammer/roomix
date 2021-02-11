@@ -94,7 +94,7 @@ public class RoomInviteRepository implements PanacheRepository<RoomInvite> {
         return roomInvite;
     }
 
-    public boolean reponseToRoomInvite(Long roomInviteId, boolean response) {
+    public boolean respondToRoomInvite(Long roomInviteId, boolean response) {
         RoomInvite roomInvite = findById(roomInviteId);
 
         if (roomInvite == null) return false;

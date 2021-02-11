@@ -9,7 +9,6 @@ import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
@@ -105,7 +104,7 @@ public class UserEndpoint {
     @GET
     @Path("roomInvites/{id}/{response}")
     public Response respondToRoomInvite(@PathParam("id") Long roomInviteId, @PathParam("response") boolean response) {
-        if (roomInviteRepository.reponseToRoomInvite(roomInviteId, response)) return Response.noContent().build();
+        if (roomInviteRepository.respondToRoomInvite(roomInviteId, response)) return Response.noContent().build();
 
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
