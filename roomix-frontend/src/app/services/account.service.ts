@@ -5,15 +5,14 @@ import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {GlobalConstants} from '../helpers/globalConstants';
 import {map} from 'rxjs/operators';
-import {Member} from '../models/member';
 import {FriendRequest} from '../models/friend-request';
 import {RoomInvite} from '../models/room-invite';
 import {RoomService} from './room.service';
-import {FriendRequestDTO} from '../models/dto/friendRequestDTO';
-import {RoomInviteDTO} from '../models/dto/roomInviteDTO';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {UserSocketService} from './user-socket.service';
 import {UserService} from './user.service';
+import {FriendRequestDTO} from '../models/dto/friendRequestDTO';
+import {RoomInviteDTO} from '../models/dto/roomInviteDTO';
 
 @Injectable({
   providedIn: 'root'
