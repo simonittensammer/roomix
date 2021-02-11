@@ -108,6 +108,7 @@ public class RoomInviteRepository implements PanacheRepository<RoomInvite> {
             room.getMemberList().add(member);
         }
 
+        delete(roomInvite);
         receiver.getRoomInviteList().remove(roomInvite);
 
         notifyObserversRespond(sender.getUsername(), receiver.getUsername(), room.getId());

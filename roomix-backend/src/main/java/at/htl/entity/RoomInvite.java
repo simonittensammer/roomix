@@ -12,12 +12,12 @@ public class RoomInvite {
     @Column(name = "RIV_ID")
     Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonbTransient
     @JoinColumn(name = "RIV_SND_ID")
     User sender;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonbTransient
     @JoinColumn(name = "RIV_RCV_ID")
     User receiver;
