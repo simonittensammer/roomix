@@ -125,7 +125,7 @@ public class RoomEndpoint {
             room.setPicUrl(roomDTO.getPicUrl());
 
             if (room.getPicUrl().equals("")) {
-                try (InputStream inputStream = getClass().getResourceAsStream("/images/default-user-pic.txt");
+                try (InputStream inputStream = getClass().getResourceAsStream("/images/default-room-pic.txt");
                      BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                     room.setPicUrl(reader.lines().collect(Collectors.joining(System.lineSeparator())));
                 }
