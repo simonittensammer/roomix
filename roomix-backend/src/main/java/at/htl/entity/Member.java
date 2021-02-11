@@ -11,12 +11,12 @@ public class Member {
     @Column(name = "MBR_ID")
     Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonbTransient
     @JoinColumn(name = "MBR_USR_ID")
     User user;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonbTransient
     @JoinColumn(name = "MBR_RM_ID")
     Room room;

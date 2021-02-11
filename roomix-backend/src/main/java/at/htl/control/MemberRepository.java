@@ -2,6 +2,7 @@ package at.htl.control;
 
 import at.htl.entity.Member;
 import at.htl.entity.Room;
+import at.htl.entity.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.hibernate.Hibernate;
 
@@ -52,5 +53,13 @@ public class MemberRepository implements PanacheRepository<Member> {
                 .add("user", userJson)
                 .add("room", roomJson)
                 .build();
+    }
+
+    public Member getMemberOfRoom(User user, Room room) {
+        return user.getMemberList()
+                .stream()
+                .filter(member -> member.getRoom().equals(room))
+                .findFirst()
+                .orElse(null);
     }
 }

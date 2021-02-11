@@ -92,5 +92,10 @@ export class RoomComponent implements OnInit {
     leaveRoomFunc() {
         // ADD HTTP REQUEST ONCE ENDPOINT IS CREATED
         console.log('Left Room');
+        this.roomService.removeMember(this.user.username, this.room.id).subscribe(
+            value => {
+                console.log(value);
+            }
+        );
     }
 }
