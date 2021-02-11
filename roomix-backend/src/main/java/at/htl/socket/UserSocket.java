@@ -106,7 +106,7 @@ public class UserSocket implements FriendRequestRepositoryObserver, RoomInviteRe
 
     @Override
     public void respontToRoomInvite(String senderKey, String receiverKey, Long roomId) {
-        SocketMessageDTO message = new SocketMessageDTO("room-invite-response", null);
+        SocketMessageDTO message = new SocketMessageDTO("room-invite-response", roomId);
         Session sender = sessions.get(senderKey);
         Session receiver = sessions.get(receiverKey);
 

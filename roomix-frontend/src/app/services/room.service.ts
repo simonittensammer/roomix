@@ -6,6 +6,7 @@ import {Room} from '../models/room';
 import {BehaviorSubject} from 'rxjs';
 import {Member} from '../models/member';
 import {User} from '../models/user';
+import {MemberDTO} from '../models/dto/memberDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -56,6 +57,10 @@ export class RoomService {
     }
 
     addMember(username: string, roomId: number) {
-        return this.http.post(GlobalConstants.apiUrl + '/room/member', {username, roomId});
+        return this.http.post(GlobalConstants.apiUrl + '/room/member', new MemberDTO(username, roomId));
+    }
+
+    removeMember(username: string, roomId: number) {
+        return this.http.delete(GlobalConstants.apiUrl + '/room/member?username=' + username + '&roomId=' + roomId);
     }
 }

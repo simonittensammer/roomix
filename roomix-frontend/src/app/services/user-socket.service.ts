@@ -68,8 +68,8 @@ export class UserSocketService {
                     });
             }
 
-            if (data.type === 'receive-room-invite') {
-                console.log('receive-room-invite');
+            if (data.type === 'room-invite-response') {
+                console.log('room-invite-response');
                 console.log(data.message);
                 /*this.roomService.getMembers(data.message)
                     .pipe(first())
