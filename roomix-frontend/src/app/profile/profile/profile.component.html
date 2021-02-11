@@ -2,7 +2,7 @@
   <div class="half-content">
     <h2>Your Profile</h2>
 
-    <div class="profilePicWrapper">
+    <div class="profilePicWrapper" (click)="changeProfilePic()">
       <img [src]="accountService.sanitizeBase64(user.picUrl)" class="profilePic" alt="profilePic">
       <div class="hoverBox">
         <ion-icon name="brush"></ion-icon>

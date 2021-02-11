@@ -24,4 +24,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+    changeProfilePic() {
+      console.log('change');
+    }
 }
