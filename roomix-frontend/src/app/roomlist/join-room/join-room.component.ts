@@ -45,6 +45,8 @@ export class JoinRoomComponent implements OnInit {
         .subscribe(data => {
           console.log(data);
         });
+
+    this.user.roomInviteList.splice(this.user.roomInviteList.indexOf(roomInvite), 1);
   }
 
   updatePublicRoomLimit() {
