@@ -6,6 +6,7 @@ import {LoginComponent} from '../../account/login/login.component';
 import {AccountService} from '../../services/account.service';
 import {User} from '../../models/user';
 import {Router} from '@angular/router';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-create-room',
@@ -20,6 +21,7 @@ export class CreateRoomComponent implements OnInit {
   constructor(
       private roomlistService: RoomlistService,
       private accountService: AccountService,
+      private userService: UserService,
       private router: Router
   ) { }
 
@@ -29,7 +31,7 @@ export class CreateRoomComponent implements OnInit {
       name: new FormControl('', Validators.required),
       isPrivate: new FormControl(false)
     });
-    this.accountService.userValue.subscribe(
+    this.userService.userValue.subscribe(
           value => {
               this.user = value;
           }
@@ -42,11 +44,11 @@ export class CreateRoomComponent implements OnInit {
       this.roomlistService.createNewRoom(this.user.username, this.newRoomForm.value.name, this.newRoomForm.value.isPrivate)
           .pipe(first())
           .subscribe(data => {
-            this.accountService.getProperMemberList(data.username)
+            this.userService.getProperMemberList(data.username)
                 .pipe(first())
                 .subscribe(data2 => {
                   data.memberList = data2;
-                  this.accountService.updateUserValue(data);
+                  this.userService.updateUserValue(data);
                 });
             console.log('done!');
           });

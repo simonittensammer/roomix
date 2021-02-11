@@ -7,6 +7,7 @@ import {PlaylistService} from '../../services/playlist.service';
 import {AccountService} from '../../services/account.service';
 import {User} from '../../models/user';
 import {PlaySongService} from '../../services/play-song.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
     selector: 'app-room',
@@ -25,6 +26,7 @@ export class RoomComponent implements OnInit {
         public roomService: RoomService,
         private router: Router,
         private accountService: AccountService,
+        private userService: UserService,
         private playSongService: PlaySongService
     ) {
     }
@@ -40,7 +42,7 @@ export class RoomComponent implements OnInit {
                             .subscribe(data2 => {
                                 data.memberList = data2;
                                 console.log(this.room);
-                                this.accountService.userValue.subscribe(
+                                this.userService.userValue.subscribe(
                                     value => {
                                         this.user = value;
                                         this.room = data;

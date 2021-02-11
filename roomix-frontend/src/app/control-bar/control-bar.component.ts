@@ -6,6 +6,7 @@ import {AccountService} from '../services/account.service';
 import {User} from '../models/user';
 import {PlaySongService} from '../services/play-song.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {UserService} from '../services/user.service';
 
 @Component({
     selector: 'app-control-bar',
@@ -22,6 +23,7 @@ export class ControlBarComponent implements OnInit {
     constructor(
         private roomService: RoomService,
         private accountService: AccountService,
+        private userService: UserService,
         public playSongService: PlaySongService,
         private sanitizer: DomSanitizer
     ) {
@@ -31,7 +33,7 @@ export class ControlBarComponent implements OnInit {
         this.roomService.roomValue.subscribe(
             value => {
                 this.room = value;
-                this.accountService.userValue.subscribe(
+                this.userService.userValue.subscribe(
                     value2 => {
                         this.user = value2;
                         console.log(this.room);

@@ -3,6 +3,7 @@ import {AccountService} from '../../services/account.service';
 import {User} from '../../models/user';
 import {first} from 'rxjs/operators';
 import {FriendRequest} from '../../models/friend-request';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-friend-requests',
@@ -16,10 +17,11 @@ export class FriendRequestsComponent implements OnInit {
 
   constructor(
       private accountService: AccountService,
+      private userService: UserService,
   ) { }
 
   ngOnInit() {
-    this.accountService.userValue.subscribe(
+    this.userService.userValue.subscribe(
         value => {
           this.user = value;
         }

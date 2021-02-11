@@ -11,53 +11,26 @@ import {RoomInvite} from '../models/room-invite';
 import {RoomService} from './room.service';
 import {FriendRequestDTO} from '../models/dto/friendRequestDTO';
 import {RoomInviteDTO} from '../models/dto/roomInviteDTO';
+import {UserSocketService} from './user-socket.service';
+import {UserService} from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  private userSubject: BehaviorSubject<User>;
 
   constructor(
       private router: Router,
       private http: HttpClient,
-      private roomService: RoomService
-  ) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
-  }
-
-  public updateIsLoggedIn(loggedIn: boolean) {
-  }
-
-  public get userValue() {
-    return this.userSubject.asObservable();
-  }
-
-  public updateUserValue(user: User) {
-
-    localStorage.setItem('user', JSON.stringify(user));
-    this.userSubject.next(user);
-  }
-
-  getProperMemberList(username) {
-    return this.http.get<Member[]>(GlobalConstants.apiUrl + '/user/' + username + '/members');
-  }
-
-  getProperFriendList(username) {
-    return this.http.get<User[]>(GlobalConstants.apiUrl + '/user/' + username + '/friends');
-  }
-
-  getProperFriendRequestList(username) {
-    return this.http.get<FriendRequest[]>(GlobalConstants.apiUrl + '/user/' + username + '/friendRequests');
-  }
-
-  getProperRoomInviteList(username) {
-    return this.http.get<RoomInvite[]>(GlobalConstants.apiUrl + '/user/' + username + '/roomInvites');
-  }
+      private roomService: RoomService,
+      private userSocketService: UserSocketService,
+      private userService: UserService
+) {}
 
   login(username, password) {
     return this.http.post<User>(GlobalConstants.apiUrl + '/user/login', { username, password })
         .pipe(map(user => {
+          this.userSocketService.connect(user.username);
           return user;
         }));
   }
@@ -68,7 +41,7 @@ export class AccountService {
     // localStorage.removeItem('room');
     this.roomService.updateRoomValue(null);
     // this.userSubject.next(null);
-    this.updateUserValue(null);
+    this.userService.updateUserValue(null);
     this.router.navigate(['/login']);
   }
 

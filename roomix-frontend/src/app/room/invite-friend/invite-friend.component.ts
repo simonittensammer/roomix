@@ -4,6 +4,7 @@ import {AccountService} from '../../services/account.service';
 import {User} from '../../models/user';
 import {first} from 'rxjs/operators';
 import {Room} from '../../models/room';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-invite-friend',
@@ -18,7 +19,8 @@ export class InviteFriendComponent implements OnInit {
 
   constructor(
       public roomService: RoomService,
-      private accountService: AccountService
+      private accountService: AccountService,
+      private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -27,7 +29,7 @@ export class InviteFriendComponent implements OnInit {
           this.room = value;
         }
     );
-    this.accountService.userValue.subscribe(
+    this.userService.userValue.subscribe(
         value => {
           this.user = value;
         }

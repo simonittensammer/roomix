@@ -7,6 +7,7 @@ import {RoomInvite} from '../../models/room-invite';
 import {RoomService} from '../../services/room.service';
 import {Room} from '../../models/room';
 import {compareNumbers} from '@angular/compiler-cli/src/diagnostics/typescript_version';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-join-room',
@@ -20,10 +21,11 @@ export class JoinRoomComponent implements OnInit {
   limit = 10;
 
   constructor(private accountService: AccountService,
+              private userService: UserService,
               private roomService: RoomService) { }
 
   ngOnInit() {
-    this.accountService.userValue.subscribe(
+    this.userService.userValue.subscribe(
         value => {
           this.user = value;
         }

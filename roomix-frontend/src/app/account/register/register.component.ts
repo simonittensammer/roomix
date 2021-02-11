@@ -4,6 +4,7 @@ import {first} from 'rxjs/operators';
 import {AccountService} from '../../services/account.service';
 import {LoginComponent} from '../login/login.component';
 import {Router} from '@angular/router';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
       private accountService: AccountService,
+      private userService: UserService,
       private router: Router,
   ) { }
 
@@ -38,12 +40,11 @@ export class RegisterComponent implements OnInit {
             this.accountService.login(username, password)
                 .pipe(first())
                 .subscribe(data => {
-                  this.accountService.getProperMemberList(data.username)
+                  this.userService.getProperMemberList(data.username)
                       .pipe(first())
                       .subscribe(data2 => {
                         data.memberList = data2;
-                        this.accountService.updateUserValue(data);
-                        this.accountService.updateIsLoggedIn(true);
+                        this.userService.updateUserValue(data);
                         this.router.navigate(['roomlist']);
                       });
                 });

@@ -3,6 +3,7 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Route
 import { Observable } from 'rxjs';
 import {AccountService} from '../services/account.service';
 import {User} from '../models/user';
+import {UserService} from '../services/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,11 @@ export class AuthGuard implements CanActivate {
 
   constructor(
       private router: Router,
-      private accountService: AccountService
+      private userService: UserService,
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    this.accountService.userValue.subscribe(
+    this.userService.userValue.subscribe(
         value => {
           this.user = value;
         }

@@ -4,6 +4,7 @@ import {AccountService} from '../../services/account.service';
 import {first} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {User} from '../../models/user';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
       private accountService: AccountService,
+      private userService: UserService,
       private router: Router
   ) { }
 
@@ -26,7 +28,7 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required)
     });
 
-    this.accountService.userValue.subscribe(
+    this.userService.userValue.subscribe(
       value => {
         this.user = value;
       }
@@ -48,24 +50,23 @@ export class LoginComponent implements OnInit {
       this.accountService.login(username, password)
           .pipe(first())
           .subscribe(data => {
-              this.accountService.getProperMemberList(data.username)
+              this.userService.getProperMemberList(data.username)
                   .pipe(first())
                   .subscribe(data2 => {
                       data.memberList = data2;
-                      this.accountService.getProperFriendRequestList(data.username)
+                      this.userService.getProperFriendRequestList(data.username)
                           .pipe(first())
                           .subscribe( data3 => {
                               data.friendRequestList = data3;
-                              this.accountService.getProperFriendList(data.username)
+                              this.userService.getProperFriendList(data.username)
                                   .pipe(first())
                                   .subscribe( data4 => {
                                       data.friendList = data4;
-                                      this.accountService.getProperRoomInviteList(data.username)
+                                      this.userService.getProperRoomInviteList(data.username)
                                           .pipe(first())
                                           .subscribe( data5 => {
                                               data.roomInviteList = data5;
-                                              this.accountService.updateUserValue(data);
-                                              this.accountService.updateIsLoggedIn(true);
+                                              this.userService.updateUserValue(data);
                                               this.router.navigate(['roomlist']);
                                           });
                                   });

@@ -4,6 +4,7 @@ import {User} from '../../models/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RoomService} from '../../services/room.service';
 import {first} from 'rxjs/operators';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-friendlist',
@@ -19,11 +20,12 @@ export class FriendlistComponent implements OnInit {
   constructor(
       private accountService: AccountService,
       private route: ActivatedRoute,
+      private userService: UserService,
       private router: Router
   ) { }
 
   ngOnInit() {
-    this.accountService.userValue.subscribe(
+    this.userService.userValue.subscribe(
         value => {
           this.user = value;
         }
