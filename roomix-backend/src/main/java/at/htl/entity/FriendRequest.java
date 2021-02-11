@@ -12,12 +12,12 @@ public class FriendRequest {
     @Column(name = "FRQ_ID")
     Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonbTransient
     @JoinColumn(name = "FRQ_SND_ID")
     User sender;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonbTransient
     @JoinColumn(name = "FRQ_RCV_ID")
     User receiver;

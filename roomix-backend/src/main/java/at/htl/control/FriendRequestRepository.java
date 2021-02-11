@@ -98,6 +98,7 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
             receiver.getFriendList().add(sender);
         }
 
+        delete(friendRequest);
         receiver.getFriendRequestList().remove(friendRequest);
 
         notifyObserversRespond(sender.getUsername(), receiver.getUsername());
