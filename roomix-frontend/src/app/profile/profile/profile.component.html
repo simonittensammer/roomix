@@ -1,8 +1,19 @@
 <div class="content half-content-wrapper">
   <div class="half-content">
-    <h2>Your Profile</h2>
+    <h2>Profile</h2>
 
-    <img [src]="accountService.sanitizeBase64(user.picUrl)" alt="profilePic">
+    <div class="profilePicWrapper" (click)="changeProfilePic()">
+      <img [src]="accountService.sanitizeBase64(user.picUrl)" class="profilePic" alt="profilePic">
+      <div class="hoverBox">
+        <ion-icon name="brush"></ion-icon>
+        Change
+      </div>
+    </div>
+
+    <div class="userInfoBox">
+      <h3>{{ user.displayname }}</h3>
+      <h4>@{{ user.username }}</h4>
+    </div>
   </div>
 
   <div class="half-content">

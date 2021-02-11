@@ -1,12 +1,12 @@
 <!--<div class="content">-->
-<h2>Your Friends</h2>
+<h2>Friends</h2>
 
 <app-add-friend *ngIf="accountService.addFriendVisible"></app-add-friend>
 
 <app-friend-requests></app-friend-requests>
 
 <h3 class="ulHeadline" (click)="collapseList()">
-    Your Friends
+    Friends
 </h3>
 <a class="buttonLink buttonRight">
     <button (click)="accountService.showAddFriend()">Add Friends</button>
