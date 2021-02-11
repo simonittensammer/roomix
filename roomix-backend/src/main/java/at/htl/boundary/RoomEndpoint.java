@@ -17,8 +17,10 @@ import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.io.StringReader;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -138,19 +140,16 @@ public class RoomEndpoint {
 
     @POST
     @Path("/member")
-    public Response addMember(JsonObject jsonObject) {
-        User user = userRepository.findByName(jsonObject.getString("username"));
+    public Response addMember(MemberDTO memberDTO, @Context UriInfo uriInfo) {
+        User user = userRepository.findByName(memberDTO.getUsername());
+        Room room = roomRepository.findById(memberDTO.getRoomId());
 
-        if (user != null) {
-            Room room = roomRepository.findById(jsonObject.getJsonNumber("roomId").longValue());
+        if (user == null || room == null) return Response.status(Response.Status.BAD_REQUEST).build();
 
-            Member member = new Member(user, room, "member");
-            memberRepository.persist(member);
+        Member member = new Member(user, room, "member");
+        memberRepository.persist(member);
 
-            return Response.status(201).entity(memberRepository.getSerializedMember(member.getId())).build();
-        }
-
-        return Response.status(406).entity("user does not exist").build();
+        return Response.created(uriInfo.getAbsolutePath()).entity(member).build();
     }
 
     @DELETE
@@ -168,7 +167,7 @@ public class RoomEndpoint {
         room.getMemberList().remove(member);
         user.getMemberList().remove(member);
         memberRepository.delete(member);
-/////
+
         return Response.noContent().build();
     }
 
