@@ -88,10 +88,13 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
 
     public boolean respondToFriendRequest(Long friendRequestId, boolean response) {
         FriendRequest friendRequest = findById(friendRequestId);
+
+        if (friendRequest == null) return false;
+
         User receiver = friendRequest.getReceiver();
         User sender = friendRequest.getSender();
 
-        if (friendRequest == null || receiver == null || sender == null) return false;
+        if (receiver == null || sender == null) return false;
 
         if (response) {
             sender.getFriendList().add(receiver);

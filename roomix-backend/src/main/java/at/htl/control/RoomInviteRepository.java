@@ -96,11 +96,14 @@ public class RoomInviteRepository implements PanacheRepository<RoomInvite> {
 
     public boolean reponseToRoomInvite(Long roomInviteId, boolean response) {
         RoomInvite roomInvite = findById(roomInviteId);
+
+        if (roomInvite == null) return false;
+
         User receiver = roomInvite.getReceiver();
         User sender = roomInvite.getSender();
         Room room =roomInvite.getRoom();
 
-        if (roomInvite == null || receiver == null || sender == null || room == null) return false;
+        if (receiver == null || sender == null || room == null) return false;
 
         if (response) {
             Member member = new Member(receiver, room, "member");
