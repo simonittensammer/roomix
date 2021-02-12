@@ -1,6 +1,9 @@
 <h2>Chat</h2>
 
-<div *ngIf="playSongService.connected && playSongService.room.id == room.id"><li class="listEntry" *ngFor="let chatMessage of room.messageList">
+<div #scrollBox class="scrollBox" *ngIf="playSongService.connected && playSongService.room.id == room.id">
+    <button class="scrollDownButton" (click)="scrollDown()" [disabled]="scrolledDown">Scroll down</button>
+
+    <li class="listEntry" *ngFor="let chatMessage of room.messageList">
         <div class="listTextContainer">
             <p class="listHeadline">
                 {{ chatMessage.sender }}

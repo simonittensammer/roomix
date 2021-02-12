@@ -1,3 +1,16 @@
+.scrollBox {
+  height: 70%;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.scrollDownButton {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  z-index: 999;
+}
+
 .chat-message {
   background-color: #2a2a2a;
   padding: 10px;

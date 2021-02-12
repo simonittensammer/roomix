@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChatMessageDTO} from "../../../models/dto/chatMessageDTO";
 import {RoomService} from "../../../services/room.service";
 import {Room} from "../../../models/room";
@@ -15,11 +15,13 @@ import {AccountService} from '../../../services/account.service';
 })
 export class ChatComponent implements OnInit {
 
+    @ViewChild('scrollBox') private scrollBox: ElementRef;
     room: Room;
     user: User;
     messages: ChatMessageDTO[];
 
     message: string;
+    scrolledDown: boolean;
 
     constructor(
         private roomService: RoomService,
@@ -55,5 +57,11 @@ export class ChatComponent implements OnInit {
         }
         console.log('is not member');
         return false;
+    }
+
+    scrollDown() {
+        try {
+            this.scrollBox.nativeElement.scrollTop = this.scrollBox.nativeElement.scrollHeight;
+        } catch (err) { }
     }
 }
