@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Room} from '../../models/room';
+import {Room} from '../../../models/room';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {RoomService} from '../../services/room.service';
+import {RoomService} from '../../../services/room.service';
 import {first} from 'rxjs/operators';
-import {PlaylistService} from '../../services/playlist.service';
-import {AccountService} from '../../services/account.service';
-import {User} from '../../models/user';
-import {PlaySongService} from '../../services/play-song.service';
-import {UserService} from '../../services/user.service';
+import {PlaylistService} from '../../../services/playlist.service';
+import {AccountService} from '../../../services/account.service';
+import {User} from '../../../models/user';
+import {PlaySongService} from '../../../services/play-song.service';
+import {UserService} from '../../../services/user.service';
 
 @Component({
     selector: 'app-room',
@@ -20,6 +20,8 @@ export class RoomComponent implements OnInit {
     room: Room;
     listeningRoom: Room;
     collapsed: boolean;
+    joined: boolean;
+    left: boolean;
 
     constructor(
         private playlistService: PlaylistService,
@@ -82,10 +84,18 @@ export class RoomComponent implements OnInit {
         this.roomService.addMember(this.user.username, this.room.id).subscribe(
             value => {
                 console.log(value);
-                /*this.accountService.getProperMemberList(this.user.username).subscribe(value2 => {
+                this.userService.getProperMemberList(this.user.username).subscribe(value2 => {
                     this.user.memberList = value2;
-                    this.accountService.updateUserValue(this.user);
-                });*/
+                    this.userService.updateUserValue(this.user);
+                    this.roomService.getMembers(this.room.id)
+                        .pipe(first())
+                        .subscribe( value3 => {
+                            this.joined = true;
+                            this.left = false;
+                            this.room.memberList = value3;
+                            this.roomService.updateRoomValue(this.room);
+                        });
+                });
             });
     }
 
@@ -95,6 +105,18 @@ export class RoomComponent implements OnInit {
         this.roomService.removeMember(this.user.username, this.room.id).subscribe(
             value => {
                 console.log(value);
+                this.roomService.getMembers(this.room.id)
+                    .pipe(first())
+                    .subscribe( value2 => {
+                        this.room.memberList = value2;
+                        this.roomService.updateRoomValue(this.room);
+                        this.userService.getProperMemberList(this.user.username).subscribe(memberList => {
+                            this.user.memberList = memberList;
+                            this.joined = false;
+                            this.left = true;
+                            this.userService.updateUserValue(this.user);
+                        });
+                    });
             }
         );
     }

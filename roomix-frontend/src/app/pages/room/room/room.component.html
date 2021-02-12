@@ -3,7 +3,7 @@
 
         <a class="buttonLink buttonRight"
            (click)="joinRoomFunc()"
-           *ngIf="!userIsMember(); else leaveRoom">
+           *ngIf="(!userIsMember() && !joined) || (userIsMember() && left); else leaveRoom">
             <button class="buttonGreen">Join</button>
         </a>
 
