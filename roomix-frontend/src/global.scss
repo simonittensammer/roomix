@@ -208,7 +208,12 @@ button:active {
 }
 
 label {
-  margin: 0 10%;
+  margin-left: 10%;
+}
+
+input[type="checkbox"] {
+  margin: 15px;
+  transform: scale(1.25);
 }
 
 .errorMsg {
