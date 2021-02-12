@@ -1,16 +1,15 @@
 package at.htl.socket;
 
-import at.htl.control.PlaylistRepository;
-import at.htl.control.RoomRepository;
-import at.htl.control.UserRepository;
+import at.htl.control.*;
+import at.htl.dto.ChatMessageDTO;
 import at.htl.dto.PlaySongMessageDTO;
 import at.htl.dto.SocketMessageDTO;
-import at.htl.entity.Playlist;
-import at.htl.entity.Room;
-import at.htl.entity.Song;
-import at.htl.entity.User;
+import at.htl.entity.*;
 import at.htl.observers.PlaylistControllerObserver;
 import at.htl.observers.PlaylistRepositoryObserver;
+import io.smallrye.mutiny.Uni;
+import org.eclipse.microprofile.context.ManagedExecutor;
+import org.eclipse.microprofile.context.ThreadContext;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -41,7 +40,13 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
     private RoomRepository roomRepository;
 
     @Inject
+    private MessageRepository messageRepository;
+
+    @Inject
     private PlaylistRepository playlistRepository;
+
+    @Inject
+    ManagedExecutor managedExecutor;
 
     @Inject
     public void init() {
@@ -97,6 +102,27 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
             playlistControllers.get(roomId).removeObserver(this);
             playlistControllers.remove(roomId);
         }
+    }
+
+    public void chatMessage(String message, Long roomId, String username) {
+
+
+        try {
+            User user = members.get(roomId).get(username);
+            Room room = rooms.get(roomId);
+            Message chatMessage = new Message(username, room, message);
+
+            managedExecutor.submit(() -> messageRepository.persist(chatMessage)).get();
+
+            ChatMessageDTO chatMessageDTO = new ChatMessageDTO(username, chatMessage.getCreationDate(), message);
+            SocketMessageDTO socketMessageDTO = new SocketMessageDTO("chat-message", chatMessageDTO);
+
+            broadcast(roomId, socketMessageDTO);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void broadcast(Long roomId, SocketMessageDTO message) {
