@@ -1,5 +1,6 @@
 package at.htl.control;
 
+import at.htl.dto.ChatMessageDTO;
 import at.htl.dto.RoomUpdateDTO;
 import at.htl.entity.Room;
 import at.htl.entity.Song;
@@ -75,5 +76,21 @@ public class RoomRepository implements PanacheRepository<Room> {
         room.setPrivate(roomUpdateDTO.isPrivate());
 
         return room;
+    }
+
+    public List<ChatMessageDTO> getAllMessagesInRoom(Long roomId) {
+        Room room = findById(roomId);
+
+        if (room == null) return null;
+
+        List<ChatMessageDTO> messages = room.getMessageList().stream()
+                .map(message -> new ChatMessageDTO(
+                        message.getSender(),
+                        message.getCreationDate(),
+                        message.getContent()))
+                .limit(50)
+                .collect(Collectors.toList());
+
+        return messages;
     }
 }
