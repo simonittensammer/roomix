@@ -12,12 +12,10 @@ public class Message {
     @Column(name = "MSG_ID")
     Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonbTransient
-    @JoinColumn(name = "MSG_MBR_ID")
-    Member member;
+    @Column(name = "MSG_SENDER")
+    String sender;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JsonbTransient
     @JoinColumn(name = "MSG_RM_ID")
     Room room;
@@ -32,8 +30,15 @@ public class Message {
         this.creationDate = LocalDateTime.now();
     }
 
-    public Message(Member member, Room room, String content, LocalDateTime creationDate) {
-        this.member = member;
+    public Message(String sender, Room room, String content) {
+        this();
+        this.sender = sender;
+        this.room = room;
+        this.content = content;
+    }
+
+    public Message(String sender, Room room, String content, LocalDateTime creationDate) {
+        this.sender = sender;
         this.room = room;
         this.content = content;
         this.creationDate = LocalDateTime.now();
@@ -47,12 +52,12 @@ public class Message {
         this.id = id;
     }
 
-    public Member getMember() {
-        return member;
+    public String getSender() {
+        return sender;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     public Room getRoom() {

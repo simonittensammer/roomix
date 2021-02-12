@@ -1,10 +1,14 @@
 package at.htl.socket;
 
 import at.htl.control.RoomRepository;
+import at.htl.dto.SocketMessageDTO;
+import at.htl.entity.Message;
 import at.htl.entity.Room;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.transaction.Transactional;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
@@ -57,7 +61,10 @@ public class RoomSocket {
 
     @OnMessage
     public void onMessage(String message, @PathParam("roomId") Long roomId, @PathParam("username") String username) {
+        Jsonb jsonb = JsonbBuilder.create();
+        SocketMessageDTO socketMessageDTO = jsonb.fromJson(message, SocketMessageDTO.class);
 
+        roomControllerService.chatMessage(socketMessageDTO.getMessage().toString(), roomId, username);
     }
 
     private void broadcast(String message) {

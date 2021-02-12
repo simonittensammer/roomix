@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.*;
+import at.htl.dto.ChatMessageDTO;
 import at.htl.dto.MemberDTO;
 import at.htl.dto.RoomDTO;
 import at.htl.dto.RoomUpdateDTO;
@@ -46,6 +47,9 @@ public class RoomEndpoint {
 
     @Inject
     PlaylistRepository playlistRepository;
+
+    @Inject
+    MessageRepository messageRepository;
 
     @GET
     public List<Room> getAll() {
@@ -245,5 +249,22 @@ public class RoomEndpoint {
         }
 
         return Response.status(406).entity("room or song does not exist").build();
+    }
+
+    @GET
+    @Path("messages/{roomId}")
+    public List<ChatMessageDTO> getMessagesInRoom(@PathParam("roomId") Long roomId) {
+        return roomRepository.getAllMessagesInRoom(roomId);
+    }
+
+    @POST
+    @Path("messages/{roomId}")
+    public Response addChatMessage(ChatMessageDTO chatMessageDTO, @PathParam("roomId") Long roomId) {
+        User user = userRepository.findByName(chatMessageDTO.getSender());
+        Room room = roomRepository.findById(roomId);
+        Message message = new Message(user.getUsername(), room, chatMessageDTO.getContent());
+
+        messageRepository.persist(message);
+        return Response.ok(message).build();
     }
 }

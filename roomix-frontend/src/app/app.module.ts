@@ -25,6 +25,7 @@ import {ProfileComponent} from './profile/profile/profile.component';
 import {JoinRoomComponent} from './roomlist/join-room/join-room.component';
 import {InviteFriendComponent} from './room/invite-friend/invite-friend.component';
 import {AddFriendComponent} from './friendlist/add-friend/add-friend.component';
+import {ChatComponent} from "./room/chat/chat.component";
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import {AddFriendComponent} from './friendlist/add-friend/add-friend.component';
         FriendRequestsComponent,
         ProfileComponent,
         InviteFriendComponent,
-        AddFriendComponent
+        AddFriendComponent,
+        ChatComponent
     ],
   entryComponents: [],
   imports: [

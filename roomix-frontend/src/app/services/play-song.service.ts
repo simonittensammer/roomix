@@ -8,6 +8,7 @@ import {Room} from '../models/room';
 import {SocketMessageDTO} from '../models/dto/SocketMessageDTO';
 import {PlaySongMessageDTO} from '../models/dto/PlaySongMessageDTO';
 import {BehaviorSubject} from 'rxjs';
+import {ChatMessageDTO} from "../models/dto/chatMessageDTO";
 
 @Injectable({
     providedIn: 'root'
@@ -41,9 +42,14 @@ export class PlaySongService {
     }
 
     connect(username, roomid) {
-        this.roomService.getRoom(roomid).subscribe(value => {
-            this.updateRoomValue(value);
-            return this.room = value;
+        this.roomService.getRoom(roomid).subscribe(room => {
+
+            this.roomService.getMessages(roomid).subscribe(messages => {
+                this.room = room;
+                this.room.messageList = messages;
+                this.updateRoomValue(room);
+                this.roomService.updateRoomValue(this.room);
+            });
         });
 
         this.songSocket = webSocket(
@@ -78,10 +84,17 @@ export class PlaySongService {
                     this.roomService.updateRoomValue(this.room);
                 }
 
-                else if (data.type === 'stop') {
+               else if (data.type === 'stop') {
                     console.log('stop playing song');
                     this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(null);
 
+                }
+
+               else if (data.type === 'chat-message') {
+                   const chatMessage: ChatMessageDTO = data.message as ChatMessageDTO;
+                   console.log(chatMessage.sender + ': ' + chatMessage.content);
+                   this.room.messageList.push(chatMessage);
+                   this.roomService.updateRoomValue(this.room);
                 }
             }, error => {
                 console.log(error);
@@ -96,5 +109,10 @@ export class PlaySongService {
         this.currentSongTimer = 0;
         this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
         this.connected = false;
+    }
+
+    // tslint:disable-next-line:ban-types
+    sendChatMessage(message: String) {
+        this.songSocket.next(new SocketMessageDTO('chat-message', message));
     }
 }
