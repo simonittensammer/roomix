@@ -71,12 +71,18 @@ export class UserSocketService {
             if (data.type === 'room-invite-response') {
                 console.log('room-invite-response');
                 console.log(data.message);
-                /*this.roomService.getMembers(data.message)
+                this.roomService.getMembers(data.message)
                     .pipe(first())
                     .subscribe( value => {
                         this.room.memberList = value;
                         this.roomService.updateRoomValue(this.room);
-                    });*/
+                    });
+                this.userService.getProperMemberList(username)
+                    .pipe(first())
+                    .subscribe( value => {
+                        this.user.memberList = value;
+                        this.userService.updateUserValue(this.user);
+                    });
             }
         });
     }
