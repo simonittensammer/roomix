@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
-import {Room} from '../../../models/room';
-import {RoomService} from '../../../services/room.service';
-import {Song} from '../../../models/song';
-import {PlaylistService} from '../../../services/playlist.service';
-import {PlaySongService} from '../../../services/play-song.service';
+import {Room} from '../../../../models/room';
+import {RoomService} from '../../../../services/room.service';
+import {Song} from '../../../../models/song';
+import {PlaylistService} from '../../../../services/playlist.service';
+import {PlaySongService} from '../../../../services/play-song.service';
 
 @Component({
   selector: 'app-playlist',

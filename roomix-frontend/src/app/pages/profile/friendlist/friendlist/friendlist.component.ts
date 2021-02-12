@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountService} from '../../services/account.service';
-import {User} from '../../models/user';
+import {AccountService} from '../../../../services/account.service';
+import {User} from '../../../../models/user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RoomService} from '../../services/room.service';
+import {RoomService} from '../../../../services/room.service';
 import {first} from 'rxjs/operators';
-import {UserService} from '../../services/user.service';
+import {UserService} from '../../../../services/user.service';
 
 @Component({
   selector: 'app-friendlist',

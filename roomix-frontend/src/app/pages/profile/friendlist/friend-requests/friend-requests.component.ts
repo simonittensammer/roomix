@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountService} from '../../services/account.service';
-import {User} from '../../models/user';
+import {AccountService} from '../../../../services/account.service';
+import {User} from '../../../../models/user';
 import {first} from 'rxjs/operators';
-import {FriendRequest} from '../../models/friend-request';
-import {UserService} from '../../services/user.service';
+import {FriendRequest} from '../../../../models/friend-request';
+import {UserService} from '../../../../services/user.service';
 
 @Component({
   selector: 'app-friend-requests',

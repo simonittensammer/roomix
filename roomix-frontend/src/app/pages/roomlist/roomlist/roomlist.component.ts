@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountService} from '../../services/account.service';
-import {User} from '../../models/user';
+import {AccountService} from '../../../services/account.service';
+import {User} from '../../../models/user';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Room} from '../../models/room';
+import {Room} from '../../../models/room';
 import {first} from 'rxjs/operators';
-import {RoomlistService} from '../../services/roomlist.service';
-import {UserService} from '../../services/user.service';
+import {RoomlistService} from '../../../services/roomlist.service';
+import {UserService} from '../../../services/user.service';
 
 @Component({
   selector: 'app-roomlist',

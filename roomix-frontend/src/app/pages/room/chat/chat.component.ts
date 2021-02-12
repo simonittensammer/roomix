@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ChatMessageDTO} from "../../models/dto/chatMessageDTO";
-import {RoomService} from "../../services/room.service";
-import {Room} from "../../models/room";
-import {User} from "../../models/user";
-import {UserService} from "../../services/user.service";
-import {UserSocketService} from "../../services/user-socket.service";
-import {PlaySongService} from "../../services/play-song.service";
+import {ChatMessageDTO} from "../../../models/dto/chatMessageDTO";
+import {RoomService} from "../../../services/room.service";
+import {Room} from "../../../models/room";
+import {User} from "../../../models/user";
+import {UserService} from "../../../services/user.service";
+import {UserSocketService} from "../../../services/user-socket.service";
+import {PlaySongService} from "../../../services/play-song.service";
 
 @Component({
     selector: 'app-chat',

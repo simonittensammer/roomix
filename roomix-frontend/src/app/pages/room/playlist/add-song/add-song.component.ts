@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, ElementRef, OnInit, Output, ViewChild} from '@angular/core';
 import {debounceTime, distinctUntilChanged, filter, first, map, pluck} from 'rxjs/operators';
 import {fromEvent} from 'rxjs';
-import {Song} from '../../../models/song';
-import {PlaylistService} from '../../../services/playlist.service';
+import {Song} from '../../../../models/song';
+import {PlaylistService} from '../../../../services/playlist.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {RoomService} from '../../../services/room.service';
-import {Room} from '../../../models/room';
+import {RoomService} from '../../../../services/room.service';
+import {Room} from '../../../../models/room';
 
 @Component({
   selector: 'app-add-song',

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {RoomService} from '../../services/room.service';
-import {AccountService} from '../../services/account.service';
-import {User} from '../../models/user';
+import {RoomService} from '../../../services/room.service';
+import {AccountService} from '../../../services/account.service';
+import {User} from '../../../models/user';
 import {first} from 'rxjs/operators';
-import {Room} from '../../models/room';
-import {UserService} from '../../services/user.service';
+import {Room} from '../../../models/room';
+import {UserService} from '../../../services/user.service';
 
 @Component({
   selector: 'app-invite-friend',
