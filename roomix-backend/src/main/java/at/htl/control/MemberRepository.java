@@ -44,9 +44,6 @@ public class MemberRepository implements PanacheRepository<Member> {
         JsonObject userJson = jsonReaderUser.readObject();
         jsonReaderUser.close();
 
-        System.out.println("####################################################");
-        System.out.println(jsonb.toJson(member.getUser().toString()));
-
         return Json.createObjectBuilder()
                 .add("id", member.getId())
                 .add("role", member.getRole())
@@ -58,7 +55,7 @@ public class MemberRepository implements PanacheRepository<Member> {
     public Member getMemberOfRoom(User user, Room room) {
         return user.getMemberList()
                 .stream()
-                .filter(member -> member.getRoom().equals(room))
+                .filter(member -> member.getRoom().getId().equals(room.getId()))
                 .findFirst()
                 .orElse(null);
     }
