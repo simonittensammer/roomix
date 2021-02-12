@@ -11,25 +11,15 @@
   z-index: 999;
 }
 
-.chat-message {
-  background-color: #2a2a2a;
-  padding: 10px;
-  margin-bottom: 5px;
-  display: table;
-  min-width: 15%;
-}
-
 .sendMessageBox {
   position: fixed;
   right: 50px;
-  bottom: 10vh;
+  bottom: 12.5vh;
 
   width: 41vw;
   height: 90px;
   padding: 15px 2.5vw 2.5vh 2.5vw;
-  //margin-bottom: -12.5vh;
   background: var(--ion-background-color);
-  //box-shadow: 0 0 15px -5px var(--ion-color-dark-contrast);
 }
 
 .messageInput {

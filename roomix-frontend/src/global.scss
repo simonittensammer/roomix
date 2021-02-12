@@ -129,6 +129,10 @@ input {
   border-radius: 5px;
 }
 
+.content > input {
+  background: var(--ion-card-background);
+}
+
 button {
   background: var(--ion-color-primary);
   padding: 10px 20px;
