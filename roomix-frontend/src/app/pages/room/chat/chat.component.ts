@@ -6,6 +6,7 @@ import {User} from "../../../models/user";
 import {UserService} from "../../../services/user.service";
 import {UserSocketService} from "../../../services/user-socket.service";
 import {PlaySongService} from "../../../services/play-song.service";
+import {AccountService} from '../../../services/account.service';
 
 @Component({
     selector: 'app-chat',
@@ -23,7 +24,8 @@ export class ChatComponent implements OnInit {
     constructor(
         private roomService: RoomService,
         private userService: UserService,
-        private playSongService: PlaySongService
+        private playSongService: PlaySongService,
+        public accountService: AccountService
     ) {
     }
 

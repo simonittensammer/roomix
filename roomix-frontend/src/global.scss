@@ -314,14 +314,21 @@ ul {
   white-space: nowrap;
 }
 
-.listHeadline, .listText {
-  line-height: 25px;
-  width: 100%;
-}
-
 .listHeadline {
   font-weight: bolder;
   font-size: 1.25em;
+}
+
+.listInfo {
+  opacity: .5;
+  font-weight: lighter;
+  font-size: .75em;
+  margin-left: 15px;
+}
+
+.listText {
+  line-height: 25px;
+  width: 100%;
 }
 
 .listButtonContainer {
