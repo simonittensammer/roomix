@@ -4,7 +4,7 @@
 </div>
 <div *ngIf="playSongService.connected">
     <div class="chat-message" *ngFor="let chatMessage of room.messageList">
-        <b>{{chatMessage.sender}}</b> {{chatMessage.timestamp}}
+        <b>{{chatMessage.sender}}</b> {{chatMessage.timestamp | date: 'dd:mm:yy HH:mm'}}
         <p>{{chatMessage.content}}</p>
     </div>
 </div>
