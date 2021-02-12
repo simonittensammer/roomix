@@ -1,15 +1,6 @@
-<div>
-    <input type="text" [(ngModel)]="message" [disabled]="!playSongService.connected">
-    <button (click)="sendMessage()" [disabled]="!playSongService.connected">send message</button>
-</div>
+<h2>Chat</h2>
 
-<div *ngIf="playSongService.connected">
-<!--    <div class="chat-message" *ngFor="let chatMessage of room.messageList">-->
-<!--        <b>{{chatMessage.sender}}</b> {{chatMessage.timestamp | date: 'dd:mm:yy HH:mm'}}-->
-<!--        <p>{{chatMessage.content}}</p>-->
-<!--    </div>-->
-
-    <li class="listEntry" *ngFor="let chatMessage of room.messageList">
+<div *ngIf="playSongService.connected"><li class="listEntry" *ngFor="let chatMessage of room.messageList">
         <div class="listTextContainer">
             <p class="listHeadline">
                 {{ chatMessage.sender }}
@@ -18,4 +9,9 @@
             <p class="listText">{{ chatMessage.content }}</p>
         </div>
     </li>
+
+    <div class="sendMessageBox">
+        <input type="text" class="messageInput" placeholder="Type a Message" [(ngModel)]="message" [disabled]="!playSongService.connected">
+        <button class="sendButton" (click)="sendMessage()" [disabled]="!playSongService.connected">Send</button>
+    </div>
 </div>
