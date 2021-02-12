@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {RoomlistService} from '../../services/roomlist.service';
+import {RoomlistService} from '../../../services/roomlist.service';
 import {first} from 'rxjs/operators';
-import {LoginComponent} from '../../account/login/login.component';
-import {AccountService} from '../../services/account.service';
-import {User} from '../../models/user';
+import {LoginComponent} from '../../../account/login/login.component';
+import {AccountService} from '../../../services/account.service';
+import {User} from '../../../models/user';
 import {Router} from '@angular/router';
-import {UserService} from '../../services/user.service';
+import {UserService} from '../../../services/user.service';
 
 @Component({
     selector: 'app-create-room',
@@ -41,14 +41,17 @@ export class CreateRoomComponent implements OnInit {
 
     onSubmit() {
         if (this.newRoomForm.valid) {
-            this.roomlistService.createNewRoom(this.user.username, this.newRoomForm.value.name, this.newRoomForm.value.isPrivate, this.base64textString)
+            this.roomlistService.createNewRoom(this.user.username, this.newRoomForm.value.name,
+                this.newRoomForm.value.isPrivate, this.base64textString)
                 .pipe(first())
                 .subscribe(data => {
+                    console.log(this.user);
+                    console.log(data);
                     this.userService.getProperMemberList(data.username)
                         .pipe(first())
                         .subscribe(data2 => {
-                            data.memberList = data2;
-                            this.userService.updateUserValue(data);
+                            this.user.memberList = data2;
+                            this.userService.updateUserValue(this.user);
                         });
                     console.log('done!');
                 });
