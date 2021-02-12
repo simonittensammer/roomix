@@ -11,7 +11,7 @@
     </li>
 
     <div class="sendMessageBox">
-        <input type="text" class="messageInput" placeholder="Type a Message" [(ngModel)]="message" [disabled]="!playSongService.connected">
+        <input type="text" class="messageInput" placeholder="Type a Message" [(ngModel)]="message" [disabled]="!playSongService.connected" (keyup.enter)="sendMessage()">
         <button class="sendButton" (click)="sendMessage()" [disabled]="!playSongService.connected">Send</button>
     </div>
 </div>

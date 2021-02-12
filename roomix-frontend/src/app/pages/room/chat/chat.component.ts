@@ -43,6 +43,7 @@ export class ChatComponent implements OnInit {
 
     sendMessage() {
         this.playSongService.sendChatMessage(this.message);
+        this.message = '';
     }
 
     userIsMember() {
