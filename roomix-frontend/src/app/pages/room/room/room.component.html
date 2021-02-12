@@ -1,37 +1,40 @@
 <div class="content half-content-wrapper">
     <div class="half-content">
-
-        <a class="buttonLink buttonRight"
-           (click)="joinRoomFunc()"
-           *ngIf="(!userIsMember() && !joined) || (userIsMember() && left); else leaveRoom">
-            <button class="buttonGreen">Join</button>
-        </a>
-
-        <ng-template #leaveRoom>
-            <a class="buttonLink buttonRight"
-               (click)="leaveRoomFunc()">
-                <button class="buttonRed">Leave</button>
-            </a>
-        </ng-template>
-
-        <a class="buttonLink buttonRight"
-           (click)="playSongService.connect(user.username, room.id)"
-           *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else disconnect">
-            <button>Connect</button>
-        </a>
-
-        <ng-template #disconnect>
-            <a class="buttonLink buttonRight"
-               (click)="playSongService.disconnect()">
-                <button>Disconnect</button>
-            </a>
-        </ng-template>
-
         <h2 *ngIf="room != null">{{ room.name }}</h2>
+
+        <div class="buttonContainer">
+            <a class="buttonLink roomButton"
+               (click)="joinRoomFunc()"
+               *ngIf="(!userIsMember() && !joined) || (userIsMember() && left); else leaveRoom">
+                <button class="buttonGreen">Join</button>
+            </a>
+
+            <ng-template #leaveRoom>
+                <a class="buttonLink roomButton"
+                   (click)="leaveRoomFunc()">
+                    <button class="buttonRed">Leave</button>
+                </a>
+            </ng-template>
+
+            <a class="buttonLink roomButton"
+               (click)="playSongService.connect(user.username, room.id)"
+               *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else disconnect">
+                <button>Connect</button>
+            </a>
+
+            <ng-template #disconnect>
+                <a class="buttonLink roomButton"
+                   (click)="playSongService.disconnect()">
+                    <button>Disconnect</button>
+                </a>
+            </ng-template>
+        </div>
+        <!--        <h3>Manage Room:</h3>-->
 
         <h3 class="ulHeadline" (click)="collapseList()">Members</h3>
         <a class="buttonLink buttonRight" (click)="roomService.showInviteFriend()">
-            <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Invite Friends</button>
+            <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Invite Friends
+            </button>
         </a>
         <ul *ngIf="!collapsed">
             <li class="listEntry" *ngFor="let member of room.memberList">

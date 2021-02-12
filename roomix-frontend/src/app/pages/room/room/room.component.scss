@@ -1,0 +1,13 @@
+.buttonContainer {
+  position: fixed;
+  top: 50px;
+  right: 43.75vw;
+  z-index: 999;
+}
+
+.roomButton {
+  float: right;
+  position: sticky;
+  z-index: 999;
+  margin-left: 15px;
+}
