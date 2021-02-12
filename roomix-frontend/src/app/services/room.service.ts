@@ -3,10 +3,11 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalConstants} from '../helpers/globalConstants';
 import {map} from 'rxjs/operators';
 import {Room} from '../models/room';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Member} from '../models/member';
 import {User} from '../models/user';
 import {MemberDTO} from '../models/dto/memberDTO';
+import {ChatMessageDTO} from "../models/dto/chatMessageDTO";
 
 @Injectable({
     providedIn: 'root'
@@ -62,5 +63,9 @@ export class RoomService {
 
     removeMember(username: string, roomId: number) {
         return this.http.delete(GlobalConstants.apiUrl + '/room/member?username=' + username + '&roomId=' + roomId);
+    }
+
+    getMessages(roomId: number): Observable<ChatMessageDTO[]> {
+        return this.http.get<ChatMessageDTO[]>(GlobalConstants.apiUrl + '/room/messages/' + roomId);
     }
 }
