@@ -1,6 +1,8 @@
 <div class="content">
   <h2>Browse rooms</h2>
 
+  <h3 *ngIf="user.roomInviteList.length > 0">Room Invites</h3>
+
   <ul>
     <li class="listEntry" *ngFor="let invite of user.roomInviteList">
       <img [src]="accountService.sanitizeBase64(invite.room.picUrl)" alt="roomPic" class="listImage">
@@ -22,6 +24,8 @@
       </div>
     </li>
   </ul>
+
+  <h3>Discover Public Rooms</h3>
 
   <input type="number" [(ngModel)]="limit" (change)="updatePublicRoomLimit()" >
 
