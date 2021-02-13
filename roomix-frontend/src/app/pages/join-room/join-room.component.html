@@ -1,37 +1,44 @@
 <div class="content">
-  <h2>Browse rooms</h2>
+    <h2>Browse rooms</h2>
 
-  <ul>
-    <li class="listEntry" *ngFor="let invite of user.roomInviteList">
-      <img [src]="accountService.sanitizeBase64(invite.room.picUrl)" alt="roomPic" class="listImage">
+    <h3 *ngIf="user.roomInviteList.length > 0">Room Invites</h3>
 
-      <div class="listTextContainer">
-        <p class="listHeadline">{{ invite.room.name }}</p>
-        <p class="listText">From: {{ invite.sender.displayname }}</p>
-      </div>
+    <ul class="inviteList" *ngIf="user.roomInviteList.length > 0">
+        <li class="listEntry" *ngFor="let invite of user.roomInviteList">
+            <img [src]="accountService.sanitizeBase64(invite.room.picUrl)" alt="roomPic" class="listImage">
+
+            <div class="listTextContainer">
+                <p class="listHeadline">{{ invite.room.name }}</p>
+                <p class="listText">From: {{ invite.sender.displayname }}</p>
+            </div>
 
 
-      <div class="listButtonContainer">
-        <a class="buttonLink" (click)="response(invite, true)">
-          <button>Accept</button>
-        </a>
+            <div class="listButtonContainer">
+                <a class="buttonLink" (click)="response(invite, true)">
+                    <button>Accept</button>
+                </a>
 
-        <a class="buttonLink" (click)="response(invite, false)">
-          <button>Decline</button>
-        </a>
-      </div>
-    </li>
-  </ul>
+                <a class="buttonLink" (click)="response(invite, false)">
+                    <button>Decline</button>
+                </a>
+            </div>
+        </li>
+    </ul>
 
-  <input type="number" [(ngModel)]="limit" (change)="updatePublicRoomLimit()" >
+    <h3>Discover Public Rooms</h3>
 
-  <div class="cardContainer">
-    <div class="card" *ngFor="let room of publicRooms" (click)="showRoom(room)">
-      <img class="cardImage" [src]="accountService.sanitizeBase64(room.picUrl)"
-           alt="roomPic">
-      <p class="cardHeadline">{{ room.name }}</p>
-      <p class="cardText">Members: {{ room.memberList.length }}</p>
+    <div class="inputWrapper">
+        <input type="text" class="searchInput" [(ngModel)]="searchTerm" placeholder="Search Rooms">
+        <input type="number" class="numberInput" [(ngModel)]="limit" (change)="updatePublicRoomLimit()">
     </div>
-  </div>
+
+    <div class="cardContainer">
+        <div class="card" *ngFor="let room of publicRooms" (click)="showRoom(room)">
+            <img class="cardImage" [src]="accountService.sanitizeBase64(room.picUrl)"
+                 alt="roomPic">
+            <p class="cardHeadline">{{ room.name }}</p>
+            <p class="cardText">Members: {{ room.memberList.length }}</p>
+        </div>
+    </div>
 
 </div>

@@ -33,11 +33,11 @@
   font-size: 1em;
   padding: 0;
   margin: 0;
-  scrollbar-width: none;
+  //scrollbar-width: none;
 }
 
 *::-webkit-scrollbar {
-  display: none;
+  //display: none;
 }
 
 h2 {
@@ -105,6 +105,11 @@ h3 {
   overflow-y: scroll;
   overflow-x: visible;
   -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.half-content::-webkit-scrollbar {
+  display: none;
 }
 
 .half-content:after {
@@ -194,8 +199,14 @@ button:active {
   background: var(--ion-card-background);
   padding: 30px 0;
   border-radius: 5px;
+  scrollbar-width: none;
+  z-index: 999;
 
   box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+}
+
+.popup::-webkit-scrollbar {
+  display: none;
 }
 
 .formHeadline {
@@ -269,7 +280,7 @@ button[disabled] {
 
 .cardHeadline {
   width: 100%;
-  margin-top: 5px;
+  margin: 5px 0;
   font-weight: bolder;
   text-align: center;
 }
@@ -293,7 +304,6 @@ ul {
 .listEntry {
   display: inline-block;
   width: 100%;
-  max-width: 960px;
   background: var(--ion-card-background);
   border-radius: 5px;
   box-shadow: 0 0 15px -5px var(--ion-color-dark-contrast);

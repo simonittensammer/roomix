@@ -6,6 +6,20 @@
     </a>
 
     <div class="cardContainer">
+        <div class="card" *ngIf="user.memberList.length == 0">
+            <p class="cardHeadline">No Rooms yet!</p>
+            <p class="cardText">
+                <button (click)="roomListService.showCreateRoom()">Create</button>
+                <br>
+                or
+                <br>
+                <a class="buttonLink" routerLink="/roomlist/join-room">
+                    <button>Join</button>
+                </a>
+                a Room!
+            </p>
+        </div>
+
         <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)">
             <img class="cardImage" [src]="accountService.sanitizeBase64(member.room.picUrl)"
                  alt="cover">
