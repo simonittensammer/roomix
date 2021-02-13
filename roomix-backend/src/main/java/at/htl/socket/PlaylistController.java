@@ -74,6 +74,8 @@ public class PlaylistController {
     }
 
     public void skipSong() {
+        songTimer.cancel();
+        songTimer = new Timer("Song-Timer");
         nextSong();
     }
 
