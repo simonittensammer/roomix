@@ -59,6 +59,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
     private Map<Long, Map<String, User>> members = new ConcurrentHashMap<>();
     private Map<Long, Room> rooms = new ConcurrentHashMap<>();
     private Map<Long, PlaylistController> playlistControllers = new ConcurrentHashMap<>();
+    private Map<Long, Integer> skipVotes = new ConcurrentHashMap<>();
 
     public void addSession(Session session) {
         try {
@@ -71,6 +72,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
             if (!rooms.containsKey(roomId)) {
                 rooms.put(roomId, room);
                 members.put(roomId, new ConcurrentHashMap<>());
+                skipVotes.put(roomId, 0);
                 playlistControllers.put(roomId, new PlaylistController(roomId, room.getPlaylist()));
                 playlistControllers.get(roomId).addObserver(this);
                 System.out.println("here 4");
@@ -98,6 +100,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
         if (members.get(roomId).size() == 0) {
             members.remove(roomId);
             rooms.remove(roomId);
+            skipVotes.remove(roomId);
             playlistControllers.get(roomId).getSongTimer().cancel();
             playlistControllers.get(roomId).removeObserver(this);
             playlistControllers.remove(roomId);
@@ -123,6 +126,21 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
         }
 
 
+    }
+
+    public void skipVote(Long roomId, boolean vote) {
+
+        int votes = skipVotes.get(roomId);
+
+        if (vote) votes += 1;
+        else votes -= 1;
+
+        if ((int) Math.ceil((float) members.get(roomId).size() / 2) <= votes) {
+            playlistControllers.get(roomId).skipSong();
+            votes = 0;
+        }
+
+        skipVotes.put(roomId, votes);
     }
 
     private void broadcast(Long roomId, SocketMessageDTO message) {
