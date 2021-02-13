@@ -7,7 +7,7 @@ import {RoomService} from './room.service';
 import {Room} from '../models/room';
 import {SocketMessageDTO} from '../models/dto/SocketMessageDTO';
 import {PlaySongMessageDTO} from '../models/dto/PlaySongMessageDTO';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {ChatMessageDTO} from "../models/dto/chatMessageDTO";
 
 @Injectable({
@@ -17,12 +17,19 @@ export class PlaySongService {
 
     songSocket: WebSocketSubject<SocketMessageDTO>;
     currentSong: Song;
-    currentSongUrl: string;
+    currentSongUrl = '';
     currentSongTimer: number;
     completeUrl: SafeResourceUrl;
     room: Room;
     private listeningRoom: BehaviorSubject<Room>;
     connected = false;
+
+    public YT: any;
+    public video: any;
+    public player: any;
+    public reframed: boolean = false;
+
+    isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     constructor(
         private sanitizer: DomSanitizer,
@@ -30,6 +37,7 @@ export class PlaySongService {
     ) {
         this.listeningRoom = new BehaviorSubject<Room>(JSON.parse(localStorage.getItem('listeningRoom')));
         this.room = new Room('');
+        this.init();
     }
 
     public get roomValue() {
@@ -67,6 +75,7 @@ export class PlaySongService {
                     this.currentSong = message.song;
                     this.currentSongUrl = this.currentSong.url;
                     this.currentSongTimer = message.time;
+                    this.player.loadVideoById(this.currentSongUrl, this.currentSongTimer);
                     this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'
                         + this.currentSongUrl + '?start=' + this.currentSongTimer + '&controls=1&amp&autoplay=1');
                 }
@@ -106,6 +115,7 @@ export class PlaySongService {
         this.songSocket.complete();
         this.currentSong = new Song('', '', '', '', 0);
         this.currentSongUrl = '';
+        this.player.loadVideoById(this.currentSongUrl);
         this.currentSongTimer = 0;
         this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
         this.connected = false;
@@ -119,5 +129,90 @@ export class PlaySongService {
     skipSong(skip: boolean) {
         // @ts-ignore
         this.songSocket.next(new SocketMessageDTO('skip-song', skip));
+    }
+
+    init() {
+        // Return if Player is already created
+        if (window['YT']) {
+            this.startVideo();
+            return;
+        }
+
+        const tag = document.createElement('script');
+        tag.src = 'http://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        /* 3. startVideo() will create an <iframe> (and YouTube player) after the API code downloads. */
+        window['onYouTubeIframeAPIReady'] = () => this.startVideo();
+    }
+
+    startVideo() {
+        this.reframed = false;
+        this.player = new window['YT'].Player('player', {
+            videoId: this.currentSongUrl,
+            startSeconds: this.currentSongTimer,
+            playerVars: {
+                autoplay: 1,
+                modestbranding: 1,
+                controls: 1,
+                disablekb: 1,
+                rel: 0,
+                showinfo: 0,
+                fs: 0,
+                playsinline: 1
+            },
+            events: {
+                'onStateChange': this.onPlayerStateChange.bind(this),
+                'onError': this.onPlayerError.bind(this),
+                'onReady': this.onPlayerReady.bind(this),
+            }
+        });
+    }
+
+    onPlayerReady(event) {
+        if (this.isRestricted) {
+            event.target.mute();
+            event.target.playVideo();
+        } else {
+            event.target.playVideo();
+        }
+    }
+
+    onPlayerStateChange(event) {
+        console.log(event);
+        switch (event.data) {
+            case window['YT'].PlayerState.PLAYING:
+                if (this.cleanTime() === 0) {
+                    console.log('started ' + this.cleanTime());
+                } else {
+                    console.log('playing ' + this.cleanTime())
+                }
+                break;
+            case window['YT'].PlayerState.PAUSED:
+                if (this.player.getDuration() - this.player.getCurrentTime() !== 0) {
+                    console.log('paused' + ' @ ' + this.cleanTime());
+                }
+                break;
+            case window['YT'].PlayerState.ENDED:
+                console.log('ended ');
+                break;
+        }
+    }
+
+    cleanTime() {
+        return Math.round(this.player.getCurrentTime());
+    }
+
+    onPlayerError(event) {
+        switch (event.data) {
+            case 2:
+                console.log('' + this.video);
+                break;
+            case 100:
+                break;
+            case 101 || 150:
+                break;
+        }
     }
 }

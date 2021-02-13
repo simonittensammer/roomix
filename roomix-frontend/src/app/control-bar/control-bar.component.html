@@ -1,5 +1,6 @@
-<div id="controlBar" *ngIf="playSongService.connected">
+<div id="player"></div>
 
+<div id="controlBar" *ngIf="playSongService.connected">
     <div id="roomInfoWrapper">
         <img [src]="accountService.sanitizeBase64(room.picUrl)" id="roomImage"
              alt="roomPic">
@@ -36,7 +37,9 @@
         <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="volumeStage == 'h'"></ion-icon>
     </div>
 
-    <iframe *ngIf="this.playSongService.currentSong != null" width="0" height="0"
+    <!--<iframe *ngIf="this.playSongService.currentSong != null" width="0" height="0"
             [src]="this.playSongService.completeUrl" frameborder="0"
-            allowfullscreen></iframe>
+            allowfullscreen></iframe>-->
+
+
 </div>

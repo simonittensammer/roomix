@@ -27,24 +27,9 @@ export class ControlBarComponent implements OnInit {
         private userService: UserService,
         public playSongService: PlaySongService,
         private sanitizer: DomSanitizer
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
-        /*this.roomService.roomValue.subscribe(
-            value => {
-                this.room = value;
-                this.userService.userValue.subscribe(
-                    value2 => {
-                        this.user = value2;
-                        console.log(this.room);
-
-                        // this.playSongService.connect();
-                        console.log(this.playSongService.currentSong);
-                    }
-                );
-            }
-        );*/
         this.playSongService.roomValue.subscribe(
             value => {
                 this.room = value;
