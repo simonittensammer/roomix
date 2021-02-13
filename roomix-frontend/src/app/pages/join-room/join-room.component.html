@@ -3,7 +3,7 @@
 
     <h3 *ngIf="user.roomInviteList.length > 0">Room Invites</h3>
 
-    <ul class="inviteList">
+    <ul class="inviteList" *ngIf="user.roomInviteList.length > 0">
         <li class="listEntry" *ngFor="let invite of user.roomInviteList">
             <img [src]="accountService.sanitizeBase64(invite.room.picUrl)" alt="roomPic" class="listImage">
 
