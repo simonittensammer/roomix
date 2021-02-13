@@ -64,7 +64,16 @@ public class RoomSocket {
         Jsonb jsonb = JsonbBuilder.create();
         SocketMessageDTO socketMessageDTO = jsonb.fromJson(message, SocketMessageDTO.class);
 
-        roomControllerService.chatMessage(socketMessageDTO.getMessage().toString(), roomId, username);
+        switch (socketMessageDTO.getType()) {
+            case "chat-message":
+                roomControllerService.chatMessage(socketMessageDTO.getMessage().toString(), roomId, username);
+                break;
+            case "skip-song":
+                roomControllerService.skipVote(roomId, (boolean) socketMessageDTO.getMessage());
+                break;
+            default:
+                break;
+        }
     }
 
     private void broadcast(String message) {
