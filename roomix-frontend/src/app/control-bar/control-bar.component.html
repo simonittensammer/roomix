@@ -17,6 +17,13 @@
         <div id="songProgress"></div>
     </div>
 
+    <div id="skipSong">
+        <button *ngIf="!skip; else unskip" (click)="skipSong()">Skip</button>
+        <ng-template #unskip>
+            <button (click)="skipSong()">Unskip</button>
+        </ng-template>
+    </div>
+
     <div id="volumeRangeBox">
         <input type="range" orient="vertical" #volumeRange id="volumeRange" name="volumeRange" min="0" max="100" value="100"
         (input)="adjustVolume(volumeRange.value)">
