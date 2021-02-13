@@ -6,6 +6,15 @@
             <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Add song</button>
         </a>
 
+        <ul *ngIf="!collapsed && room.playlist.songList.length == 0">
+            <li class="listEntry">
+                <div class="listTextContainer">
+                    <p class="listHeadline">No Songs yet!</p>
+                    <p class="listText">Click the button on the top right to add your first song!</p>
+                </div>
+            </li>
+        </ul>
+
         <ul *ngIf="!collapsed">
             <li class="listEntry" *ngFor="let song of room.playlist.songList">
                 <img src="{{ song.picUrl }}" alt="" class="listImage">
