@@ -1,46 +1,47 @@
 <!--<div class="content">-->
-    <div *ngIf="room">
-        <h3 class="ulHeadline" (click)="collapseList()">Playlist</h3>
+<div *ngIf="room">
+    <h3 class="ulHeadline" (click)="collapseList()">Playlist</h3>
 
-        <a class="buttonLink buttonRight" (click)="playlistService.showAddSong()">
-            <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Add song</button>
-        </a>
+    <a class="buttonLink buttonRight" (click)="playlistService.showAddSong()">
+        <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Add song</button>
+    </a>
 
-        <ul *ngIf="!collapsed && room.playlist.songList.length == 0">
-            <li class="listEntry">
-                <div class="listTextContainer">
-                    <p class="listHeadline">No Songs yet!</p>
-                    <p class="listText">Click the button on the top right to add your first song!</p>
-                </div>
-            </li>
-        </ul>
+    <ul *ngIf="!collapsed">
+        <li class="listEntry" *ngFor="let song of room.playlist.songList">
+            <img src="{{ song.picUrl }}" alt="" class="listImage">
 
-        <ul *ngIf="!collapsed">
-            <li class="listEntry" *ngFor="let song of room.playlist.songList">
-                <img src="{{ song.picUrl }}" alt="" class="listImage">
+            <div class="listTextContainer">
+                <p class="listHeadline">{{ song.title }}</p>
+                <p class="listText">{{ song.artist }}</p>
+            </div>
 
-                <div class="listTextContainer">
-                    <p class="listHeadline">{{ song.title }}</p>
-                    <p class="listText">{{ song.artist }}</p>
-                </div>
+            <div class="listButtonContainer">
+                <a class="buttonLink" (click)="deleteFromPlaylist(song)">
+                    <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Delete
+                    </button>
+                </a>
+            </div>
+        </li>
+    </ul>
 
-                <div class="listButtonContainer">
-                    <a class="buttonLink" (click)="deleteFromPlaylist(song)">
-                        <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Delete</button>
-                    </a>
-                </div>
-            </li>
-        </ul>
+    <ul *ngIf="!collapsed && room.playlist.songList.length == 0">
+        <li class="listEntry">
+            <div class="listTextContainer">
+                <p class="listHeadline">No Songs yet!</p>
+                <p class="listText">Click the button on the top right to add your first song!</p>
+            </div>
+        </li>
+    </ul>
 
-        <ul *ngIf="collapsed">
-            <li class="listEntry" (click)="collapseList()">
-                <div class="listTextContainer">
-                    <p class="listHeadline">Show Playlist</p>
-                    <p class="listText">Click here or on the headline, to show the list!</p>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <ul *ngIf="collapsed">
+        <li class="listEntry" (click)="collapseList()">
+            <div class="listTextContainer">
+                <p class="listHeadline">Show Playlist</p>
+                <p class="listText">Click here or on the headline, to show the list!</p>
+            </div>
+        </li>
+    </ul>
+</div>
 
-    <app-add-song *ngIf="playlistService.addSongVisible"></app-add-song>
+<app-add-song *ngIf="playlistService.addSongVisible"></app-add-song>
 <!--</div>-->
