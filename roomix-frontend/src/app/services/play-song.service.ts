@@ -7,7 +7,7 @@ import {RoomService} from './room.service';
 import {Room} from '../models/room';
 import {SocketMessageDTO} from '../models/dto/SocketMessageDTO';
 import {PlaySongMessageDTO} from '../models/dto/PlaySongMessageDTO';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {ChatMessageDTO} from "../models/dto/chatMessageDTO";
 
 @Injectable({
@@ -28,6 +28,9 @@ export class PlaySongService {
     public video: any;
     public player: any;
     public reframed: boolean = false;
+
+    private resetSkipVote = new Subject<void>();
+    public resetSkipVoteEvent = this.resetSkipVote.asObservable();
 
     isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -78,6 +81,7 @@ export class PlaySongService {
                     this.player.loadVideoById(this.currentSongUrl, this.currentSongTimer);
                     this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'
                         + this.currentSongUrl + '?start=' + this.currentSongTimer + '&controls=1&amp&autoplay=1');
+                    this.resetSkipVote.next();
                 }
 
                 else if (data.type === 'add-song') {

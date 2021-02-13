@@ -36,6 +36,11 @@ export class ControlBarComponent implements OnInit {
             }
         );
         this.volumeStage = 'h';
+
+        this.playSongService.resetSkipVoteEvent.subscribe(() => {
+            console.log('asdlkjxlckvo');
+            this.skip = false;
+        });
     }
 
     adjustVolume(value) {
