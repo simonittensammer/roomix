@@ -1,0 +1,26 @@
+.inviteList {
+  max-height: 30%;
+  overflow-y: scroll;
+  width: 35%;
+}
+
+.listEntry {
+  width: 100%;
+}
+
+.listTextContainer {
+  width: 40%;
+}
+
+.inputWrapper {
+  margin-bottom: 30px;
+}
+
+.inputWrapper > input{
+  background: var(--ion-card-background);
+  margin-right: 15px;
+}
+
+.numberInput {
+  width: 75px;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../../models/user';
 import {AccountService} from '../../services/account.service';
 import {FriendRequest} from '../../models/friend-request';
@@ -11,53 +11,55 @@ import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-join-room',
-  templateUrl: './join-room.component.html',
-  styleUrls: ['./join-room.component.scss'],
+    selector: 'app-join-room',
+    templateUrl: './join-room.component.html',
+    styleUrls: ['./join-room.component.scss'],
 })
 export class JoinRoomComponent implements OnInit {
 
-  user: User;
-  publicRooms: Array<Room>;
-  limit = 10;
+    user: User;
+    publicRooms: Array<Room>;
+    limit = 10;
+    searchTerm: string;
 
-  constructor(private accountService: AccountService,
-              private userService: UserService,
-              private router: Router,
-              private roomService: RoomService) { }
+    constructor(private accountService: AccountService,
+                private userService: UserService,
+                private router: Router,
+                private roomService: RoomService) {
+    }
 
-  ngOnInit() {
-    this.userService.userValue.subscribe(
-        value => {
-          this.user = value;
+    ngOnInit() {
+        this.userService.userValue.subscribe(
+            value => {
+                this.user = value;
+            }
+        );
+        this.roomService.getPopularPublicRooms(this.limit).subscribe(
+            publicRooms => {
+                this.publicRooms = publicRooms;
+            }
+        );
+    }
+
+    response(roomInvite: RoomInvite, accept: boolean) {
+        this.accountService.roomInviteResponse(roomInvite, accept)
+            .pipe(first())
+            .subscribe(data => {
+                console.log(data);
+            });
+
+        this.user.roomInviteList.splice(this.user.roomInviteList.indexOf(roomInvite), 1);
+    }
+
+    updatePublicRoomLimit() {
+        if (this.limit >= 1) {
+            this.roomService.getPopularPublicRooms(this.limit).subscribe(
+                publicRooms => {
+                    this.publicRooms = publicRooms;
+                }
+            );
         }
-    );
-    this.roomService.getPopularPublicRooms(this.limit).subscribe(
-        publicRooms => {
-            this.publicRooms = publicRooms;
-        }
-    );
-  }
-
-  response(roomInvite: RoomInvite, accept: boolean) {
-    this.accountService.roomInviteResponse(roomInvite, accept)
-        .pipe(first())
-        .subscribe(data => {
-          console.log(data);
-        });
-
-    this.user.roomInviteList.splice(this.user.roomInviteList.indexOf(roomInvite), 1);
-  }
-
-  updatePublicRoomLimit() {
-      if (this.limit >= 1) {
-          this.roomService.getPopularPublicRooms(this.limit).subscribe(
-              publicRooms => {
-                  this.publicRooms = publicRooms;
-              }
-          );
-      }
-  }
+    }
 
     showRoom(room: Room) {
         this.router.navigate(['room', room.id]);
