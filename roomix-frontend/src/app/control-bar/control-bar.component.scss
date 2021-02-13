@@ -125,3 +125,9 @@ input[type=range]:focus {
   left: 50%;
   transform: translate(-50%, -25%);
 }
+
+#skipSong {
+  position: absolute;
+  right: 200px;
+  bottom: 15px;
+}

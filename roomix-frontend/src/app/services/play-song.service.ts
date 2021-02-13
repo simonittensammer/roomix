@@ -115,4 +115,9 @@ export class PlaySongService {
     sendChatMessage(message: String) {
         this.songSocket.next(new SocketMessageDTO('chat-message', message));
     }
+
+    skipSong(skip: boolean) {
+        // @ts-ignore
+        this.songSocket.next(new SocketMessageDTO('skip-song', skip));
+    }
 }

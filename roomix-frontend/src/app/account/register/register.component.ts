@@ -48,8 +48,23 @@ export class RegisterComponent implements OnInit {
                                 .pipe(first())
                                 .subscribe(data2 => {
                                     data.memberList = data2;
-                                    this.userService.updateUserValue(data);
-                                    this.router.navigate(['roomlist']);
+                                    this.userService.getProperFriendRequestList(data.username)
+                                        .pipe(first())
+                                        .subscribe(data3 => {
+                                            data.friendRequestList = data3;
+                                            this.userService.getProperFriendList(data.username)
+                                                .pipe(first())
+                                                .subscribe(data4 => {
+                                                    data.friendList = data4;
+                                                    this.userService.getProperRoomInviteList(data.username)
+                                                        .pipe(first())
+                                                        .subscribe(data5 => {
+                                                            data.roomInviteList = data5;
+                                                            this.userService.updateUserValue(data);
+                                                            this.router.navigate(['roomlist']);
+                                                        });
+                                                });
+                                        });
                                 });
                         });
                 });

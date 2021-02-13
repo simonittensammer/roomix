@@ -19,6 +19,7 @@ export class ControlBarComponent implements OnInit {
     room: Room;
     volumePercentage = 100;
     volumeStage: string;
+    skip: boolean;
 
     constructor(
         private roomService: RoomService,
@@ -66,5 +67,10 @@ export class ControlBarComponent implements OnInit {
         } else {
             this.volumeStage = 'h';
         }
+    }
+
+    skipSong() {
+        this.skip = !this.skip;
+        this.playSongService.skipSong(this.skip);
     }
 }
