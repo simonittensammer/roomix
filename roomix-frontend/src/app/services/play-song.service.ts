@@ -23,6 +23,8 @@ export class PlaySongService {
     room: Room;
     private listeningRoom: BehaviorSubject<Room>;
     connected = false;
+    volumePercentage: number;
+    volumeStage: string;
 
     public YT: any;
     public video: any;
@@ -39,6 +41,7 @@ export class PlaySongService {
         private roomService: RoomService
     ) {
         this.listeningRoom = new BehaviorSubject<Room>(JSON.parse(localStorage.getItem('listeningRoom')));
+        this.volumePercentage = Number(localStorage.getItem('volume'));
         this.room = new Room('');
         this.init();
     }
@@ -221,6 +224,23 @@ export class PlaySongService {
     }
 
     changeVolume(volume: number) {
-        this.player.setVolume(volume);
+        if (volume === -1) {
+            volume = Number(localStorage.getItem('volume'));
+            if (volume === null) {
+               volume = 50;
+            }
+        }
+        if (volume === 0) {
+            this.volumeStage = 'x';
+        } else if (volume <= 33) {
+            this.volumeStage = 'l';
+        } else if (volume <= 66) {
+            this.volumeStage = 'm';
+        } else {
+            this.volumeStage = 'h';
+        }
+        this.volumePercentage = volume;
+        localStorage.setItem('volume', String(this.volumePercentage));
+        this.player.setVolume(this.volumePercentage);
     }
 }

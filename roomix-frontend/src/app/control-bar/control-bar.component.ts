@@ -17,8 +17,6 @@ export class ControlBarComponent implements OnInit {
 
     user: User;
     room: Room;
-    volumePercentage = 100;
-    volumeStage: string;
     skip: boolean;
 
     constructor(
@@ -35,7 +33,7 @@ export class ControlBarComponent implements OnInit {
                 this.room = value;
             }
         );
-        this.volumeStage = 'h';
+        this.playSongService.changeVolume(-1);
 
         this.playSongService.resetSkipVoteEvent.subscribe(() => {
             console.log('asdlkjxlckvo');
@@ -44,19 +42,7 @@ export class ControlBarComponent implements OnInit {
     }
 
     adjustVolume(value) {
-        this.volumePercentage = value;
         this.playSongService.changeVolume(value);
-
-        // tslint:disable-next-line:triple-equals
-        if (this.volumePercentage == 0) {
-            this.volumeStage = 'x';
-        } else if (this.volumePercentage <= 33) {
-            this.volumeStage = 'l';
-        } else if (this.volumePercentage <= 66) {
-            this.volumeStage = 'm';
-        } else {
-            this.volumeStage = 'h';
-        }
     }
 
     skipSong() {

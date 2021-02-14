@@ -26,15 +26,15 @@
     </div>
 
     <div id="volumeRangeBox">
-        <input type="range" orient="vertical" #volumeRange id="volumeRange" name="volumeRange" min="0" max="100" value="100"
+        <input type="range" orient="vertical" #volumeRange id="volumeRange" name="volumeRange" min="0" max="100" value="{{playSongService.volumePercentage}}"
         (input)="adjustVolume(volumeRange.value)">
 
         <br>
 
-        <ion-icon class="volumeIcon" name="volume-mute-outline" *ngIf="volumeStage == 'x'"></ion-icon>
-        <ion-icon class="volumeIcon" name="volume-low-outline" *ngIf="volumeStage == 'l'"></ion-icon>
-        <ion-icon class="volumeIcon" name="volume-medium-outline" *ngIf="volumeStage == 'm'"></ion-icon>
-        <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="volumeStage == 'h'"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-mute-outline" *ngIf="playSongService.volumeStage == 'x'"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-low-outline" *ngIf="playSongService.volumeStage == 'l'"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-medium-outline" *ngIf="playSongService.volumeStage == 'm'"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="playSongService.volumeStage == 'h'"></ion-icon>
     </div>
 
     <!--<iframe *ngIf="this.playSongService.currentSong != null" width="0" height="0"
