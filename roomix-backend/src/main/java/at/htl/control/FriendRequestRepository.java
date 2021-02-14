@@ -77,6 +77,10 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
 
         if (sender == null || receiver == null) return null;
 
+        if (sender.getFriendList().contains(receiver)) return null;
+
+        if (streamAll().anyMatch(friendRequest -> friendRequest.getSender().equals(sender) && friendRequest.getReceiver().equals(receiver))) return null;
+
         FriendRequest friendRequest = new FriendRequest(sender, receiver);
         persist(friendRequest);
         receiver.getFriendRequestList().add(friendRequest);
