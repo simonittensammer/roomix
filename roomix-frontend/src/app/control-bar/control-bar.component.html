@@ -31,10 +31,10 @@
 
         <br>
 
-        <ion-icon class="volumeIcon" name="volume-mute-outline" *ngIf="playSongService.volumeStage == 'x'"></ion-icon>
-        <ion-icon class="volumeIcon" name="volume-low-outline" *ngIf="playSongService.volumeStage == 'l'"></ion-icon>
-        <ion-icon class="volumeIcon" name="volume-medium-outline" *ngIf="playSongService.volumeStage == 'm'"></ion-icon>
-        <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="playSongService.volumeStage == 'h'"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-mute-outline" *ngIf="playSongService.volumeStage == 'x'" (click)="mutePlayer()"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-low-outline" *ngIf="playSongService.volumeStage == 'l'" (click)="mutePlayer()"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-medium-outline" *ngIf="playSongService.volumeStage == 'm'" (click)="mutePlayer()"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="playSongService.volumeStage == 'h'" (click)="mutePlayer()"></ion-icon>
     </div>
 
     <!--<iframe *ngIf="this.playSongService.currentSong != null" width="0" height="0"

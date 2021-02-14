@@ -49,4 +49,8 @@ export class ControlBarComponent implements OnInit {
         this.skip = !this.skip;
         this.playSongService.skipSong(this.skip);
     }
+
+    mutePlayer() {
+        this.playSongService.mutePlayer();
+    }
 }

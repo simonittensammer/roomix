@@ -25,11 +25,12 @@ export class PlaySongService {
     connected = false;
     volumePercentage: number;
     volumeStage: string;
+    mute: boolean;
 
     public YT: any;
     public video: any;
     public player: any;
-    public reframed: boolean = false;
+    public reframed: boolean;
 
     private resetSkipVote = new Subject<void>();
     public resetSkipVoteEvent = this.resetSkipVote.asObservable();
@@ -239,8 +240,31 @@ export class PlaySongService {
         } else {
             this.volumeStage = 'h';
         }
+        if (this.player.isMuted()) {
+            this.mute = false;
+            this.player.unMute();
+        }
         this.volumePercentage = volume;
         localStorage.setItem('volume', String(this.volumePercentage));
         this.player.setVolume(this.volumePercentage);
+    }
+
+    mutePlayer() {
+        this.mute = !this.mute;
+        if (this.mute) {
+           this.player.mute();
+           this.volumeStage = 'x';
+        } else {
+            if (this.volumePercentage === 0) {
+                this.volumeStage = 'x';
+            } else if (this.volumePercentage <= 33) {
+                this.volumeStage = 'l';
+            } else if (this.volumePercentage <= 66) {
+                this.volumeStage = 'm';
+            } else {
+                this.volumeStage = 'h';
+            }
+            this.player.unMute();
+        }
     }
 }
