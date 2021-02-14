@@ -37,6 +37,8 @@ export class PlaySongService {
     public resetSkipVoteEvent = this.resetSkipVote.asObservable();
     private updateSkipAmount = new Subject<SkipVoteAmountDTO>();
     public updateSkipAmountEvent = this.updateSkipAmount.asObservable();
+    private updateMemberList = new Subject<void>();
+    public updateMemberListEvent = this.updateMemberList.asObservable();
 
     isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     songProgress = 0;
@@ -130,6 +132,10 @@ export class PlaySongService {
                 else if (data.type === 'skip-vote') {
                     const skipAmount: SkipVoteAmountDTO = data.message as SkipVoteAmountDTO;
                     this.updateSkipAmount.next(skipAmount);
+                }
+
+                else if (data.type === 'update-members') {
+                    this.updateMemberList.next();
                 }
             }, error => {
                 console.log(error);

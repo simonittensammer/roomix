@@ -60,6 +60,12 @@ export class RoomComponent implements OnInit {
                         });
                 });
             });
+
+        this.playSongService.updateMemberListEvent.subscribe(() => {
+           this.roomService.getMembers(this.room.id).subscribe(members => {
+               this.room.memberList = members;
+           });
+        });
     }
 
     showPlaylist() {
