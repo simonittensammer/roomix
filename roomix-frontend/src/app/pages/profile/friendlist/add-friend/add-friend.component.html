@@ -2,11 +2,26 @@
   <div class="popup centerXY">
     <h2 class="formHeadline formElement">Add a friend</h2>
 
-    <input class="formElement" [(ngModel)]="friendUserName" placeholder="an username" type="text">
+    <input #input class="formElement" placeholder="an username" type="text">
 
-    <button id="formSubmit" class="buttonLink formElement" (click)="sendFriendRequest()">
-      Add Friend
-    </button>
+    <ul class="formElement">
+      <ng-container *ngFor="let user of possibleFriends">
+        <li class="listEntry">
+          <img [src]="accountService.sanitizeBase64(user.picUrl)" alt="" class="listImage">
+
+          <div class="listTextContainer">
+            <p class="listHeadline">{{ user.displayname }}</p>
+            <p class="listText">@{{ user.username }}</p>
+          </div>
+
+          <div class="listButtonContainer">
+            <a class="buttonLink" (click)="sendFriendRequest(user.username)">
+              <button>Add</button>
+            </a>
+          </div>
+        </li>
+      </ng-container>
+    </ul>
 
     <div class="formElement">
       <a (click)="accountService.showAddFriend()">Cancel</a>

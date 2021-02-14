@@ -70,6 +70,10 @@ export class AccountService {
     return this.http.get(GlobalConstants.apiUrl + '/user/roomInvites/' + roomInvite.id + '/' + accept);
   }
 
+  searchUserWithMatchingName(searchTerm: string): Observable<User[]> {
+    return this.http.get<Array<User>>(GlobalConstants.apiUrl + '/user/search/' + searchTerm);
+  }
+
   showAddFriend() {
     this.addFriendVisible = !this.addFriendVisible;
   }
