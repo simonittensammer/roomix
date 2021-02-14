@@ -3,19 +3,15 @@ package at.htl.socket;
 import at.htl.control.*;
 import at.htl.dto.ChatMessageDTO;
 import at.htl.dto.PlaySongMessageDTO;
+import at.htl.dto.SkipVoteAmountDTO;
 import at.htl.dto.SocketMessageDTO;
 import at.htl.entity.*;
 import at.htl.observers.PlaylistControllerObserver;
 import at.htl.observers.PlaylistRepositoryObserver;
-import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.context.ManagedExecutor;
-import org.eclipse.microprofile.context.ThreadContext;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.transaction.Transactional;
@@ -81,16 +77,30 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
             members.get(roomId).put(username, user);
             sessions.put((String) session.getUserProperties().get("username"), session);
 
-            messageSesseion(session, playlistControllers.get(roomId).getCurrentSongMessage());
+            messageSession(session, new SocketMessageDTO(
+                    "new-song",
+                    new PlaySongMessageDTO(
+                            playlistControllers.get(roomId).getCurrentSong(),
+                            playlistControllers.get(roomId).getCurrentSongTime()
+                    )
+            ));
 
-            printStatus();
+            broadcast(roomId, new SocketMessageDTO(
+                    "skip-vote",
+                    new SkipVoteAmountDTO(
+                            skipVotes.get(roomId),
+                            (int) Math.ceil((float) members.get(roomId).size() / 2)
+                    )
+            ));
+
+            //printStatus();
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
 
-    public void removeSession(Session session) {
+    public void removeSession(Session session) throws ExecutionException, InterruptedException {
         String username = session.getUserProperties().get("username").toString();
         Long roomId = Long.valueOf(session.getUserProperties().get("roomId").toString());
 
@@ -104,62 +114,62 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
             playlistControllers.get(roomId).getSongTimer().cancel();
             playlistControllers.get(roomId).removeObserver(this);
             playlistControllers.remove(roomId);
+        } else {
+            checkForSkip(roomId, skipVotes.get(roomId));
         }
     }
 
-    public void chatMessage(String message, Long roomId, String username) {
+    public void chatMessage(String message, Long roomId, String username) throws ExecutionException, InterruptedException {
 
+        User user = members.get(roomId).get(username);
+        Room room = rooms.get(roomId);
+        Message chatMessage = new Message(username, room, message);
 
-        try {
-            User user = members.get(roomId).get(username);
-            Room room = rooms.get(roomId);
-            Message chatMessage = new Message(username, room, message);
+        managedExecutor.submit(() -> messageRepository.persist(chatMessage)).get();
 
-            managedExecutor.submit(() -> messageRepository.persist(chatMessage)).get();
+        ChatMessageDTO chatMessageDTO = new ChatMessageDTO(username, chatMessage.getCreationDate(), message);
+        SocketMessageDTO socketMessageDTO = new SocketMessageDTO("chat-message", chatMessageDTO);
 
-            ChatMessageDTO chatMessageDTO = new ChatMessageDTO(username, chatMessage.getCreationDate(), message);
-            SocketMessageDTO socketMessageDTO = new SocketMessageDTO("chat-message", chatMessageDTO);
-
-            broadcast(roomId, socketMessageDTO);
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
+        broadcast(roomId, socketMessageDTO);
 
     }
 
-    public void skipVote(Long roomId, boolean vote) {
+    public void skipVote(Long roomId, boolean vote) throws ExecutionException, InterruptedException {
 
         int votes = skipVotes.get(roomId);
 
         if (vote) votes += 1;
         else votes -= 1;
 
-        if ((int) Math.ceil((float) members.get(roomId).size() / 2) <= votes) {
-            playlistControllers.get(roomId).skipSong();
+        checkForSkip(roomId, votes);
+    }
+
+    private void checkForSkip(Long roomId, int votes) throws ExecutionException, InterruptedException {
+        int amountNeeded = (int) Math.ceil((float) members.get(roomId).size() / 2);
+
+        if (amountNeeded <= votes) {
+            managedExecutor.submit(() -> playlistControllers.get(roomId).skipSong()).get();
             votes = 0;
         }
-
         skipVotes.put(roomId, votes);
+
+        SocketMessageDTO socketMessageDTO = new SocketMessageDTO("skip-vote", new SkipVoteAmountDTO(votes, (amountNeeded)));
+        broadcast(roomId, socketMessageDTO);
     }
 
     private void broadcast(Long roomId, SocketMessageDTO message) {
         Jsonb jsonb = JsonbBuilder.create();
-        sessions.values().forEach(s -> {
-            if (s.getUserProperties().get("roomId") == roomId) {
-                LOGGER.info("messaging session(" + s.getUserProperties().get("username") + ", " + s.getUserProperties().get("roomId") + "): " + message);
-                s.getAsyncRemote().sendObject(jsonb.toJson(message), result ->  {
-                    if (result.getException() != null) {
-                        System.out.println("Unable to send message: " + result.getException());
-                    }
-                });
+        sessions.values().forEach(session -> {
+            if (session.getUserProperties().get("roomId") == roomId) {
+                messageSession(session, message);
             }
         });
     }
 
-    private void messageSesseion(Session session, String message) {
+    private void messageSession(Session session, SocketMessageDTO message) {
+        Jsonb jsonb = JsonbBuilder.create();
         LOGGER.info("messaging session(" + session.getUserProperties().get("username") + ", " + session.getUserProperties().get("roomId") + "): " + message);
-        session.getAsyncRemote().sendObject(message, result ->  {
+        session.getAsyncRemote().sendObject(jsonb.toJson(message), result -> {
             if (result.getException() != null) {
                 System.out.println("Unable to send message: " + result.getException());
             }
@@ -173,7 +183,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
         List<String> playlistControllersStrings = new LinkedList<>();
 
         sessions.entrySet().stream().forEach(o -> {
-            sessionsStrings.add("key=" + o.getKey() + ", value=session(" + o.getValue().getUserProperties().get("username") + ", " +o.getValue().getUserProperties().get("roomId") + ")");
+            sessionsStrings.add("key=" + o.getKey() + ", value=session(" + o.getValue().getUserProperties().get("username") + ", " + o.getValue().getUserProperties().get("roomId") + ")");
         });
 
         rooms.entrySet().stream().forEach(o -> {
@@ -181,10 +191,10 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
         });
 
         members.entrySet().stream().forEach(o -> {
-           List<String> usersString = o.getValue().entrySet().stream().map(o2 -> {
-               return "(key=" + o2.getKey() + ", value=" + o2.getValue().getUsername() + ")";
-           }).collect(Collectors.toList());
-           membersStrings.add("key=" + o.getKey() + ", value=" + String.join(", ", usersString));
+            List<String> usersString = o.getValue().entrySet().stream().map(o2 -> {
+                return "(key=" + o2.getKey() + ", value=" + o2.getValue().getUsername() + ")";
+            }).collect(Collectors.toList());
+            membersStrings.add("key=" + o.getKey() + ", value=" + String.join(", ", usersString));
         });
 
         playlistControllers.entrySet().stream().forEach(o -> {
@@ -240,7 +250,7 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
                 }
             }
             playlistControllers.get(roomId).getPlaylist().getSongList().remove(index);
-            LOGGER.info("length="+playlistControllers.get(roomId).getPlaylist().getSongList().size());
+            LOGGER.info("length=" + playlistControllers.get(roomId).getPlaylist().getSongList().size());
             playlistControllers.get(roomId).updatePlaylist();
 
             if (playlistControllers.get(roomId).getPlaylist().getSongList().size() == 0) {

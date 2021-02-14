@@ -7,6 +7,7 @@ import {User} from '../models/user';
 import {PlaySongService} from '../services/play-song.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {UserService} from '../services/user.service';
+import {SkipVoteAmountDTO} from '../models/dto/skipVoteAmountDTO';
 
 @Component({
     selector: 'app-control-bar',
@@ -18,6 +19,7 @@ export class ControlBarComponent implements OnInit {
     user: User;
     room: Room;
     skip: boolean;
+    skips: SkipVoteAmountDTO;
 
     constructor(
         private roomService: RoomService,
@@ -36,8 +38,11 @@ export class ControlBarComponent implements OnInit {
         this.playSongService.changeVolume(-1);
 
         this.playSongService.resetSkipVoteEvent.subscribe(() => {
-            console.log('asdlkjxlckvo');
             this.skip = false;
+        });
+
+        this.playSongService.updateSkipAmountEvent.subscribe(skipVoteAmountDTO => {
+            this.skips = skipVoteAmountDTO;
         });
     }
 
