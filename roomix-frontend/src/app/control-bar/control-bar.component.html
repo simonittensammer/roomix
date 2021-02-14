@@ -23,6 +23,7 @@
         <ng-template #unskip>
             <button (click)="skipSong()">Unskip</button>
         </ng-template>
+        <div *ngIf="skips !== null && skips.currentAmount > 0">{{skips.currentAmount}}/{{skips.amountNeeded}}</div>
     </div>
 
     <div id="volumeRangeBox">

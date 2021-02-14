@@ -9,6 +9,7 @@ import {SocketMessageDTO} from '../models/dto/SocketMessageDTO';
 import {PlaySongMessageDTO} from '../models/dto/PlaySongMessageDTO';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {ChatMessageDTO} from "../models/dto/chatMessageDTO";
+import {SkipVoteAmountDTO} from '../models/dto/skipVoteAmountDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +32,8 @@ export class PlaySongService {
 
     private resetSkipVote = new Subject<void>();
     public resetSkipVoteEvent = this.resetSkipVote.asObservable();
+    private updateSkipAmount = new Subject<SkipVoteAmountDTO>();
+    public updateSkipAmountEvent = this.updateSkipAmount.asObservable();
 
     isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -108,6 +111,11 @@ export class PlaySongService {
                    console.log(chatMessage.sender + ': ' + chatMessage.content);
                    this.room.messageList.push(chatMessage);
                    this.roomService.updateRoomValue(this.room);
+                }
+
+                else if (data.type === 'skip-vote') {
+                    const skipAmount: SkipVoteAmountDTO = data.message as SkipVoteAmountDTO;
+                    this.updateSkipAmount.next(skipAmount);
                 }
             }, error => {
                 console.log(error);
