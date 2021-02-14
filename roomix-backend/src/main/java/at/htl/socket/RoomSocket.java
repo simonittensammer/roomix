@@ -44,7 +44,7 @@ public class RoomSocket {
     }
 
     @OnClose
-    public void onClose(Session session, @PathParam("roomId") Long roomId, @PathParam("username") String username) {
+    public void onClose(Session session, @PathParam("roomId") Long roomId, @PathParam("username") String username) throws ExecutionException, InterruptedException {
         LOGGER.info("session closed with roomId=" + roomId + ", username=" + username);
 
         sessions.remove(username);
@@ -60,7 +60,7 @@ public class RoomSocket {
     }
 
     @OnMessage
-    public void onMessage(String message, @PathParam("roomId") Long roomId, @PathParam("username") String username) {
+    public void onMessage(String message, @PathParam("roomId") Long roomId, @PathParam("username") String username) throws ExecutionException, InterruptedException {
         Jsonb jsonb = JsonbBuilder.create();
         SocketMessageDTO socketMessageDTO = jsonb.fromJson(message, SocketMessageDTO.class);
 
