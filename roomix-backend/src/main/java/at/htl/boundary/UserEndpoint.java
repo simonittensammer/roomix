@@ -217,12 +217,13 @@ public class UserEndpoint {
     }
 
     @GET
-    @Path("search/{searchTerm}")
-    public List<User> searchUsersWithMatchingName(@PathParam("searchTerm") String searchTerm) {
+    @Path("{username}/search/{searchTerm}")
+    public List<User> searchUsersWithMatchingName(@PathParam("username") String username, @PathParam("searchTerm") String searchTerm) {
         return userRepository.streamAll()
                 .map(user -> userRepository.initUser(user))
-                .filter(user -> user.getUsername().toLowerCase().contains(searchTerm.toLowerCase()))
+                .filter(user -> user.getUsername().toLowerCase().contains(searchTerm.toLowerCase()) && !user.getUsername().equals(username))
                 .limit(5)
                 .collect(Collectors.toList());
     }
+
 }
