@@ -227,4 +227,8 @@ export class PlaySongService {
                 break;
         }
     }
+
+    changeVolume(volume: number) {
+        this.player.setVolume(volume);
+    }
 }

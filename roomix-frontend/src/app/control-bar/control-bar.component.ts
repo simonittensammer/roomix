@@ -50,7 +50,7 @@ export class ControlBarComponent implements OnInit {
 
     adjustVolume(value) {
         this.volumePercentage = value;
-        // console.log(this.volumePercentage);
+        this.playSongService.changeVolume(value);
 
         // tslint:disable-next-line:triple-equals
         if (this.volumePercentage == 0) {
