@@ -33,6 +33,8 @@ export class PlaySongService {
     public resetSkipVoteEvent = this.resetSkipVote.asObservable();
 
     isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    songProgress = 0;
+    remainingSongDuration = 0;
 
     constructor(
         private sanitizer: DomSanitizer,
@@ -81,6 +83,14 @@ export class PlaySongService {
                     this.player.loadVideoById(this.currentSongUrl, this.currentSongTimer);
                     this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'
                         + this.currentSongUrl + '?start=' + this.currentSongTimer + '&controls=1&amp&autoplay=1');
+                    setTimeout(() => {
+                        this.remainingSongDuration = 0.05;
+                        this.songProgress =  (this.currentSongTimer * 100) / this.currentSong.length;
+                    }, 1000);
+                    setTimeout(() => {
+                        this.remainingSongDuration = this.currentSong.length - this.currentSongTimer;
+                        this.songProgress =  100;
+                    }, 1250);
                     this.resetSkipVote.next();
                 }
 
@@ -123,6 +133,8 @@ export class PlaySongService {
         this.currentSongTimer = 0;
         this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
         this.connected = false;
+        this.remainingSongDuration = 0;
+        this.songProgress =  0;
     }
 
     // tslint:disable-next-line:ban-types

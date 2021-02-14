@@ -1,6 +1,6 @@
 <div id="player"></div>
 
-<div id="controlBar" *ngIf="playSongService.connected">
+<div id="controlBar" *ngIf="playSongService.connected" (click)="startAnimation()">
     <div id="roomInfoWrapper">
         <img [src]="accountService.sanitizeBase64(room.picUrl)" id="roomImage"
              alt="roomPic">
@@ -14,8 +14,9 @@
         <ion-icon name="musical-notes"></ion-icon>
         {{ playSongService.currentSong.title }}
     </p>
+
     <div id="songProgressBar">
-        <div id="songProgress"></div>
+        <div #songProgress id="songProgress" style="transition-duration: {{ playSongService.remainingSongDuration }}s; width: {{ playSongService.songProgress }}%"></div>
     </div>
 
     <div id="skipSong">
@@ -36,10 +37,4 @@
         <ion-icon class="volumeIcon" name="volume-medium-outline" *ngIf="volumeStage == 'm'"></ion-icon>
         <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="volumeStage == 'h'"></ion-icon>
     </div>
-
-    <!--<iframe *ngIf="this.playSongService.currentSong != null" width="0" height="0"
-            [src]="this.playSongService.completeUrl" frameborder="0"
-            allowfullscreen></iframe>-->
-
-
 </div>

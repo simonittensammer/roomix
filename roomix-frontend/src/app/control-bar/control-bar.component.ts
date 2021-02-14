@@ -1,17 +1,14 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {RoomService} from '../services/room.service';
 import {Room} from '../models/room';
-import {Observable} from 'rxjs';
 import {AccountService} from '../services/account.service';
 import {User} from '../models/user';
 import {PlaySongService} from '../services/play-song.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {UserService} from '../services/user.service';
 
 @Component({
     selector: 'app-control-bar',
     templateUrl: './control-bar.component.html',
-    styleUrls: ['./control-bar.component.scss'],
+    styleUrls: ['./control-bar.component.scss']
 })
 export class ControlBarComponent implements OnInit {
 
@@ -20,14 +17,18 @@ export class ControlBarComponent implements OnInit {
     volumePercentage = 100;
     volumeStage: string;
     skip: boolean;
+    songProgress = 0;
+    animationTime = '30s';
+
+    // @ViewChild('songProgress') songProgressBar: ElementRef;
 
     constructor(
         private roomService: RoomService,
         private accountService: AccountService,
-        private userService: UserService,
         public playSongService: PlaySongService,
-        private sanitizer: DomSanitizer
-    ) {}
+        private renderer: Renderer2
+    ) {
+    }
 
     ngOnInit() {
         this.playSongService.roomValue.subscribe(
@@ -63,4 +64,11 @@ export class ControlBarComponent implements OnInit {
         this.skip = !this.skip;
         this.playSongService.skipSong(this.skip);
     }
+
+    // startAnimation() {
+    //     console.log('start');
+    //
+    //     this.renderer.setStyle(this.songProgressBar.nativeElement, 'transition-duration', '30s');
+    //     this.renderer.setStyle(this.songProgressBar.nativeElement, 'width', this.songProgress + '%');
+    // }
 }

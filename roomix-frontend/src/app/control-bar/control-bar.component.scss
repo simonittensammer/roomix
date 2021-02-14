@@ -61,15 +61,20 @@ ion-icon {
   height: 1vh;
   width: 50%;
   border-radius: .5vh;
+  z-index: 900;
 
   background: var(--ion-color-dark);
+}
 
-  #songProgress {
-    width: 15%;
-    height: 100%;
-    border-radius: .5vh;
-    background: var(--ion-card-background);
-  }
+#songProgress {
+  //width: 0;
+  height: 100%;
+  border-radius: .5vh;
+  background: var(--ion-card-background);
+
+  width: 0;
+  transition-property: width;
+  transition-timing-function: linear;
 }
 
 #volumeRangeBox {

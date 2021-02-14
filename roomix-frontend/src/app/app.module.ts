@@ -25,7 +25,7 @@ import {ProfileComponent} from './pages/profile/profile/profile.component';
 import {JoinRoomComponent} from './pages/join-room/join-room.component';
 import {InviteFriendComponent} from './pages/room/invite-friend/invite-friend.component';
 import {AddFriendComponent} from './pages/profile/friendlist/add-friend/add-friend.component';
-import {ChatComponent} from "./pages/room/chat/chat.component";
+import {ChatComponent} from './pages/room/chat/chat.component';
 
 @NgModule({
     declarations: [
@@ -54,7 +54,7 @@ import {ChatComponent} from "./pages/room/chat/chat.component";
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
-      ReactiveFormsModule,
+      ReactiveFormsModule
   ],
   providers: [
     StatusBar,
