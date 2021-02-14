@@ -43,7 +43,7 @@ export class AddFriendComponent implements OnInit, AfterViewInit {
                 debounceTime(500),
                 pluck('target', 'value'),
                 distinctUntilChanged(),
-                filter((value: string) => value.length > 3),
+                filter((value: string) => value.length > 0),
                 map((value) => value.split(' ').join('+'))
             ).subscribe(value => {
                 console.log(value);
