@@ -110,8 +110,7 @@ public class RoomInviteRepository implements PanacheRepository<RoomInvite> {
         if (receiver == null || sender == null || room == null) return false;
 
         if (response) {
-            Member member = new Member(receiver, room, "member");
-            memberRepository.persist(member);
+            Member member = memberRepository.addMember(receiver, room);
             room.getMemberList().add(member);
         }
 

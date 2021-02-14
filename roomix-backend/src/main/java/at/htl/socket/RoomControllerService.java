@@ -6,6 +6,7 @@ import at.htl.dto.PlaySongMessageDTO;
 import at.htl.dto.SkipVoteAmountDTO;
 import at.htl.dto.SocketMessageDTO;
 import at.htl.entity.*;
+import at.htl.observers.MemberRepositoryObserver;
 import at.htl.observers.PlaylistControllerObserver;
 import at.htl.observers.PlaylistRepositoryObserver;
 import org.eclipse.microprofile.context.ManagedExecutor;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Transactional
 @ApplicationScoped
-public class RoomControllerService implements PlaylistControllerObserver, PlaylistRepositoryObserver {
+public class RoomControllerService implements PlaylistControllerObserver, PlaylistRepositoryObserver, MemberRepositoryObserver {
 
     private static final Logger LOGGER = Logger.getLogger("RoomControllerService");
 
@@ -42,10 +43,14 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
     private PlaylistRepository playlistRepository;
 
     @Inject
+    MemberRepository memberRepository;
+
+    @Inject
     ManagedExecutor managedExecutor;
 
     @Inject
     public void init() {
+        memberRepository.addObserver(this);
         playlistRepository.addObserver(this);
     }
 
@@ -76,6 +81,8 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
 
             members.get(roomId).put(username, user);
             sessions.put((String) session.getUserProperties().get("username"), session);
+
+            messageSession(session, new SocketMessageDTO("update-members", null));
 
             messageSession(session, new SocketMessageDTO(
                     "new-song",
@@ -257,5 +264,12 @@ public class RoomControllerService implements PlaylistControllerObserver, Playli
                 broadcast(roomId, new SocketMessageDTO("stop", null));
             }
         }
+    }
+
+    @Override
+    public void update(Long roomId) {
+        System.out.println("update members");
+        SocketMessageDTO socketMessageDTO = new SocketMessageDTO("update-members", null);
+        broadcast(roomId, socketMessageDTO);
     }
 }

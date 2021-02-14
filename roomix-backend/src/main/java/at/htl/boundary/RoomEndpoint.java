@@ -158,8 +158,7 @@ public class RoomEndpoint {
 
         if (user == null || room == null) return Response.status(Response.Status.BAD_REQUEST).build();
 
-        Member member = new Member(user, room, "member");
-        memberRepository.persist(member);
+        Member member = memberRepository.addMember(user, room);
 
         return Response.created(uriInfo.getAbsolutePath()).entity(member).build();
     }
@@ -178,7 +177,7 @@ public class RoomEndpoint {
 
         room.getMemberList().remove(member);
         user.getMemberList().remove(member);
-        memberRepository.delete(member);
+        memberRepository.removeMember(member);
 
         return Response.noContent().build();
     }
