@@ -85,6 +85,10 @@ public class RoomInviteRepository implements PanacheRepository<RoomInvite> {
 
         if (sender == null || receiver == null || room == null) return null;
 
+        if (room.getMemberList().stream().anyMatch(member -> receiver.getMemberList().contains(member))) return null;
+
+        if (streamAll().anyMatch(roomInvite -> roomInvite.getSender().equals(sender) && roomInvite.getReceiver().equals(receiver) && roomInvite.getRoom().equals(room))) return null;
+
         RoomInvite roomInvite = new RoomInvite(sender, receiver, room);
         persist(roomInvite);
         receiver.getRoomInviteList().add(roomInvite);
