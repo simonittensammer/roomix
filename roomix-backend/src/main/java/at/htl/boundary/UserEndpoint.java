@@ -226,4 +226,18 @@ public class UserEndpoint {
                 .collect(Collectors.toList());
     }
 
+    @GET
+    @Path("{username}/{roomId}/friends/search/{searchTerm}")
+    public List<User> searchFriendsWithMatchingName(@PathParam("username") String username, @PathParam("roomId") Long roomId, @PathParam("searchTerm") String searchTerm) {
+        User searchUser = userRepository.findByName(username);
+        searchUser = userRepository.initUser(searchUser);
+        Room room = roomRepository.findById(roomId);
+
+        return searchUser.getFriendList().stream()
+                .map(user -> userRepository.initUser(user))
+                .filter(user -> user.getUsername().toLowerCase().contains(searchTerm.toLowerCase()) && memberRepository.getMemberOfRoom(user, room) == null)
+                .limit(5)
+                .collect(Collectors.toList());
+    }
+
 }
