@@ -218,27 +218,35 @@ public class UserEndpoint {
 
     @GET
     @Path("{username}/search/{searchTerm}")
-    public List<User> searchUsersWithMatchingName(@PathParam("username") String username, @PathParam("searchTerm") String searchTerm) {
-        User searchUser = userRepository.initUser(userRepository.findByName(username));
+    public Response searchUsersWithMatchingName(@PathParam("username") String username, @PathParam("searchTerm") String searchTerm) {
+        User searchUser = userRepository.findByName(username);
 
-        return userRepository.streamAll()
+        if (searchUser == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        List<User> result = userRepository.streamAll()
                 .map(user -> userRepository.initUser(user))
                 .filter(user -> user.getUsername().toLowerCase().contains(searchTerm.toLowerCase()) && !user.getUsername().equals(username) && !searchUser.getFriendList().contains(user))
                 .limit(5)
                 .collect(Collectors.toList());
+
+        return Response.ok(result).build();
     }
 
     @GET
     @Path("{username}/{roomId}/friends/search/{searchTerm}")
-    public List<User> searchFriendsWithMatchingName(@PathParam("username") String username, @PathParam("roomId") Long roomId, @PathParam("searchTerm") String searchTerm) {
-        User searchUser = userRepository.initUser(userRepository.findByName(username));
+    public Response searchFriendsWithMatchingName(@PathParam("username") String username, @PathParam("roomId") Long roomId, @PathParam("searchTerm") String searchTerm) {
+        User searchUser = userRepository.findByName(username);
         Room room = roomRepository.findById(roomId);
 
-        return searchUser.getFriendList().stream()
+        if (searchUser == null || room == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        List<User> result = searchUser.getFriendList().stream()
                 .map(user -> userRepository.initUser(user))
                 .filter(user -> user.getUsername().toLowerCase().contains(searchTerm.toLowerCase()) && memberRepository.getMemberOfRoom(user, room) == null)
                 .limit(5)
                 .collect(Collectors.toList());
+
+        return Response.ok(result).build();
     }
 
 }
