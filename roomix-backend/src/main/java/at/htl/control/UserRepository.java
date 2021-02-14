@@ -161,4 +161,15 @@ public class UserRepository implements PanacheRepository<User> {
         user2.getAddUser().add(user1);
         user1.getFriendList().add(user2);
     }
+
+    public User initUser(User user) {
+        Hibernate.initialize(user);
+        Hibernate.initialize(user.getFriendRequestList());
+        Hibernate.initialize(user.getMemberList());
+        Hibernate.initialize(user.getRoomInviteList());
+        Hibernate.initialize(user.getFriendList());
+        Hibernate.initialize(user.getAddUser());
+        return user;
+    }
+
 }

@@ -215,4 +215,14 @@ public class UserEndpoint {
 
         return Response.status(406).entity("user does not exist").build();
     }
+
+    @GET
+    @Path("search/{searchTerm}")
+    public List<User> searchUsersWithMatchingName(@PathParam("searchTerm") String searchTerm) {
+        return userRepository.streamAll()
+                .map(user -> userRepository.initUser(user))
+                .filter(user -> user.getUsername().toLowerCase().contains(searchTerm.toLowerCase()))
+                .limit(5)
+                .collect(Collectors.toList());
+    }
 }
