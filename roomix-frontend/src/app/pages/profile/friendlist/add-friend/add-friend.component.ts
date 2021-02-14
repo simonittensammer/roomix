@@ -47,7 +47,7 @@ export class AddFriendComponent implements OnInit, AfterViewInit {
                 map((value) => value.split(' ').join('+'))
             ).subscribe(value => {
                 console.log(value);
-                this.accountService.searchUserWithMatchingName(value).subscribe(users => {
+                this.accountService.searchUserWithMatchingName(this.user.username, value).subscribe(users => {
                     this.possibleFriends = users;
                 });
             });
