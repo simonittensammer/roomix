@@ -4,6 +4,12 @@ import {Room} from '../models/room';
 import {AccountService} from '../services/account.service';
 import {User} from '../models/user';
 import {PlaySongService} from '../services/play-song.service';
+<<<<<<< HEAD
+=======
+import {DomSanitizer} from '@angular/platform-browser';
+import {UserService} from '../services/user.service';
+import {SkipVoteAmountDTO} from '../models/dto/skipVoteAmountDTO';
+>>>>>>> ad1872efc0144666d8c6778ac7d15f6b3c099358
 
 @Component({
     selector: 'app-control-bar',
@@ -14,13 +20,15 @@ export class ControlBarComponent implements OnInit {
 
     user: User;
     room: Room;
-    volumePercentage = 100;
-    volumeStage: string;
     skip: boolean;
+<<<<<<< HEAD
     songProgress = 0;
     animationTime = '30s';
 
     // @ViewChild('songProgress') songProgressBar: ElementRef;
+=======
+    skips: SkipVoteAmountDTO;
+>>>>>>> ad1872efc0144666d8c6778ac7d15f6b3c099358
 
     constructor(
         private roomService: RoomService,
@@ -36,28 +44,19 @@ export class ControlBarComponent implements OnInit {
                 this.room = value;
             }
         );
-        this.volumeStage = 'h';
+        this.playSongService.changeVolume(-1);
 
         this.playSongService.resetSkipVoteEvent.subscribe(() => {
-            console.log('asdlkjxlckvo');
             this.skip = false;
+        });
+
+        this.playSongService.updateSkipAmountEvent.subscribe(skipVoteAmountDTO => {
+            this.skips = skipVoteAmountDTO;
         });
     }
 
     adjustVolume(value) {
-        this.volumePercentage = value;
         this.playSongService.changeVolume(value);
-
-        // tslint:disable-next-line:triple-equals
-        if (this.volumePercentage == 0) {
-            this.volumeStage = 'x';
-        } else if (this.volumePercentage <= 33) {
-            this.volumeStage = 'l';
-        } else if (this.volumePercentage <= 66) {
-            this.volumeStage = 'm';
-        } else {
-            this.volumeStage = 'h';
-        }
     }
 
     skipSong() {
@@ -65,10 +64,16 @@ export class ControlBarComponent implements OnInit {
         this.playSongService.skipSong(this.skip);
     }
 
+<<<<<<< HEAD
     // startAnimation() {
     //     console.log('start');
     //
     //     this.renderer.setStyle(this.songProgressBar.nativeElement, 'transition-duration', '30s');
     //     this.renderer.setStyle(this.songProgressBar.nativeElement, 'width', this.songProgress + '%');
     // }
+=======
+    mutePlayer() {
+        this.playSongService.mutePlayer();
+    }
+>>>>>>> ad1872efc0144666d8c6778ac7d15f6b3c099358
 }

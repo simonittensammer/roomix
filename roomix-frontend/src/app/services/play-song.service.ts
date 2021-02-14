@@ -9,6 +9,7 @@ import {SocketMessageDTO} from '../models/dto/SocketMessageDTO';
 import {PlaySongMessageDTO} from '../models/dto/PlaySongMessageDTO';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {ChatMessageDTO} from "../models/dto/chatMessageDTO";
+import {SkipVoteAmountDTO} from '../models/dto/skipVoteAmountDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -23,14 +24,19 @@ export class PlaySongService {
     room: Room;
     private listeningRoom: BehaviorSubject<Room>;
     connected = false;
+    volumePercentage: number;
+    volumeStage: string;
+    mute: boolean;
 
     public YT: any;
     public video: any;
     public player: any;
-    public reframed: boolean = false;
+    public reframed: boolean;
 
     private resetSkipVote = new Subject<void>();
     public resetSkipVoteEvent = this.resetSkipVote.asObservable();
+    private updateSkipAmount = new Subject<SkipVoteAmountDTO>();
+    public updateSkipAmountEvent = this.updateSkipAmount.asObservable();
 
     isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     songProgress = 0;
@@ -41,6 +47,7 @@ export class PlaySongService {
         private roomService: RoomService
     ) {
         this.listeningRoom = new BehaviorSubject<Room>(JSON.parse(localStorage.getItem('listeningRoom')));
+        this.volumePercentage = Number(localStorage.getItem('volume'));
         this.room = new Room('');
         this.init();
     }
@@ -118,6 +125,11 @@ export class PlaySongService {
                    console.log(chatMessage.sender + ': ' + chatMessage.content);
                    this.room.messageList.push(chatMessage);
                    this.roomService.updateRoomValue(this.room);
+                }
+
+                else if (data.type === 'skip-vote') {
+                    const skipAmount: SkipVoteAmountDTO = data.message as SkipVoteAmountDTO;
+                    this.updateSkipAmount.next(skipAmount);
                 }
             }, error => {
                 console.log(error);
@@ -233,6 +245,46 @@ export class PlaySongService {
     }
 
     changeVolume(volume: number) {
-        this.player.setVolume(volume);
+        if (volume === -1) {
+            volume = Number(localStorage.getItem('volume'));
+            if (volume === null) {
+               volume = 50;
+            }
+        }
+        if (volume === 0) {
+            this.volumeStage = 'x';
+        } else if (volume <= 33) {
+            this.volumeStage = 'l';
+        } else if (volume <= 66) {
+            this.volumeStage = 'm';
+        } else {
+            this.volumeStage = 'h';
+        }
+        if (this.player.isMuted()) {
+            this.mute = false;
+            this.player.unMute();
+        }
+        this.volumePercentage = volume;
+        localStorage.setItem('volume', String(this.volumePercentage));
+        this.player.setVolume(this.volumePercentage);
+    }
+
+    mutePlayer() {
+        this.mute = !this.mute;
+        if (this.mute) {
+           this.player.mute();
+           this.volumeStage = 'x';
+        } else {
+            if (this.volumePercentage === 0) {
+                this.volumeStage = 'x';
+            } else if (this.volumePercentage <= 33) {
+                this.volumeStage = 'l';
+            } else if (this.volumePercentage <= 66) {
+                this.volumeStage = 'm';
+            } else {
+                this.volumeStage = 'h';
+            }
+            this.player.unMute();
+        }
     }
 }
