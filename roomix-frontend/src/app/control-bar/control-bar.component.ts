@@ -4,12 +4,7 @@ import {Room} from '../models/room';
 import {AccountService} from '../services/account.service';
 import {User} from '../models/user';
 import {PlaySongService} from '../services/play-song.service';
-<<<<<<< HEAD
-=======
-import {DomSanitizer} from '@angular/platform-browser';
-import {UserService} from '../services/user.service';
-import {SkipVoteAmountDTO} from '../models/dto/skipVoteAmountDTO';
->>>>>>> ad1872efc0144666d8c6778ac7d15f6b3c099358
+import { SkipVoteAmountDTO } from '../models/dto/skipVoteAmountDTO';
 
 @Component({
     selector: 'app-control-bar',
@@ -21,14 +16,11 @@ export class ControlBarComponent implements OnInit {
     user: User;
     room: Room;
     skip: boolean;
-<<<<<<< HEAD
     songProgress = 0;
     animationTime = '30s';
 
     // @ViewChild('songProgress') songProgressBar: ElementRef;
-=======
     skips: SkipVoteAmountDTO;
->>>>>>> ad1872efc0144666d8c6778ac7d15f6b3c099358
 
     constructor(
         private roomService: RoomService,
@@ -64,16 +56,7 @@ export class ControlBarComponent implements OnInit {
         this.playSongService.skipSong(this.skip);
     }
 
-<<<<<<< HEAD
-    // startAnimation() {
-    //     console.log('start');
-    //
-    //     this.renderer.setStyle(this.songProgressBar.nativeElement, 'transition-duration', '30s');
-    //     this.renderer.setStyle(this.songProgressBar.nativeElement, 'width', this.songProgress + '%');
-    // }
-=======
     mutePlayer() {
         this.playSongService.mutePlayer();
     }
->>>>>>> ad1872efc0144666d8c6778ac7d15f6b3c099358
 }
