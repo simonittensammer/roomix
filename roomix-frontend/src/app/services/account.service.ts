@@ -74,6 +74,10 @@ export class AccountService {
     return this.http.get<Array<User>>(GlobalConstants.apiUrl + '/user/' + username + '/search/' + searchTerm);
   }
 
+  searchFriendsWithMatchingName(username: string, roomId: number, searchTerm: string) {
+    return this.http.get<Array<User>>(GlobalConstants.apiUrl + '/user/' + username + '/' + roomId + '/friends/search/' + searchTerm);
+  }
+
   showAddFriend() {
     this.addFriendVisible = !this.addFriendVisible;
   }

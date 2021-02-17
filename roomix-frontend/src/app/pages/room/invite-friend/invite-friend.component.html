@@ -4,18 +4,17 @@
     <input #input class="searchBar formElement" type="text" placeholder="Search" [(ngModel)]="searchQuery">
 
     <ul class="formElement">
-        <ng-container *ngFor="let friend of user.friendList">
-            <li class="listEntry"
-                *ngIf="(searchQuery == '' || (friend.username | uppercase).includes(searchQuery | uppercase) || (friend.displayname | uppercase).includes(searchQuery | uppercase))">
-                <img [src]="accountService.sanitizeBase64(friend.picUrl)" alt="" class="listImage">
+        <ng-container *ngFor="let user of possibleInvites">
+            <li class="listEntry">
+                <img [src]="accountService.sanitizeBase64(user.picUrl)" alt="" class="listImage">
 
                 <div class="listTextContainer">
-                    <p class="listHeadline">{{ friend.displayname }}</p>
-                    <p class="listText">@{{ friend.username }}</p>
+                    <p class="listHeadline">{{ user.displayname }}</p>
+                    <p class="listText">@{{ user.username }}</p>
                 </div>
 
                 <div class="listButtonContainer">
-                    <a class="buttonLink" (click)="sendRoomInvite(friend.username)">
+                    <a class="buttonLink" (click)="sendRoomInvite(user.username)">
                         <button>Invite</button>
                     </a>
                 </div>

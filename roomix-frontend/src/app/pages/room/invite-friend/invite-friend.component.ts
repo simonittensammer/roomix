@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {RoomService} from '../../../services/room.service';
 import {AccountService} from '../../../services/account.service';
 import {User} from '../../../models/user';
-import {first} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter, first, map, pluck} from 'rxjs/operators';
 import {Room} from '../../../models/room';
 import {UserService} from '../../../services/user.service';
+import {fromEvent} from 'rxjs';
 
 @Component({
   selector: 'app-invite-friend',
   templateUrl: './invite-friend.component.html',
   styleUrls: ['./invite-friend.component.scss'],
 })
-export class InviteFriendComponent implements OnInit {
+export class InviteFriendComponent implements OnInit, AfterViewInit {
 
   user: User;
   room: Room;
   searchQuery = '';
+  possibleInvites: Array<User>;
+  @ViewChild('input') inputElement: ElementRef;
 
   constructor(
       public roomService: RoomService,
@@ -27,11 +30,11 @@ export class InviteFriendComponent implements OnInit {
     this.roomService.roomValue.subscribe(
         value => {
           this.room = value;
-        }
-    );
-    this.userService.userValue.subscribe(
-        value => {
-          this.user = value;
+          this.userService.userValue.subscribe(
+              value2 => {
+                  this.user = value2;
+                }
+            );
         }
     );
   }
@@ -44,14 +47,19 @@ export class InviteFriendComponent implements OnInit {
         });
   }
 
-    // checkUserMemberOfRoom(friend) {
-    //     this.room.memberList.forEach(member => {
-    //         console.log(member.user);
-    //         console.log(friend);
-    //         if (member.user.username === friend.username) {
-    //             return true;
-    //         }
-    //     });
-    //     return false;
-    // }
+    ngAfterViewInit() {
+        fromEvent(this.inputElement.nativeElement, 'keyup')
+            .pipe(
+                debounceTime(500),
+                pluck('target', 'value'),
+                distinctUntilChanged(),
+                filter((value: string) => value.length > 0),
+                map((value) => value.split(' ').join('+'))
+            ).subscribe(value => {
+            console.log(value);
+            this.accountService.searchFriendsWithMatchingName(this.user.username, this.room.id, value).subscribe(users => {
+                this.possibleInvites = users;
+            });
+        });
+    }
 }
