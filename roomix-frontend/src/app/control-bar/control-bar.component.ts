@@ -34,9 +34,9 @@ export class ControlBarComponent implements OnInit {
         this.playSongService.roomValue.subscribe(
             value => {
                 this.room = value;
+                this.playSongService.changeVolume(-1);
             }
         );
-        this.playSongService.changeVolume(-1);
 
         this.playSongService.resetSkipVoteEvent.subscribe(() => {
             this.skip = false;

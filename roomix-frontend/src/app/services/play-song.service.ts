@@ -49,7 +49,6 @@ export class PlaySongService {
         private roomService: RoomService
     ) {
         this.listeningRoom = new BehaviorSubject<Room>(JSON.parse(localStorage.getItem('listeningRoom')));
-        this.volumePercentage = Number(localStorage.getItem('volume'));
         this.room = new Room('');
         this.init();
     }
@@ -257,20 +256,8 @@ export class PlaySongService {
                volume = 50;
             }
         }
-        if (volume === 0) {
-            this.volumeStage = 'x';
-        } else if (volume <= 33) {
-            this.volumeStage = 'l';
-        } else if (volume <= 66) {
-            this.volumeStage = 'm';
-        } else {
-            this.volumeStage = 'h';
-        }
-        if (this.player.isMuted()) {
-            this.mute = false;
-            this.player.unMute();
-        }
         this.volumePercentage = volume;
+        this.setVolumeStage();
         localStorage.setItem('volume', String(this.volumePercentage));
         this.player.setVolume(this.volumePercentage);
     }
@@ -281,16 +268,20 @@ export class PlaySongService {
            this.player.mute();
            this.volumeStage = 'x';
         } else {
-            if (this.volumePercentage === 0) {
-                this.volumeStage = 'x';
-            } else if (this.volumePercentage <= 33) {
-                this.volumeStage = 'l';
-            } else if (this.volumePercentage <= 66) {
-                this.volumeStage = 'm';
-            } else {
-                this.volumeStage = 'h';
-            }
+            this.setVolumeStage();
             this.player.unMute();
+        }
+    }
+
+    setVolumeStage() {
+        if (this.volumePercentage === 0) {
+            this.volumeStage = 'x';
+        } else if (this.volumePercentage <= 33) {
+            this.volumeStage = 'l';
+        } else if (this.volumePercentage <= 66) {
+            this.volumeStage = 'm';
+        } else {
+            this.volumeStage = 'h';
         }
     }
 }
