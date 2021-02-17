@@ -28,7 +28,7 @@
     <h3>Discover Public Rooms</h3>
 
     <div class="inputWrapper">
-        <input type="text" class="searchInput" [(ngModel)]="searchTerm" placeholder="Search Rooms">
+        <input #input type="text" class="searchInput" placeholder="Search Rooms">
         <input type="number" class="numberInput" [(ngModel)]="limit" (change)="updatePublicRoomLimit()">
     </div>
 

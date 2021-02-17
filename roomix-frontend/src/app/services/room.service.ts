@@ -50,7 +50,7 @@ export class RoomService {
         this.inviteFriendVisible = !this.inviteFriendVisible;
     }
 
-    getPopularPublicRooms(limit: number) {
+    getPopularPublicRooms(limit: number, searchTerm: string) {
         return this.http.get<Array<Room>>(GlobalConstants.apiUrl + '/room/popular/?limit=' + limit)
             .pipe(map(rooms => {
                 return rooms;
