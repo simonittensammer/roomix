@@ -1,6 +1,6 @@
 <div id="player"></div>
 
-<div id="controlBar" *ngIf="playSongService.connected">
+<div id="controlBar" *ngIf="playSongService.connected" (click)="startAnimation()">
     <div id="roomInfoWrapper">
         <img [src]="accountService.sanitizeBase64(room.picUrl)" id="roomImage"
              alt="roomPic">
