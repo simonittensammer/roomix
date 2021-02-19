@@ -150,6 +150,18 @@ public class RoomEndpoint {
         return Response.status(406).entity("user does not exist").build();
     }
 
+    @DELETE
+    @Path("/{roomId}")
+    public Response deleteRoom(@PathParam("roomId") Long roomId) {
+        Room room = roomRepository.findById(roomId);
+
+        if (room == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        roomRepository.delete(room);
+
+        return Response.noContent().build();
+    }
+
 
     @POST
     @Path("/member")
