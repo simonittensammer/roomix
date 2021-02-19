@@ -72,11 +72,11 @@ export class AccountService {
     }
 
     searchUserWithMatchingName(username: string, searchTerm: string): Observable<User[]> {
-        return this.http.get<Array<User>>(GlobalConstants.apiUrl + '/user/' + username + '/search/' + searchTerm);
+        return this.http.get<Array<User>>(GlobalConstants.apiUrl + '/user/' + username + '/search?searchTerm=' + searchTerm);
     }
 
     searchFriendsWithMatchingName(username: string, roomId: number, searchTerm: string) {
-        return this.http.get<Array<User>>(GlobalConstants.apiUrl + '/user/' + username + '/' + roomId + '/friends/search/' + searchTerm);
+        return this.http.get<Array<User>>(GlobalConstants.apiUrl + '/user/' + username + '/' + roomId + '/friends/search?searchTerm=' + searchTerm);
     }
 
     showAddFriend() {
