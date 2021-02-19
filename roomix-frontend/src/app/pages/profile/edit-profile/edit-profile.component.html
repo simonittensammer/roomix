@@ -1,3 +1,11 @@
-<p>
-  edit-profile works!
-</p>
+<div class="popup centerXY">
+    <h2 class="formElement formHeadline">Edit your Profile</h2>
+
+    <!-- Inputs -->
+
+    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Save</button>
+
+    <div class="formElement">
+        <a (click)="accountService.showEditProfile()">Cancel</a>
+    </div>
+</div>
