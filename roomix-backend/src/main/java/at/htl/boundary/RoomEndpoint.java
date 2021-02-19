@@ -192,6 +192,8 @@ public class RoomEndpoint {
         user.getMemberList().remove(member);
         memberRepository.removeMember(member);
 
+        if (room.getMemberList().size() == 0) roomRepository.delete(room);
+
         return Response.noContent().build();
     }
 
