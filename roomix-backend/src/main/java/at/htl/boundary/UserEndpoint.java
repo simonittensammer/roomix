@@ -100,7 +100,8 @@ public class UserEndpoint {
     @GET
     @Path("friendRequests/{id}/{response}")
     public Response respondToFriendRequest(@PathParam("id") Long friendRequestId, @PathParam("response") boolean response) {
-        if (friendRequestRepository.respondToFriendRequest(friendRequestId, response)) return Response.noContent().build();
+        if (friendRequestRepository.respondToFriendRequest(friendRequestId, response))
+            return Response.noContent().build();
 
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
@@ -124,7 +125,7 @@ public class UserEndpoint {
             }
             userRepository.persist(user);
             return Response.status(201).entity(user).build();
-        }catch (PersistenceException e) {
+        } catch (PersistenceException e) {
             return Response.status(406).entity("username is already taken").build();
         }
     }
@@ -138,7 +139,7 @@ public class UserEndpoint {
         User user = userRepository.findByName(username);
 
         if (user != null) {
-            if(user.getPassword().equals(password)) {
+            if (user.getPassword().equals(password)) {
                 return Response.ok(user).build();
             } else {
                 return Response.status(406).entity("password wrong").build();
@@ -160,7 +161,7 @@ public class UserEndpoint {
             try {
                 userRepository.updateUser(user, changes);
                 return Response.ok(user).build();
-            }catch (PersistenceException e) {
+            } catch (PersistenceException e) {
                 return Response.status(406).entity("username is already taken").build();
             }
         }
@@ -233,18 +234,27 @@ public class UserEndpoint {
     }
 
     @GET
-    @Path("{username}/{roomId}/friends/search/{searchTerm}")
-    public Response searchFriendsWithMatchingName(@PathParam("username") String username, @PathParam("roomId") Long roomId, @PathParam("searchTerm") String searchTerm) {
+    @Path("{username}/{roomId}/friends/search")
+    public Response searchFriendsWithMatchingName(@PathParam("username") String username, @PathParam("roomId") Long roomId, @QueryParam("searchTerm") String searchTerm) {
         User searchUser = userRepository.findByName(username);
         Room room = roomRepository.findById(roomId);
 
         if (searchUser == null || room == null) return Response.status(Response.Status.BAD_REQUEST).build();
 
-        List<User> result = searchUser.getFriendList().stream()
-                .map(user -> userRepository.initUser(user))
-                .filter(user -> user.getUsername().toLowerCase().contains(searchTerm.toLowerCase()) && memberRepository.getMemberOfRoom(user, room) == null)
-                .limit(5)
-                .collect(Collectors.toList());
+        List<User> result;
+
+        if (searchTerm == null) {
+
+            result = searchUser.getFriendList().stream().map(user -> userRepository.initUser(user)).limit(5).collect(Collectors.toList());
+
+        } else {
+
+            result = searchUser.getFriendList().stream()
+                    .map(user -> userRepository.initUser(user))
+                    .filter(user -> user.getUsername().toLowerCase().contains(searchTerm.toLowerCase()) && memberRepository.getMemberOfRoom(user, room) == null)
+                    .limit(5)
+                    .collect(Collectors.toList());
+        }
 
         return Response.ok(result).build();
     }
