@@ -24,12 +24,7 @@ public class RoomRepository implements PanacheRepository<Room> {
         Room room = find("RM_ID", id).firstResult();
 
         if (room != null) {
-            Hibernate.initialize(room);
-            Hibernate.initialize(room.getMessageList());
-            Hibernate.initialize(room.getMemberList());
-            Hibernate.initialize(room.getPlaylist());
-            Hibernate.initialize(room.getPlaylist().getSongList());
-            Hibernate.initialize(room.getPlaylist().getCurrentSong());
+            room = initRoom(room);
         }
         return room;
     }
@@ -37,12 +32,7 @@ public class RoomRepository implements PanacheRepository<Room> {
     public List<Room> findAllRoomsWithSong(Song song) {
         List<Room> rooms = new LinkedList<>();
 
-        List<Room> allRooms = streamAll().peek(o -> {
-            Hibernate.initialize(o.getMessageList());
-            Hibernate.initialize(o.getMemberList());
-            Hibernate.initialize(o.getPlaylist());
-            Hibernate.initialize(o.getPlaylist().getSongList());
-        }).collect(Collectors.toList());
+        List<Room> allRooms = streamAll().map(this::initRoom).collect(Collectors.toList());
 
         allRooms.forEach(room -> {
             if (room.getPlaylist().getSongList().contains(song)) {
@@ -55,12 +45,7 @@ public class RoomRepository implements PanacheRepository<Room> {
 
     public List<Room> findPopularPublicRooms(int limit) {
         List<Room> rooms = list("isprivate", false).stream()
-                .peek(o -> {
-                    Hibernate.initialize(o.getMessageList());
-                    Hibernate.initialize(o.getMemberList());
-                    Hibernate.initialize(o.getPlaylist());
-                    Hibernate.initialize(o.getPlaylist().getSongList());
-                })
+                .map(this::initRoom)
                 .sorted((o1, o2) -> o2.getMemberList().size() - o1.getMemberList().size())
                 .limit(limit)
                 .collect(Collectors.toList());
@@ -92,5 +77,15 @@ public class RoomRepository implements PanacheRepository<Room> {
                 .collect(Collectors.toList());
 
         return messages;
+    }
+
+    public Room initRoom(Room room) {
+        Hibernate.initialize(room);
+        Hibernate.initialize(room.getMessageList());
+        Hibernate.initialize(room.getMemberList());
+        Hibernate.initialize(room.getPlaylist());
+        Hibernate.initialize(room.getPlaylist().getSongList());
+        Hibernate.initialize(room.getPlaylist().getCurrentSong());
+        return room;
     }
 }
