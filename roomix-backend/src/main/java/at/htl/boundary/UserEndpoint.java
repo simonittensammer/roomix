@@ -218,8 +218,8 @@ public class UserEndpoint {
     }
 
     @GET
-    @Path("{username}/search/{searchTerm}")
-    public Response searchUsersWithMatchingName(@PathParam("username") String username, @PathParam("searchTerm") String searchTerm) {
+    @Path("{username}/search")
+    public Response searchUsersWithMatchingName(@PathParam("username") String username, @QueryParam("searchTerm") String searchTerm) {
         User searchUser = userRepository.findByName(username);
 
         if (searchUser == null) return Response.status(Response.Status.BAD_REQUEST).build();
