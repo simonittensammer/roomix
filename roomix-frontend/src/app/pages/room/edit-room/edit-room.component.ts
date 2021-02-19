@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {RoomService} from '../../../services/room.service';
 
 @Component({
   selector: 'app-edit-room',
@@ -7,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditRoomComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+      public roomService: RoomService
+  ) { }
 
   ngOnInit() {}
 
+    onSubmit() {
+
+    }
 }

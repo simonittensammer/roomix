@@ -16,6 +16,7 @@ export class RoomService {
     private roomSubject: BehaviorSubject<Room>;
     oldRoom: Room = null;
     inviteFriendVisible: boolean;
+    editRoomVisible: boolean;
 
     constructor(
         private http: HttpClient,
@@ -67,5 +68,9 @@ export class RoomService {
 
     getMessages(roomId: number): Observable<ChatMessageDTO[]> {
         return this.http.get<ChatMessageDTO[]>(GlobalConstants.apiUrl + '/room/messages/' + roomId);
+    }
+
+    showEditRoom() {
+        this.editRoomVisible = !this.editRoomVisible;
     }
 }

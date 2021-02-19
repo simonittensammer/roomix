@@ -1,3 +1,11 @@
-<p>
-  edit-room works!
-</p>
+<div class="popup centerXY">
+  <h2 class="formElement formHeadline">Edit your Room</h2>
+
+  <!-- Inputs -->
+
+  <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Save</button>
+
+  <div class="formElement">
+    <a (click)="roomService.showEditRoom()">Cancel</a>
+  </div>
+</div>
