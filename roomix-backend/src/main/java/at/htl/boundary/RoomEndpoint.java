@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.*;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Path("room")
@@ -265,5 +266,21 @@ public class RoomEndpoint {
 
         messageRepository.persist(message);
         return Response.ok(message).build();
+    }
+
+    @GET
+    @Path("search")
+    public Response searchPublicRoomsByName(@QueryParam("searchTerm") String searchTerm) {
+        List<Room> result;
+
+        if (searchTerm == null) result = roomRepository.findPopularPublicRooms(5);
+
+        else result = roomRepository.streamAll()
+                .map(room -> roomRepository.initRoom(room))
+                .filter(room -> room.getName().toLowerCase().contains(searchTerm.toLowerCase()) && !room.isPrivate())
+                .limit(5)
+                .collect(Collectors.toList());
+
+        return Response.ok(result).build();
     }
 }
