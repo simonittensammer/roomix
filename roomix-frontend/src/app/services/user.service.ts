@@ -31,22 +31,22 @@ export class UserService {
   }
 
   getProperMemberList(username) {
-    return this.http.get<Member[]>(GlobalConstants.apiUrl + '/user/' + username + '/members');
+    return this.http.get<Member[]>(GlobalConstants.APIURL + '/user/' + username + '/members');
   }
 
   getProperFriendList(username) {
-    return this.http.get<User[]>(GlobalConstants.apiUrl + '/user/' + username + '/friends');
+    return this.http.get<User[]>(GlobalConstants.APIURL + '/user/' + username + '/friends');
   }
 
   getProperFriendRequestList(username) {
-    return this.http.get<FriendRequest[]>(GlobalConstants.apiUrl + '/user/' + username + '/friendRequests');
+    return this.http.get<FriendRequest[]>(GlobalConstants.APIURL + '/user/' + username + '/friendRequests');
   }
 
   getProperRoomInviteList(username) {
-    return this.http.get<RoomInvite[]>(GlobalConstants.apiUrl + '/user/' + username + '/roomInvites');
+    return this.http.get<RoomInvite[]>(GlobalConstants.APIURL + '/user/' + username + '/roomInvites');
   }
 
   updateUser(username: string, image: string, displayname: string, password: string) {
-    return this.http.put<User>(GlobalConstants.apiUrl + '/user', new UserUpdateDTO(username, displayname, password, image));
+    return this.http.put<User>(GlobalConstants.APIURL + '/user', new UserUpdateDTO(username, displayname, password, image));
   }
 }

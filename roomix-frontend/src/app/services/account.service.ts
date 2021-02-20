@@ -33,7 +33,7 @@ export class AccountService {
 
 
     login(username, password) {
-        return this.http.post<User>(GlobalConstants.apiUrl + '/user/login', {username, password})
+        return this.http.post<User>(GlobalConstants.APIURL + '/user/login', {username, password})
             .pipe(map(user => {
                 this.userSocketService.connect(user.username);
                 return user;
@@ -52,31 +52,31 @@ export class AccountService {
 
     register(user: User, base64textString: string) {
         user.picUrl = base64textString;
-        return this.http.post(GlobalConstants.apiUrl + '/user', user);
+        return this.http.post(GlobalConstants.APIURL + '/user', user);
     }
 
     sendFriendRequest(sender: string, receiver: string): Observable<FriendRequest> {
-        return this.http.post<FriendRequest>(GlobalConstants.apiUrl + '/user/friendRequest', new FriendRequestDTO(sender, receiver));
+        return this.http.post<FriendRequest>(GlobalConstants.APIURL + '/user/friendRequest', new FriendRequestDTO(sender, receiver));
     }
 
     friendRequestResponse(friendRequest: FriendRequest, accept: boolean) {
-        return this.http.get(GlobalConstants.apiUrl + '/user/friendRequests/' + friendRequest.id + '/' + accept);
+        return this.http.get(GlobalConstants.APIURL + '/user/friendRequests/' + friendRequest.id + '/' + accept);
     }
 
     sendRoomInvite(roomId: number, sender: string, receiver: string): Observable<RoomInvite> {
-        return this.http.post<RoomInvite>(GlobalConstants.apiUrl + '/user/roomInvite', new RoomInviteDTO(sender, receiver, roomId));
+        return this.http.post<RoomInvite>(GlobalConstants.APIURL + '/user/roomInvite', new RoomInviteDTO(sender, receiver, roomId));
     }
 
     roomInviteResponse(roomInvite: RoomInvite, accept: boolean) {
-        return this.http.get(GlobalConstants.apiUrl + '/user/roomInvites/' + roomInvite.id + '/' + accept);
+        return this.http.get(GlobalConstants.APIURL + '/user/roomInvites/' + roomInvite.id + '/' + accept);
     }
 
     searchUserWithMatchingName(username: string, searchTerm: string): Observable<User[]> {
-        return this.http.get<Array<User>>(GlobalConstants.apiUrl + '/user/' + username + '/search?searchTerm=' + searchTerm);
+        return this.http.get<Array<User>>(GlobalConstants.APIURL + '/user/' + username + '/search?searchTerm=' + searchTerm);
     }
 
     searchFriendsWithMatchingName(username: string, roomId: number, searchTerm: string) {
-        return this.http.get<Array<User>>(GlobalConstants.apiUrl + '/user/' + username + '/' + roomId + '/friends/search?searchTerm=' + searchTerm);
+        return this.http.get<Array<User>>(GlobalConstants.APIURL + '/user/' + username + '/' + roomId + '/friends/search?searchTerm=' + searchTerm);
     }
 
     showAddFriend() {

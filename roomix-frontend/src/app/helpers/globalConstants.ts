@@ -1,4 +1,5 @@
 export class GlobalConstants {
-    public static apiUrl = 'http://localhost:8080';
-    public static siteTitle = 'Roomix';
+    public static APIURL = 'http://localhost:8080';
+    public static SITETITLE = 'Roomix';
+    public static ROLES = ['owner', 'admin', 'dj', 'member'];
 }

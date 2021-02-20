@@ -7,8 +7,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Member} from '../models/member';
 import {User} from '../models/user';
 import {MemberDTO} from '../models/dto/memberDTO';
-import {ChatMessageDTO} from "../models/dto/chatMessageDTO";
-import {UserUpdateDTO} from '../models/dto/userUpdateDTO';
+import {ChatMessageDTO} from '../models/dto/chatMessageDTO';
 import {RoomUpdateDTO} from '../models/dto/roomUpdateDTO';
 
 @Injectable({
@@ -27,7 +26,7 @@ export class RoomService {
     }
 
     getRoom(id) {
-        return this.http.get<Room>(GlobalConstants.apiUrl + '/room/' + id)
+        return this.http.get<Room>(GlobalConstants.APIURL + '/room/' + id)
             .pipe(map(room => {
                 return room;
             }));
@@ -43,7 +42,7 @@ export class RoomService {
     }
 
     public getMembers(id) {
-        return this.http.get<Array<Member>>(GlobalConstants.apiUrl + '/room/' + id + '/members')
+        return this.http.get<Array<Member>>(GlobalConstants.APIURL + '/room/' + id + '/members')
             .pipe(map(members => {
                 return members;
             }));
@@ -54,22 +53,22 @@ export class RoomService {
     }
 
     getPopularPublicRooms(limit: number, searchTerm: string) {
-        return this.http.get<Array<Room>>(GlobalConstants.apiUrl + '/room/popular?searchTerm=' + searchTerm + '&limit=' + limit)
+        return this.http.get<Array<Room>>(GlobalConstants.APIURL + '/room/popular?searchTerm=' + searchTerm + '&limit=' + limit)
             .pipe(map(rooms => {
                 return rooms;
             }));
     }
 
     addMember(username: string, roomId: number) {
-        return this.http.post(GlobalConstants.apiUrl + '/room/member', new MemberDTO(username, roomId));
+        return this.http.post(GlobalConstants.APIURL + '/room/member', new MemberDTO(username, roomId));
     }
 
     removeMember(username: string, roomId: number) {
-        return this.http.delete(GlobalConstants.apiUrl + '/room/member?username=' + username + '&roomId=' + roomId);
+        return this.http.delete(GlobalConstants.APIURL + '/room/member?username=' + username + '&roomId=' + roomId);
     }
 
     getMessages(roomId: number): Observable<ChatMessageDTO[]> {
-        return this.http.get<ChatMessageDTO[]>(GlobalConstants.apiUrl + '/room/messages/' + roomId);
+        return this.http.get<ChatMessageDTO[]>(GlobalConstants.APIURL + '/room/messages/' + roomId);
     }
 
     showEditRoom() {
@@ -77,10 +76,10 @@ export class RoomService {
     }
 
     deleteRoom(roomId: number) {
-        return this.http.delete(GlobalConstants.apiUrl + '/room/' + roomId);
+        return this.http.delete(GlobalConstants.APIURL + '/room/' + roomId);
     }
 
     updateRoom(roomId: number, image: string, name: string, isPrivate: boolean) {
-        return this.http.put<Room>(GlobalConstants.apiUrl + '/room', new RoomUpdateDTO(roomId, name, isPrivate, image));
+        return this.http.put<Room>(GlobalConstants.APIURL + '/room', new RoomUpdateDTO(roomId, name, isPrivate, image));
     }
 }

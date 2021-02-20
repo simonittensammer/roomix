@@ -19,7 +19,7 @@ export class PlaylistService {
   constructor(private http: HttpClient) {}
 
   getVideos(query: string): Observable <any> {
-    const url = GlobalConstants.apiUrl + '/song/YT/search/' + query;
+    const url = GlobalConstants.APIURL + '/song/YT/search/' + query;
     return this.http.get(url)
         .pipe(
             map((response: any) => response.items)
@@ -27,7 +27,7 @@ export class PlaylistService {
   }
 
   getVideoDuration(videoId: string) {
-    const url = GlobalConstants.apiUrl + '/song/YT/duration/' + videoId;
+    const url = GlobalConstants.APIURL + '/song/YT/duration/' + videoId;
     return this.http.get(url)
         .pipe(
             map((response: any) => response.items)
@@ -35,11 +35,11 @@ export class PlaylistService {
   }
 
   addSong(roomId: number, song: Song) {
-    return this.http.post(GlobalConstants.apiUrl + '/room/song', { roomId, song});
+    return this.http.post(GlobalConstants.APIURL + '/room/song', { roomId, song});
   }
 
   deleteSongFromPlaylist(roomId: number, songUrl: string) {
-    return this.http.delete<Song>(GlobalConstants.apiUrl + '/room/' + roomId + '/song/delete/' + songUrl);
+    return this.http.delete<Song>(GlobalConstants.APIURL + '/room/' + roomId + '/song/delete/' + songUrl);
   }
 
   showAddSong() {
