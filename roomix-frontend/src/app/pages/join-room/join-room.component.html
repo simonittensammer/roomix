@@ -5,7 +5,7 @@
 
     <ul class="inviteList" *ngIf="user.roomInviteList.length > 0">
         <li class="listEntry" *ngFor="let invite of user.roomInviteList">
-            <img [src]="accountService.sanitizeBase64(invite.room.picUrl)" alt="roomPic" class="listImage">
+            <img [src]="accountService.getPictureUrl(invite.room.picUrl)" alt="roomPic" class="listImage">
 
             <div class="listTextContainer">
                 <p class="listHeadline">{{ invite.room.name }}</p>
@@ -34,7 +34,7 @@
 
     <div class="cardContainer">
         <div class="card" *ngFor="let room of publicRooms" (click)="showRoom(room)">
-            <img class="cardImage" [src]="accountService.sanitizeBase64(room.picUrl)"
+            <img class="cardImage" [src]="accountService.getPictureUrl(room.picUrl)"
                  alt="roomPic">
             <p class="cardHeadline">{{ room.name }}</p>
             <p class="cardText">Members: {{ room.memberList.length }}</p>

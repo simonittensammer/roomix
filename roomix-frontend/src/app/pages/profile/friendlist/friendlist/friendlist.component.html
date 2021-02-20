@@ -14,7 +14,7 @@
 
 <ul *ngIf="!collapsed">
     <li class="listEntry" *ngFor="let friend of user.friendList">
-        <img [src]="accountService.sanitizeBase64(friend.picUrl)" alt="" class="listImage">
+        <img [src]="accountService.getPictureUrl(friend.picUrl)" alt="" class="listImage">
 
         <div class="listTextContainer">
             <p class="listHeadline">{{ friend.displayname }}</p>

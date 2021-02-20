@@ -3,7 +3,7 @@
     <h2>Profile</h2>
 
     <div class="profilePicWrapper" (click)="changeProfilePic()">
-      <img [src]="accountService.sanitizeBase64(user.picUrl)" class="profilePic" alt="profilePic">
+      <img [src]="accountService.getPictureUrl(user.picUrl)" class="profilePic" alt="profilePic">
       <div class="hoverBox">
         <ion-icon name="brush"></ion-icon>
         Change

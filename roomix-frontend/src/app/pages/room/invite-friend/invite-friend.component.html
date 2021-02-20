@@ -6,7 +6,7 @@
     <ul class="formElement">
         <ng-container *ngFor="let user of possibleInvites">
             <li class="listEntry">
-                <img [src]="accountService.sanitizeBase64(user.picUrl)" alt="" class="listImage">
+                <img [src]="accountService.getPictureUrl(user.picUrl)" alt="" class="listImage">
 
                 <div class="listTextContainer">
                     <p class="listHeadline">{{ user.displayname }}</p>
