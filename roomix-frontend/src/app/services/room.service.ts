@@ -8,6 +8,8 @@ import {Member} from '../models/member';
 import {User} from '../models/user';
 import {MemberDTO} from '../models/dto/memberDTO';
 import {ChatMessageDTO} from "../models/dto/chatMessageDTO";
+import {UserUpdateDTO} from '../models/dto/userUpdateDTO';
+import {RoomUpdateDTO} from '../models/dto/roomUpdateDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -76,5 +78,9 @@ export class RoomService {
 
     deleteRoom(roomId: number) {
         return this.http.delete(GlobalConstants.apiUrl + '/room/' + roomId);
+    }
+
+    updateRoom(roomId: number, image: string, name: string, isPrivate: boolean) {
+        return this.http.put<Room>(GlobalConstants.apiUrl + '/room', new RoomUpdateDTO(roomId, name, isPrivate, image));
     }
 }

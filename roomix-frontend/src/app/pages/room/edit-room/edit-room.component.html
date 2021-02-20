@@ -1,11 +1,24 @@
 <div class="popup centerXY">
-  <h2 class="formElement formHeadline">Edit your Room</h2>
 
   <!-- Inputs -->
+  <form [formGroup]="editRoomForm">
+    <h2 class="formElement formHeadline">Edit your Room</h2>
 
-  <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Save</button>
+    <label for="img">Picture:</label>
+    <input class="formElement" formControlName="picUrl" type="file" id="img" name="img" accept="image/*" (change)="handleFileSelect($event)">
 
-  <button class="buttonRed" (click)="deleteRoom()">Delete Room</button>
+    <label for="name">Name</label>
+    <input type="text" id="name" class="formElement" formControlName="name" placeholder="Name">
+
+    <!--    <label>Roomtype</label>-->
+    <label>Room is private</label>
+    <input type="checkbox" class="checkBox" formControlName="isPrivate">
+
+    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Save</button>
+
+  </form>
+
+  <!--<button class="buttonRed" (click)="deleteRoom()" [disabled]="GlobalConstants.roles[0] !== user.activeMember.role">Delete Room</button>-->
 
   <div class="formElement">
     <a (click)="roomService.showEditRoom()">Cancel</a>

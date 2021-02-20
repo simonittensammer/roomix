@@ -32,7 +32,7 @@
 
             <a class="buttonLink roomButton"
                (click)="roomService.showEditRoom()">
-                <button>Edit</button>
+                <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Edit</button>
             </a>
         </div>
 
