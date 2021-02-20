@@ -117,6 +117,7 @@ export class RoomComponent implements OnInit {
                             this.joined = false;
                             this.left = true;
                             this.userService.updateUserValue(this.user);
+                            this.playSongService.disconnect();
                             this.router.navigate(['roomlist']);
                     });
             }
