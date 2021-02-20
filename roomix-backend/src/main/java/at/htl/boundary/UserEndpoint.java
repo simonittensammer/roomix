@@ -3,6 +3,7 @@ package at.htl.boundary;
 import at.htl.control.*;
 import at.htl.dto.FriendRequestDTO;
 import at.htl.dto.RoomInviteDTO;
+import at.htl.dto.UserUpdateDTO;
 import at.htl.entity.*;
 import at.htl.control.UserRepository;
 import org.hibernate.Hibernate;
@@ -149,24 +150,14 @@ public class UserEndpoint {
         return Response.status(406).entity("user does not exist").build();
     }
 
-    @POST
-    @Path("/update")
-    public Response updateUser(JsonObject jsonObject) {
-        String username = jsonObject.getString("username");
-        JsonObject changes = jsonObject.getJsonObject("changes");
+    @PUT
+    public Response updateUser(UserUpdateDTO userUpdateDTO) {
+        User user = userRepository.findByName(userUpdateDTO.getUsername());
 
-        User user = userRepository.findByName(username);
+        if (user == null) return Response.status(Response.Status.BAD_REQUEST).build();
 
-        if (user != null) {
-            try {
-                userRepository.updateUser(user, changes);
-                return Response.ok(user).build();
-            } catch (PersistenceException e) {
-                return Response.status(406).entity("username is already taken").build();
-            }
-        }
-
-        return Response.status(406).entity("user does not exist").build();
+        user.update(userUpdateDTO);
+        return Response.ok(user).build();
     }
 
     @POST

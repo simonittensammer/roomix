@@ -1,5 +1,6 @@
 package at.htl.entity;
 
+import at.htl.dto.UserUpdateDTO;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.security.jpa.Password;
 
@@ -74,6 +75,13 @@ public class User {
         this.roomInviteList = new LinkedList<>();
         this.friendList = new LinkedList<>();
         this.addUser = new LinkedList<>();
+    }
+
+    public User update(UserUpdateDTO userUpdateDTO) {
+        this.displayname = userUpdateDTO.getDisplayname();
+        this.password = userUpdateDTO.getPassword();
+        this.picUrl = userUpdateDTO.getPicUrl();
+        return this;
     }
 
     public Long getId() {

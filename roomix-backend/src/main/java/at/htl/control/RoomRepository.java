@@ -52,17 +52,6 @@ public class RoomRepository implements PanacheRepository<Room> {
         return rooms;
     }
 
-    public Room update(RoomUpdateDTO roomUpdateDTO) {
-        Room room = findById(roomUpdateDTO.getRoomId());
-
-        if (room == null) return null;
-
-        room.setName(roomUpdateDTO.getRoomname());
-        room.setPrivate(roomUpdateDTO.isPrivate());
-
-        return room;
-    }
-
     public List<ChatMessageDTO> getAllMessagesInRoom(Long roomId) {
         Room room = findById(roomId);
 
