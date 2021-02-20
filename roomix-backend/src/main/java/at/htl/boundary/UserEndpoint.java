@@ -18,10 +18,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -117,12 +116,19 @@ public class UserEndpoint {
     @POST
     public Response addUser(User user) throws IOException {
         try {
+
             if (user.getPicUrl().equals("")) {
-                try (InputStream inputStream = getClass().getResourceAsStream("/images/default-user-pic.txt");
-                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-                    user.setPicUrl(reader.lines().collect(Collectors.joining(System.lineSeparator())));
+                user.setPicUrl("space-profile.jpg");
+            } else {
+                byte[] data = Base64.getDecoder().decode(user.getPicUrl());
+                java.nio.file.Path resources = Paths.get(getClass().getClassLoader().getResource("/META-INF/resources/images").getPath());
+                try (OutputStream stream = new FileOutputStream(resources.toAbsolutePath().toString() + "/" + user.getUsername() + "-profile-pic.png", false)) {
+                    System.out.println(resources.toAbsolutePath().toString());
+                    stream.write(data);
                 }
+                user.setPicUrl(user.getUsername() + "-profile-pic.png");
             }
+
             userRepository.persist(user);
             return Response.status(201).entity(user).build();
         } catch (PersistenceException e) {
