@@ -1,11 +1,31 @@
 <div class="popup centerXY">
-    <h2 class="formElement formHeadline">Edit your Profile</h2>
 
     <!-- Inputs -->
+    <form [formGroup]="editProfileForm">
+        <h2 class="formElement formHeadline">Edit your Profile</h2>
 
-    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Save</button>
+        <label for="img">Profile Picture:</label>
+        <input class="formElement" formControlName="profilePic" type="file" id="img" name="img" accept="image/*" (change)="handleFileSelect($event)">
+
+        <label>Username</label>
+        <input type="text" id="username" class="formElement" formControlName="username" placeholder="{{user.username}}" disabled="true">
+
+        <label for="displayname">Display name</label>
+        <input type="text" id="displayname" class="formElement" formControlName="displayname" placeholder="{{user.displayname}}">
+        <p class="errorMsg" *ngIf="editProfileForm.controls['displayname'].hasError('required') && editProfileForm.controls['displayname'].dirty">
+            Displayname is required
+        </p>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" class="formElement" formControlName="password" placeholder="{{user.password}}">
+        <p class="errorMsg" *ngIf="editProfileForm.controls['password'].hasError('required')  && editProfileForm.controls['password'].dirty">
+            Password is required
+        </p>
+
+        <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()" [disabled]="!editProfileForm.valid || !editProfileForm.dirty">Save</button>
 
     <div class="formElement">
         <a (click)="accountService.showEditProfile()">Cancel</a>
     </div>
+    </form>
 </div>
