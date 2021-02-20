@@ -146,6 +146,7 @@ export class PlaySongService {
     disconnect() {
         if (this.songSocket != null) {
             this.songSocket.complete();
+            this.updateRoomValue(null);
             this.currentSong = new Song('', '', '', '', 0);
             this.currentSongUrl = '';
             this.player.loadVideoById(this.currentSongUrl);
