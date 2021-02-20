@@ -52,7 +52,7 @@ export class RoomService {
     }
 
     getPopularPublicRooms(limit: number, searchTerm: string) {
-        return this.http.get<Array<Room>>(GlobalConstants.apiUrl + '/room/popular/?limit=' + limit)
+        return this.http.get<Array<Room>>(GlobalConstants.apiUrl + '/room/popular?searchTerm=' + searchTerm + '&limit=' + limit)
             .pipe(map(rooms => {
                 return rooms;
             }));

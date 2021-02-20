@@ -76,12 +76,13 @@ export class JoinRoomComponent implements OnInit, AfterViewInit {
                 debounceTime(500),
                 pluck('target', 'value'),
                 distinctUntilChanged(),
-                filter((value: string) => value.length > 0),
+                filter((value: string) => value.length > -1),
                 map((value) => value.split(' ').join('+'))
             ).subscribe(value => {
             console.log(value);
-            this.roomService.getPopularPublicRooms(this.limit, value).subscribe(users => {
-                this.publicRooms = users;
+            this.roomService.getPopularPublicRooms(this.limit, value).subscribe(publicRooms => {
+                console.log(publicRooms);
+                this.publicRooms = publicRooms;
             });
         });
     }
