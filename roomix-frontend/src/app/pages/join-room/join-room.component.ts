@@ -63,7 +63,11 @@ export class JoinRoomComponent implements OnInit, AfterViewInit {
     }
 
     showRoom(room: Room) {
-        this.router.navigate(['room', room.id]);
+        this.roomService.getRoom(room.id).subscribe(value => {
+            if (value != null) {
+                this.router.navigate(['room', room.id]);
+            }
+        });
     }
 
     ngAfterViewInit() {

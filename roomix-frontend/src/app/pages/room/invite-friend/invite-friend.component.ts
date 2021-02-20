@@ -33,6 +33,9 @@ export class InviteFriendComponent implements OnInit, AfterViewInit {
           this.userService.userValue.subscribe(
               value2 => {
                   this.user = value2;
+                  this.accountService.searchFriendsWithMatchingName(this.user.username, this.room.id, '').subscribe(users => {
+                      this.possibleInvites = users;
+                  });
                 }
             );
         }
@@ -53,7 +56,7 @@ export class InviteFriendComponent implements OnInit, AfterViewInit {
                 debounceTime(500),
                 pluck('target', 'value'),
                 distinctUntilChanged(),
-                filter((value: string) => value.length > 0),
+                filter((value: string) => value.length > -1),
                 map((value) => value.split(' ').join('+'))
             ).subscribe(value => {
             console.log(value);

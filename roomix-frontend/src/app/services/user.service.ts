@@ -44,4 +44,8 @@ export class UserService {
   getProperRoomInviteList(username) {
     return this.http.get<RoomInvite[]>(GlobalConstants.apiUrl + '/user/' + username + '/roomInvites');
   }
+
+  updateUser(username: string, image: string, displayname: string, password: string) {
+    return this.http.post<User>(GlobalConstants.apiUrl + '/user/update', {username, image, displayname, password});
+  }
 }

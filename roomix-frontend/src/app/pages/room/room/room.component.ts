@@ -111,17 +111,14 @@ export class RoomComponent implements OnInit {
         this.roomService.removeMember(this.user.username, this.room.id).subscribe(
             value => {
                 console.log(value);
-                this.roomService.getMembers(this.room.id)
-                    .pipe(first())
-                    .subscribe( value2 => {
-                        this.room.memberList = value2;
-                        this.roomService.updateRoomValue(this.room);
-                        this.userService.getProperMemberList(this.user.username).subscribe(memberList => {
+                this.roomService.updateRoomValue(null);
+                this.userService.getProperMemberList(this.user.username).subscribe(memberList => {
                             this.user.memberList = memberList;
                             this.joined = false;
                             this.left = true;
                             this.userService.updateUserValue(this.user);
-                        });
+                            this.playSongService.disconnect();
+                            this.router.navigate(['roomlist']);
                     });
             }
         );
