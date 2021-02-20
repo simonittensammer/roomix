@@ -23,6 +23,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.*;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -139,15 +141,20 @@ public class RoomEndpoint {
             room.setPrivate(roomDTO.isPrivate());
             room.setPicUrl(roomDTO.getPicUrl());
 
-            if (room.getPicUrl().equals("")) {
-                try (InputStream inputStream = getClass().getResourceAsStream("/images/default-room-pic.txt");
-                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-                    room.setPicUrl(reader.lines().collect(Collectors.joining(System.lineSeparator())));
-                }
-            }
-
             playlistRepository.persist(room.getPlaylist());
             roomRepository.persist(room);
+
+            if (room.getPicUrl().equals("")) {
+                room.setPicUrl("space-room.jpg");
+            } else {
+                byte[] data = Base64.getDecoder().decode(room.getPicUrl());
+                java.nio.file.Path resources = Paths.get(getClass().getClassLoader().getResource("/META-INF/resources/images").getPath());
+                try (OutputStream stream = new FileOutputStream(resources.toAbsolutePath().toString() + "/" + room.getId() + "-profile-pic.png", false)) {
+                    System.out.println(resources.toAbsolutePath().toString());
+                    stream.write(data);
+                }
+                room.setPicUrl(room.getId() + "-profile-pic.png");
+            }
 
             Member member = new Member(creator, room, "owner");
             memberRepository.persist(member);
