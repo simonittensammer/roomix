@@ -98,8 +98,18 @@ public class RoomEndpoint {
 
     @GET
     @Path("/popular")
-    public List<Room> getPopularPublicRooms(@QueryParam("limit") int limit) {
-        return roomRepository.findPopularPublicRooms(limit);
+    public List<Room> getPopularPublicRooms(@QueryParam("searchTerm") String searchTerm, @QueryParam("limit") int limit) {
+        List<Room> result;
+
+        if (searchTerm == null) result = roomRepository.findPopularPublicRooms(limit);
+
+        else result = roomRepository.streamAll()
+                .map(room -> roomRepository.initRoom(room))
+                .filter(room -> room.getName().toLowerCase().contains(searchTerm.toLowerCase()) && !room.isPrivate())
+                .limit(limit)
+                .collect(Collectors.toList());
+
+        return result;
     }
 
     @GET
@@ -280,21 +290,5 @@ public class RoomEndpoint {
 
         messageRepository.persist(message);
         return Response.ok(message).build();
-    }
-
-    @GET
-    @Path("search")
-    public Response searchPublicRoomsByName(@QueryParam("searchTerm") String searchTerm) {
-        List<Room> result;
-
-        if (searchTerm == null) result = roomRepository.findPopularPublicRooms(5);
-
-        else result = roomRepository.streamAll()
-                .map(room -> roomRepository.initRoom(room))
-                .filter(room -> room.getName().toLowerCase().contains(searchTerm.toLowerCase()) && !room.isPrivate())
-                .limit(5)
-                .collect(Collectors.toList());
-
-        return Response.ok(result).build();
     }
 }
