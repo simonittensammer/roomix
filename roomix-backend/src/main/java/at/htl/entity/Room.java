@@ -1,5 +1,7 @@
 package at.htl.entity;
 
+import at.htl.dto.RoomUpdateDTO;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -54,6 +56,13 @@ public class Room {
         this.messageList = new LinkedList<>();
         this.activeMemberCount = 0;
         this.playlist = new Playlist();
+    }
+
+    public Room update(RoomUpdateDTO roomUpdateDTO) {
+        this.name = roomUpdateDTO.getRoomname();
+        this.picUrl = roomUpdateDTO.getPicUrl();
+        this.isPrivate = roomUpdateDTO.isPrivate();
+        return  this;
     }
 
     public Long getId() {

@@ -239,7 +239,13 @@ public class RoomEndpoint {
 
     @PUT
     public Response updateRoom(RoomUpdateDTO roomUpdateDTO) {
-        return Response.ok(roomRepository.update(roomUpdateDTO)).build();
+        Room room = roomRepository.findById(roomUpdateDTO.getRoomId());
+
+        if (room == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        room.update(roomUpdateDTO);
+
+        return Response.ok(room).build();
     }
 
     @DELETE
