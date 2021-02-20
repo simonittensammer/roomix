@@ -73,4 +73,8 @@ export class RoomService {
     showEditRoom() {
         this.editRoomVisible = !this.editRoomVisible;
     }
+
+    deleteRoom(roomId: number) {
+        return this.http.delete(GlobalConstants.apiUrl + '/room/' + roomId);
+    }
 }
