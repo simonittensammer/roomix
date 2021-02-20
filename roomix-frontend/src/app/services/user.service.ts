@@ -6,6 +6,7 @@ import {GlobalConstants} from '../helpers/globalConstants';
 import {FriendRequest} from '../models/friend-request';
 import {RoomInvite} from '../models/room-invite';
 import {HttpClient} from '@angular/common/http';
+import {UserUpdateDTO} from '../models/dto/userUpdateDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,6 @@ export class UserService {
   }
 
   updateUser(username: string, image: string, displayname: string, password: string) {
-    return this.http.post<User>(GlobalConstants.apiUrl + '/user/update', {username, image, displayname, password});
+    return this.http.put<User>(GlobalConstants.apiUrl + '/user', new UserUpdateDTO(username, displayname, password, image));
   }
 }
