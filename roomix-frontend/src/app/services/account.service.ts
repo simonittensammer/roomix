@@ -90,4 +90,8 @@ export class AccountService {
     showEditProfile() {
         this.editProfileVisible = !this.editProfileVisible;
     }
+
+    getPictureUrl(picUrl: string): string {
+        return `http://${location.hostname}:8080/images/${picUrl}?${Date.now()}`;
+    }
 }
