@@ -27,9 +27,9 @@ export class EditProfileComponent implements OnInit {
         }
     );
     this.editProfileForm = new FormGroup({
-      profilePic: new FormControl(null),
-      displayname: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+      profilePic: new FormControl(this.user.picUrl, null),
+      displayname: new FormControl(this.user.displayname, Validators.required),
+      password: new FormControl(this.user.password, Validators.required)
     });
   }
 
@@ -37,9 +37,9 @@ export class EditProfileComponent implements OnInit {
     if (this.editProfileForm.valid) {
       this.userService.updateUser(this.user.username, this.base64textString,
           this.editProfileForm.value.displayname, this.editProfileForm.value.password).subscribe(value => {
-            this.user.displayname = this.editProfileForm.value.displayname;
-            this.user.password = this.editProfileForm.value.password;
-            this.user.picUrl = this.base64textString;
+            this.user.displayname = value.displayname;
+            this.user.password = value.password;
+            this.user.picUrl = value.picUrl;
             this.userService.updateUserValue(this.user);
       });
     }

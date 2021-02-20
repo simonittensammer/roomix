@@ -11,18 +11,12 @@
         <input type="text" id="username" class="formElement" formControlName="username" placeholder="{{user.username}}" disabled="true">
 
         <label for="displayname">Display name</label>
-        <input type="text" id="displayname" class="formElement" formControlName="displayname" placeholder="{{user.displayname}}">
-        <p class="errorMsg" *ngIf="editProfileForm.controls['displayname'].hasError('required') && editProfileForm.controls['displayname'].dirty">
-            Displayname is required
-        </p>
+        <input type="text" id="displayname" class="formElement" formControlName="displayname">
 
         <label for="password">Password</label>
-        <input type="password" id="password" class="formElement" formControlName="password" placeholder="{{user.password}}">
-        <p class="errorMsg" *ngIf="editProfileForm.controls['password'].hasError('required')  && editProfileForm.controls['password'].dirty">
-            Password is required
-        </p>
+        <input type="password" id="password" class="formElement" formControlName="password">
 
-        <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()" [disabled]="!editProfileForm.valid || !editProfileForm.dirty">Save</button>
+        <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Save</button>
 
     <div class="formElement">
         <a (click)="accountService.showEditProfile()">Cancel</a>
