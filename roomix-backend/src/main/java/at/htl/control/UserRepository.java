@@ -37,34 +37,6 @@ public class UserRepository implements PanacheRepository<User> {
         return user;
     }
 
-    public void updateUser(User user, JsonObject jsonObject) {
-
-        if (jsonObject.containsKey("username")) {
-            if (findByName(jsonObject.getString("username")) != null) {
-                throw new PersistenceException();
-            }
-        }
-
-        jsonObject.forEach((s, jsonValue) -> {
-            String value = jsonValue.toString().replace("\"", "");
-            switch (s) {
-                case "displayname":
-                    user.setDisplayname(value);
-                    break;
-                case "username":
-                    user.setUsername(value);
-                    break;
-                case "password":
-                    user.setPassword(value);
-                    break;
-                case "picUrl":
-                    user.setPicUrl(value);
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
 
     public List<Room> findAllRoomsOfUser(String username) {
         List<Room> roomList = new LinkedList<>();
