@@ -125,6 +125,7 @@ export class RoomComponent implements OnInit {
                 this.roomService.updateRoomValue(null);
                 this.userService.getProperMemberList(this.user.username).subscribe(memberList => {
                             this.user.memberList = memberList;
+                            this.user.activeMember = null;
                             this.joined = false;
                             this.left = true;
                             this.userService.updateUserValue(this.user);
@@ -142,5 +143,19 @@ export class RoomComponent implements OnInit {
                 this.roomService.updateRoomValue(this.room);
             });
         });
+    }
+
+    setActiveMember() {
+        for (const member of this.room.memberList) {
+            if (member.user.id === this.user.id) {
+                this.user.activeMember = member;
+                this.userService.updateUserValue(this.user);
+            }
+        }
+    }
+
+    removeActiveMember() {
+        this.user.activeMember = null;
+        this.userService.updateUserValue(this.user);
     }
 }
