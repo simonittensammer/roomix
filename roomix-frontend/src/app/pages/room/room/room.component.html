@@ -18,7 +18,7 @@
             </ng-template>
 
             <a class="buttonLink roomButton"
-               (click)="playSongService.connect(user.username, room.id)"
+               (click)="playSongService.disconnect(); playSongService.connect(user.username, room.id)"
                *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else disconnect">
                 <button [disabled]="!userIsMember()">Connect</button>
             </a>
