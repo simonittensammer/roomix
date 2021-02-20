@@ -8,6 +8,7 @@ import {AccountService} from '../../../services/account.service';
 import {User} from '../../../models/user';
 import {PlaySongService} from '../../../services/play-song.service';
 import {UserService} from '../../../services/user.service';
+import {Member} from '../../../models/member';
 
 @Component({
     selector: 'app-room',
@@ -64,6 +65,16 @@ export class RoomComponent implements OnInit {
         this.playSongService.updateMemberListEvent.subscribe(() => {
            this.roomService.getMembers(this.room.id).subscribe(members => {
                this.room.memberList = members;
+               if (!this.userIsMember()) {
+                   this.userService.getProperMemberList(this.user.username).subscribe(memberList => {
+                       this.user.memberList = memberList;
+                       this.joined = false;
+                       this.left = true;
+                       this.userService.updateUserValue(this.user);
+                       this.playSongService.disconnect();
+                       this.router.navigate(['roomlist']);
+                   });
+               }
            });
         });
     }
@@ -122,5 +133,14 @@ export class RoomComponent implements OnInit {
                     });
             }
         );
+    }
+
+    removeUserFromRoom(member: Member) {
+        this.roomService.removeMember(member.user.username, this.room.id).subscribe(value => {
+            this.roomService.getMembers(this.room.id).subscribe(value2 => {
+                this.room.memberList = value2;
+                this.roomService.updateRoomValue(this.room);
+            });
+        });
     }
 }

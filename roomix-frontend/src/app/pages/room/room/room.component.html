@@ -20,7 +20,7 @@
             <a class="buttonLink roomButton"
                (click)="playSongService.connect(user.username, room.id)"
                *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else disconnect">
-                <button>Connect</button>
+                <button [disabled]="!userIsMember()">Connect</button>
             </a>
 
             <ng-template #disconnect>
@@ -49,6 +49,14 @@
                 <div class="listTextContainer">
                     <p class="listHeadline">[{{ member.role | uppercase }}] {{ member.user.displayname }}</p>
                     <p class="listText">@{{ member.user.username }}</p>
+                </div>
+
+                <div class="listButtonContainer">
+                    <a class="buttonLink">
+                        <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
+                        || member.user.username === user.username" (click)="removeUserFromRoom(member)">Remove
+                        </button>
+                    </a>
                 </div>
             </li>
         </ul>
