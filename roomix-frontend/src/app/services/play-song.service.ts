@@ -63,6 +63,7 @@ export class PlaySongService {
     }
 
     connect(username, roomid) {
+        this.currentSong = new Song('', '', '', '', 0);
         this.roomService.getRoom(roomid).subscribe(room => {
 
             this.roomService.getMessages(roomid).subscribe(messages => {
@@ -143,15 +144,17 @@ export class PlaySongService {
     }
 
     disconnect() {
-        this.songSocket.complete();
-        this.currentSong = new Song('', '', '', '', 0);
-        this.currentSongUrl = '';
-        this.player.loadVideoById(this.currentSongUrl);
-        this.currentSongTimer = 0;
-        this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
-        this.connected = false;
-        this.remainingSongDuration = 0;
-        this.songProgress =  0;
+        if (this.songSocket != null) {
+            this.songSocket.complete();
+            this.currentSong = new Song('', '', '', '', 0);
+            this.currentSongUrl = '';
+            this.player.loadVideoById(this.currentSongUrl);
+            this.currentSongTimer = 0;
+            this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
+            this.connected = false;
+            this.remainingSongDuration = 0;
+            this.songProgress = 0;
+        }
     }
 
     // tslint:disable-next-line:ban-types

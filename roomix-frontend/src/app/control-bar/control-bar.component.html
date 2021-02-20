@@ -2,11 +2,11 @@
 
 <div id="controlBar" *ngIf="playSongService.connected" (click)="startAnimation()">
     <div id="roomInfoWrapper">
-        <img [src]="accountService.sanitizeBase64(room.picUrl)" id="roomImage"
+        <img [src]="accountService.sanitizeBase64((playSongService.roomValue | async).picUrl)" id="roomImage"
              alt="roomPic">
-        <h3 id="roomName">{{ room.name }}</h3>
+        <h3 id="roomName">{{ (playSongService.roomValue | async).name }}</h3>
         <p id="roomInfo">
-            Members: {{ room.memberList.length }}
+            Members: {{ (playSongService.roomValue | async).memberList.length }}
         </p>
     </div>
 
