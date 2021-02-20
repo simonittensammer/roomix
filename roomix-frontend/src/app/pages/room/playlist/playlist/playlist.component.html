@@ -3,7 +3,9 @@
     <h3 class="ulHeadline" (click)="collapseList()">Playlist</h3>
 
     <a class="buttonLink buttonRight" (click)="playlistService.showAddSong()">
-        <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Add song</button>
+        <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
+        || (playSongService.connected && room.name === listeningRoom.name)
+        && !(user.activeMember != null && (roles[3] != user.activeMember.role))">Add song</button>
     </a>
 
     <ul *ngIf="!collapsed">
@@ -17,7 +19,9 @@
 
             <div class="listButtonContainer">
                 <a class="buttonLink" (click)="deleteFromPlaylist(song)">
-                    <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Delete
+                    <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
+                    || (playSongService.connected && room.name === listeningRoom.name)
+                    && !(user.activeMember != null && (roles[3] != user.activeMember.role))">Delete
                     </button>
                 </a>
             </div>

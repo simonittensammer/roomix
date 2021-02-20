@@ -6,6 +6,9 @@ import {RoomService} from '../../../../services/room.service';
 import {Song} from '../../../../models/song';
 import {PlaylistService} from '../../../../services/playlist.service';
 import {PlaySongService} from '../../../../services/play-song.service';
+import {GlobalConstants} from '../../../../helpers/globalConstants';
+import {User} from '../../../../models/user';
+import {UserService} from '../../../../services/user.service';
 
 @Component({
   selector: 'app-playlist',
@@ -14,13 +17,16 @@ import {PlaySongService} from '../../../../services/play-song.service';
 })
 export class PlaylistComponent implements OnInit {
 
+  collapsed: boolean;
+  roles: Array<string>;
+  user: User;
   room: Room;
   listeningRoom: Room;
-  collapsed: boolean;
 
   constructor(
       private playlistService: PlaylistService,
       private playSongService: PlaySongService,
+      private userService: UserService,
       private route: ActivatedRoute,
       private roomService: RoomService
   ) { }
@@ -34,6 +40,11 @@ export class PlaylistComponent implements OnInit {
               });
           }
       );
+      this.userService.userValue.subscribe(value => {
+          this.user = value;
+          console.log(this.user.activeMember.role);
+      });
+      this.roles = GlobalConstants.ROLES;
   }
 
     deleteFromPlaylist(song: Song) {

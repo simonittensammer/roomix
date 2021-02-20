@@ -6,6 +6,7 @@ import {UserService} from '../../../services/user.service';
 import {User} from '../../../models/user';
 import {PlaySongService} from '../../../services/play-song.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {GlobalConstants} from '../../../helpers/globalConstants';
 
 @Component({
   selector: 'app-edit-room',
@@ -18,13 +19,16 @@ export class EditRoomComponent implements OnInit {
   user: User;
   editRoomForm: FormGroup;
   base64textString = '';
+  roles: Array<string>;
 
   constructor(
       private roomService: RoomService,
       private userService: UserService,
       private playSongService: PlaySongService,
       private router: Router
-  ) { }
+  ) {
+    this.roles = GlobalConstants.ROLES;
+  }
 
   ngOnInit() {
     this.roomService.roomValue.subscribe(value => {
@@ -32,7 +36,7 @@ export class EditRoomComponent implements OnInit {
     });
     this.userService.userValue.subscribe(value => {
       this.user = value;
-
+      console.log(this.user.activeMember.role);
     });
     this.editRoomForm = new FormGroup({
       picUrl: new FormControl(this.room.picUrl, null),

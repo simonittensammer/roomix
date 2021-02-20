@@ -9,6 +9,7 @@ import {User} from '../../../models/user';
 import {PlaySongService} from '../../../services/play-song.service';
 import {UserService} from '../../../services/user.service';
 import {Member} from '../../../models/member';
+import {GlobalConstants} from '../../../helpers/globalConstants';
 
 @Component({
     selector: 'app-room',
@@ -23,6 +24,7 @@ export class RoomComponent implements OnInit {
     collapsed: boolean;
     joined: boolean;
     left: boolean;
+    roles: Array<string>;
 
     constructor(
         private playlistService: PlaylistService,
@@ -33,6 +35,7 @@ export class RoomComponent implements OnInit {
         private userService: UserService,
         private playSongService: PlaySongService
     ) {
+        this.roles = GlobalConstants.ROLES;
     }
 
     ngOnInit() {

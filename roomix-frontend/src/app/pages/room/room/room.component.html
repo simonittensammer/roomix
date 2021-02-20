@@ -32,7 +32,10 @@
 
             <a class="buttonLink roomButton"
                (click)="roomService.showEditRoom()">
-                <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Edit</button>
+                <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
+                || (playSongService.connected && room.name === listeningRoom.name)
+                && !(user.activeMember != null && (roles[0] === user.activeMember.role
+                || roles[1] === user.activeMember.role))">Edit</button>
             </a>
         </div>
 
@@ -54,7 +57,9 @@
                 <div class="listButtonContainer">
                     <a class="buttonLink">
                         <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
-                        || member.user.username === user.username" (click)="removeUserFromRoom(member)">Remove
+                        || member.user.username === user.username || (playSongService.connected && room.name === listeningRoom.name)
+                        && !(user.activeMember != null && (roles[0] === user.activeMember.role
+                        || roles[1] === user.activeMember.role))" (click)="removeUserFromRoom(member)">Remove
                         </button>
                     </a>
                 </div>
