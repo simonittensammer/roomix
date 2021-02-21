@@ -10,6 +10,7 @@ import {PlaySongService} from '../../../services/play-song.service';
 import {UserService} from '../../../services/user.service';
 import {Member} from '../../../models/member';
 import {GlobalConstants} from '../../../helpers/globalConstants';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-room',
@@ -25,6 +26,8 @@ export class RoomComponent implements OnInit {
     joined: boolean;
     left: boolean;
     roles: Array<string>;
+    selectedOption: string;
+    private selectForm: FormGroup;
 
     constructor(
         private playlistService: PlaylistService,
@@ -33,7 +36,8 @@ export class RoomComponent implements OnInit {
         private router: Router,
         private accountService: AccountService,
         private userService: UserService,
-        private playSongService: PlaySongService
+        private playSongService: PlaySongService,
+        private fb: FormBuilder
     ) {
         this.roles = GlobalConstants.ROLES;
     }
@@ -80,6 +84,13 @@ export class RoomComponent implements OnInit {
                }
            });
         });
+
+        this.selectForm = this.fb.group({
+            role: [null]
+        });
+        // this.selectForm.get('role').valueChanges.subscribe(f => {
+        //     this.changeRole(f);
+        // });
     }
 
     showPlaylist() {
@@ -160,5 +171,13 @@ export class RoomComponent implements OnInit {
     removeActiveMember() {
         this.user.activeMember = null;
         this.userService.updateUserValue(this.user);
+    }
+
+    setDefaults(role: string) {
+        this.selectForm.get('role').patchValue(role);
+    }
+
+    changeRole(member: Member) {
+        this.roomService.updateRole(this.room.id, member, this.selectForm.value.role);
     }
 }

@@ -35,7 +35,8 @@
                 <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
                 || (playSongService.connected && room.name === listeningRoom.name)
                 && !(user.activeMember != null && (roles[0] === user.activeMember.role
-                || roles[1] === user.activeMember.role))">Edit</button>
+                || roles[1] === user.activeMember.role))">Edit
+                </button>
             </a>
         </div>
 
@@ -55,11 +56,27 @@
                 </div>
 
                 <div class="listButtonContainer">
+                    <a class="buttonLink" *ngIf="!(!(playSongService.connected && room.name === listeningRoom.name)
+                        || member.user.username === user.username || (playSongService.connected && room.name === listeningRoom.name)
+                        && !(user.activeMember != null && (roles[0] === user.activeMember.role
+                        || roles[1] === user.activeMember.role)))">
+                        <form [formGroup]="selectForm">
+                            <select name="roleSelect" id="roleSelect" formControlName="role"
+                                    (change)="changeRole(member)">
+                                <option *ngFor="let role of roles | slice:1" [ngValue]="role" (load)="setDefaults(role)">{{ role }}</option>
+                                <!--                            <option [value]="roles[1]">Admin</option>-->
+                                <!--                            <option [value]="roles[2]">DJ</option>-->
+                                <!--                            <option [value]="roles[3]">Member</option>-->
+                            </select>
+                        </form>
+                    </a>
+
                     <a class="buttonLink">
                         <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
                         || member.user.username === user.username || (playSongService.connected && room.name === listeningRoom.name)
                         && !(user.activeMember != null && (roles[0] === user.activeMember.role
-                        || roles[1] === user.activeMember.role))" (click)="removeUserFromRoom(member)">Remove
+                        || roles[1] === user.activeMember.role))" (click)="removeUserFromRoom(member)">
+                            Remove
                         </button>
                     </a>
                 </div>

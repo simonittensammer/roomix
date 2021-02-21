@@ -82,4 +82,8 @@ export class RoomService {
     updateRoom(roomId: number, image: string, name: string, isPrivate: boolean) {
         return this.http.put<Room>(GlobalConstants.APIURL + '/room', new RoomUpdateDTO(roomId, name, isPrivate, image));
     }
+
+    updateRole(roomId: number, member: Member, newRole: string) {
+        console.log(member, newRole);
+    }
 }

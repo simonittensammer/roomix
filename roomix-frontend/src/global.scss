@@ -138,6 +138,16 @@ input {
   background: var(--ion-card-background);
 }
 
+select {
+  background: var(--ion-color-primary);
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+
+  border: none;
+  outline: none;
+}
+
 button {
   background: var(--ion-color-primary);
   padding: 10px 20px;
@@ -360,7 +370,7 @@ ul {
     float: left;
     height: 40px;
 
-    button {
+    button, select {
       margin: 5px;
     }
   }
