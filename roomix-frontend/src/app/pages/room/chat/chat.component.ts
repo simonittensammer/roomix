@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ChatMessageDTO} from "../../../models/dto/chatMessageDTO";
-import {RoomService} from "../../../services/room.service";
-import {Room} from "../../../models/room";
-import {User} from "../../../models/user";
-import {UserService} from "../../../services/user.service";
-import {UserSocketService} from "../../../services/user-socket.service";
-import {PlaySongService} from "../../../services/play-song.service";
+import {ChatMessageDTO} from '../../../models/dto/chatMessageDTO';
+import {RoomService} from '../../../services/room.service';
+import {Room} from '../../../models/room';
+import {User} from '../../../models/user';
+import {UserService} from '../../../services/user.service';
+import {UserSocketService} from '../../../services/user-socket.service';
+import {PlaySongService} from '../../../services/play-song.service';
 import {AccountService} from '../../../services/account.service';
 
 @Component({
@@ -34,13 +34,18 @@ export class ChatComponent implements OnInit {
     ngOnInit() {
         this.roomService.roomValue.subscribe(
             room => {
-                this.room = room;
-            });
+                this.roomService.getMembers(room.id).subscribe(members => {
+                    room.memberList = members;
+                    this.room = room;
+                });
+            }
+        );
 
         this.userService.userValue.subscribe(
             value => {
                 this.user = value;
-            });
+            }
+        );
     }
 
     sendMessage() {
@@ -62,6 +67,11 @@ export class ChatComponent implements OnInit {
     scrollDown() {
         try {
             this.scrollBox.nativeElement.scrollTop = this.scrollBox.nativeElement.scrollHeight;
-        } catch (err) { }
+        } catch (err) {
+        }
+    }
+
+    getDisplaynameByUsername(sender: string) {
+        return this.room.memberList.find(member => member.user.username === sender).user.displayname;
     }
 }

@@ -6,7 +6,7 @@
     <li class="listEntry" *ngFor="let chatMessage of room.messageList">
         <div class="listTextContainer">
             <p class="listHeadline">
-                {{ chatMessage.sender }}
+                {{ getDisplaynameByUsername(chatMessage.sender) }}
                 <span class="listInfo">{{ chatMessage.timestamp | date: 'dd/mm/yyyy HH:mm' }}</span>
             </p>
             <p class="listText">{{ chatMessage.content }}</p>
