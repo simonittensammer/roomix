@@ -4,33 +4,33 @@
 
         <div class="buttonContainer">
 
-            <a class="buttonLink roomButton"
+            <a class="buttonLink mainButton"
                (click)="joinRoomFunc()"
                *ngIf="(!userIsMember() && !joined) || (userIsMember() && left); else leaveRoom">
                 <button class="buttonGreen">Join</button>
             </a>
 
             <ng-template #leaveRoom>
-                <a class="buttonLink roomButton"
+                <a class="buttonLink mainButton"
                    (click)="leaveRoomFunc()">
                     <button class="buttonRed">Leave</button>
                 </a>
             </ng-template>
 
-            <a class="buttonLink roomButton"
+            <a class="buttonLink mainButton"
                (click)="playSongService.disconnect(); setActiveMember(); playSongService.connect(user.username, room.id)"
                *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else disconnect">
                 <button [disabled]="!userIsMember()">Connect</button>
             </a>
 
             <ng-template #disconnect>
-                <a class="buttonLink roomButton"
+                <a class="buttonLink mainButton"
                    (click)="removeActiveMember(); playSongService.disconnect()">
                     <button>Disconnect</button>
                 </a>
             </ng-template>
 
-            <a class="buttonLink roomButton"
+            <a class="buttonLink mainButton"
                (click)="roomService.showEditRoom()">
                 <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
                 || (playSongService.connected && room.name === listeningRoom.name)

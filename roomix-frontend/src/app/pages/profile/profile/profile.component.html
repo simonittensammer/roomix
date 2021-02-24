@@ -1,28 +1,30 @@
 <div class="content half-content-wrapper">
-  <div class="half-content">
-    <h2>Profile</h2>
+    <div class="half-content">
+        <h2>Profile</h2>
 
-    <div class="profilePicWrapper" (click)="changeProfilePic()">
-      <img [src]="accountService.sanitizeBase64(user.picUrl)" class="profilePic" alt="profilePic">
-      <div class="hoverBox">
-        <ion-icon name="brush"></ion-icon>
-        Change
-      </div>
+        <div class="buttonContainer">
+            <a class="buttonLink mainButton" (click)="accountService.showEditProfile()">
+                <button>Edit</button>
+            </a>
+        </div>
+
+        <div class="profilePicWrapper" (click)="accountService.showEditProfile()">
+            <img [src]="accountService.sanitizeBase64(user.picUrl)" class="profilePic" alt="profilePic">
+            <div class="hoverBox">
+                <ion-icon name="brush"></ion-icon>
+                Change
+            </div>
+        </div>
+
+        <div class="userInfoBox">
+            <h3>{{ user.displayname }}</h3>
+            <h4>@{{ user.username }}</h4>
+        </div>
     </div>
 
-    <div class="userInfoBox">
-      <h3>{{ user.displayname }}</h3>
-      <h4>@{{ user.username }}</h4>
+    <div class="half-content">
+        <app-friendlist></app-friendlist>
     </div>
-
-    <button (click)="accountService.showEditProfile()">
-      Edit
-    </button>
-  </div>
-
-  <div class="half-content">
-    <app-friendlist></app-friendlist>
-  </div>
 </div>
 
 <app-edit-profile *ngIf="accountService.editProfileVisible"></app-edit-profile>
