@@ -1,0 +1,150 @@
+* {
+  color: var(--ion-background-color);
+}
+
+.landingPageWrapper {
+  width: 100vw;
+
+  overflow-y: scroll;
+
+  background: var(--ion-background-color);
+}
+
+.banner {
+  width: 100%;
+  height: 55vh;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 55vh;
+  }
+}
+
+.layer {
+  animation-name: layer;
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.layer1 {
+  animation-delay: 0s;
+}
+
+.layer2 {
+  animation-delay: -20s;
+}
+
+.layer3 {
+  animation-delay: -10s;
+}
+
+.bannerOverlay {
+  position: relative;
+  top: -55vh;
+
+  img {
+    position: absolute;
+  }
+}
+
+.planet {
+  height: 20vh !important;
+
+  animation-name: planet;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.planet1 {
+  top: 2.5vh;
+  left: 5vw;
+
+  animation-delay: 0s;
+}
+
+.planet2 {
+  top: 5vh;
+  right: 10vw;
+
+  animation-delay: -2s;
+}
+
+.planet3 {
+  top: 25vh;
+  left: 20vw;
+
+  animation-delay: -4s;
+}
+
+.logo {
+  height: 100px !important;
+  top: 12.5vh;
+  max-width: 75vw;
+}
+
+.bannerButtonBox {
+  position: absolute;
+  top: 27.5vh;
+  z-index: 999;
+
+  a {
+    button {
+      font-size: 1.25rem;
+      height: 50px;
+      border-radius: 25px;
+      padding: 0 50px;
+
+      cursor: pointer;
+      z-index: 999;
+
+      background: #ffffff;
+    }
+
+    button:hover {
+      box-shadow: 0 0 25px 0 rgba(255, 255, 255, .35);
+    }
+
+    button:active {
+      transform: scale(.975);
+    }
+  }
+}
+
+@keyframes layer {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+  50% {
+    transform: scale(1.25) rotate(0);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes planet {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+  50% {
+    transform: scale(1.2) rotate(0);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+.landingPageContent {
+  position: relative;
+  top: 0;
+  left: 7.5vw;
+
+  width: 85vw;
+
+  padding: 50px;
+}

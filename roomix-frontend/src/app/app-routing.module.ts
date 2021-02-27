@@ -12,17 +12,22 @@ import {FriendlistComponent} from './pages/profile/friendlist/friendlist/friendl
 import {ProfileComponent} from './pages/profile/profile/profile.component';
 import {FriendRequestsComponent} from './pages/profile/friendlist/friend-requests/friend-requests.component';
 import {JoinRoomComponent} from './pages/join-room/join-room.component';
+import {LandingPageComponent} from './pages/landing-page/landing-page.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: LandingPageComponent
+  },
   {
     path: 'login',
     component: LoginComponent
   },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '',
+  //   redirectTo: 'login',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'register',
     component: RegisterComponent
