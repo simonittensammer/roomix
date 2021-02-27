@@ -95,15 +95,21 @@
 
   a {
     button {
+      ion-icon {
+        float: left;
+        font-size: 1.25em;
+        margin-right: 15px;
+      }
+
       font-size: 1.25rem;
+      line-height: 1.25em;
       height: 50px;
       border-radius: 25px;
-      padding: 0 50px;
+      padding: 0 35px;
 
       cursor: pointer;
       z-index: 999;
 
-      //background: var(--ion-background-color);
       background: #ffffff;
     }
 
