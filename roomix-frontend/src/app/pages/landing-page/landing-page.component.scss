@@ -5,10 +5,14 @@
 
 .landingPageWrapper {
   width: 100vw;
+  height: 100vh;
 
   overflow-y: scroll;
+  overflow-x: hidden;
+  top: 0;
 
   background: #ffffff;
+  //background: var(--ion-background-color);
 }
 
 .banner {
@@ -29,6 +33,7 @@
   animation-duration: 30s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
+  object-fit: cover;
 }
 
 .layer1 {
