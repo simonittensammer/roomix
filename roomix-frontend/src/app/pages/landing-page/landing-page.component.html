@@ -1,49 +1,113 @@
-<div class="landingPageWrapper">
-  <div class="banner">
-    <img src="assets/banner-layers/banner-layer0.png" alt="layer0" class="layer layer0">
-    <img src="assets/banner-layers/banner-layer1.png" alt="layer1" class="layer layer1">
-    <img src="assets/banner-layers/banner-layer2.png" alt="layer2" class="layer layer2">
-    <img src="assets/banner-layers/banner-layer3.png" alt="layer3" class="layer layer3">
+<div #scrollBox class="landingPageWrapper" (scroll)="onScroll($event)">
+    <div class="banner">
+        <img src="assets/banner-layers/banner-layer0.png" alt="layer0" class="layer layer0">
+        <img src="assets/banner-layers/banner-layer1.png" alt="layer1" class="layer layer1">
+        <img src="assets/banner-layers/banner-layer2.png" alt="layer2" class="layer layer2">
+        <img src="assets/banner-layers/banner-layer3.png" alt="layer3" class="layer layer3">
 
-    <img src="assets/banner-layers/banner-top-layer.png" alt="top-layer" class="topLayer">
-  </div>
-
-  <div class="bannerOverlay">
-    <img src="assets/banner-layers/planet1.png" alt="planet1" class="planet planet1">
-    <img src="assets/banner-layers/planet2.png" alt="planet2" class="planet planet2">
-    <img src="assets/banner-layers/planet3.png" alt="planet3" class="planet planet3">
-
-    <img src="assets/logo/logo-bw.svg" alt="logo" class="logo centerX">
-
-    <div class="bannerButtonBox centerX">
-      <a routerLink="/login">
-        <button>
-          Get Started
-        </button>
-      </a>
+        <img src="assets/banner-layers/banner-top-layer.png" alt="top-layer" class="topLayer">
     </div>
-  </div>
 
-  <div class="landingPageContent centerX">
-    <div class="gridBox">
-      <div class="gridHalfWidth">
-        <h3>Create your own Rooms!</h3>
-        <p>You can crate your own private or public Rooms!</p>
-      </div>
-      <div class="gridHalfWidth">
-        <h3>Placeholder</h3>
-        <p>asdlöfkjaslödfjls  asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf jasdlfj </p>
-      </div>
+    <div class="bannerOverlay">
+        <img src="assets/banner-layers/planet1.png" alt="planet1" class="planet planet1"
+             [ngStyle]="{'margin-top': (scrollPx * 0.40) + 'px'}">
+        <img src="assets/banner-layers/planet2.png" alt="planet2" class="planet planet2"
+             [ngStyle]="{'margin-top': (scrollPx * 0.35) + 'px'}">
+        <img src="assets/banner-layers/planet3.png" alt="planet3" class="planet planet3"
+             [ngStyle]="{'margin-top': (scrollPx * 0.30) + 'px'}">
 
-      <div class="gridHalfWidth">
-        <h3>Placeholder</h3>
-        <p>asdlöfkjaslödfjls  asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf jasdlfj </p>
-      </div>
-      <div class="gridHalfWidth">
-        <h3>Invite your Friends!</h3>
-        <p>asdlöfkjaslödfjls  asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf jasdlfj </p>
-      </div>
+        <img src="assets/logo/logo-bw.svg" alt="logo" class="logo centerX"
+             [ngStyle]="{'margin-top': (scrollPx * 0.5) + 'px'}">
 
+        <div class="bannerButtonBox centerX"
+             [ngStyle]="{'margin-top': (scrollPx * 0.5) + 'px'}">
+            <a routerLink="/login">
+                <button>
+                    <ion-icon name="rocket"></ion-icon>
+                    Get Started
+                </button>
+            </a>
+        </div>
     </div>
-  </div>
+
+    <div class="landingPageContent centerX">
+        <div class="gridBox">
+            <div class="gridHalfWidth">
+                <h3>Create your own Rooms!</h3>
+                <p>You can crate your own private or public Rooms!</p>
+            </div>
+            <div class="gridHalfWidth">
+                <h3>Placeholder</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+
+            <div class="gridHalfWidth">
+                <h3>Placeholder</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+            <div class="gridHalfWidth">
+                <h3>Invite your Friends!</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+
+            <div class="gridHalfWidth">
+                <h3>Enjoy Music together!</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+            <div class="gridHalfWidth">
+                <h3>Placeholder</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+
+            <div class="gridHalfWidth">
+                <h3>Enjoy Music together!</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+            <div class="gridHalfWidth">
+                <h3>Placeholder</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+
+            <div class="gridHalfWidth">
+                <h3>Enjoy Music together!</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+            <div class="gridHalfWidth">
+                <h3>Placeholder</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+
+            <div class="gridHalfWidth">
+                <h3>Enjoy Music together!</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+            <div class="gridHalfWidth">
+                <h3>Placeholder</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+
+            <div class="gridHalfWidth">
+                <h3>Enjoy Music together!</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+            <div class="gridHalfWidth">
+                <h3>Placeholder</h3>
+                <p>asdlöfkjaslödfjls asdlfk jsaldf asldf lsaf djlsj fdlsa dfl asldföj aslödfj löasjf lsa jfl sajlf
+                    jasdlfj </p>
+            </div>
+
+        </div>
+    </div>
 </div>

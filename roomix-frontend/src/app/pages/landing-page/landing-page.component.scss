@@ -48,9 +48,17 @@
   animation-delay: -10s;
 }
 
+.topLayer {
+  z-index: 999;
+}
+
 .bannerOverlay {
   position: relative;
   top: -55vh;
+  margin-bottom: -55vh;
+  width: 100vw;
+  height: 55vh;
+  overflow: hidden;
 
   img {
     position: absolute;
@@ -96,7 +104,7 @@
 .bannerButtonBox {
   position: absolute;
   top: 27.5vh;
-  z-index: 999;
+  z-index: 750;
 
   a {
     button {
@@ -110,7 +118,6 @@
       line-height: 1.25em;
       height: 50px;
       border-radius: 25px;
-      padding: 0 35px;
 
       cursor: pointer;
       z-index: 999;
