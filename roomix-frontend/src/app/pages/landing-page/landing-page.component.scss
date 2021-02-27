@@ -1,4 +1,5 @@
 * {
+  //color: #ffffff;
   color: var(--ion-background-color);
 }
 
@@ -7,7 +8,7 @@
 
   overflow-y: scroll;
 
-  background: var(--ion-background-color);
+  background: #ffffff;
 }
 
 .banner {
@@ -102,6 +103,7 @@
       cursor: pointer;
       z-index: 999;
 
+      //background: var(--ion-background-color);
       background: #ffffff;
     }
 
@@ -142,9 +144,34 @@
 .landingPageContent {
   position: relative;
   top: 0;
-  left: 7.5vw;
 
-  width: 85vw;
+  width: 100vw;
+  max-width: 1500px;
+  min-height: 50vh;
 
   padding: 50px;
+}
+
+.gridBox {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .gridBox {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.gridHalfWidth {
+  grid-column: span 3;
+  padding: 30px;
+}
+
+p {
+  font-size: 1.25em;
+  line-height: 200%;
 }
