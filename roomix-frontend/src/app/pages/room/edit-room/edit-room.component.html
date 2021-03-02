@@ -18,7 +18,7 @@
 
   </form>
 
-  <button class="buttonRed" (click)="deleteRoom()" [disabled]="roles[0] !== user.activeMember.role">Delete Room</button>
+  <button class="buttonRed formElement" (click)="deleteRoom(); roomService.showEditRoom()" [disabled]="roles[0] !== user.activeMember.role">Delete Room</button>
 
   <div class="formElement">
     <a (click)="roomService.showEditRoom()">Cancel</a>
