@@ -16,7 +16,7 @@
         <label for="password">Password</label>
         <input type="password" id="password" class="formElement" formControlName="password">
 
-        <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Save</button>
+        <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit(); accountService.showEditProfile()">Save</button>
 
     <div class="formElement">
         <a (click)="accountService.showEditProfile()">Cancel</a>
