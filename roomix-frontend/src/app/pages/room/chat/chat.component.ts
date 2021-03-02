@@ -37,6 +37,9 @@ export class ChatComponent implements OnInit {
                 this.roomService.getMembers(room.id).subscribe(members => {
                     room.memberList = members;
                     this.room = room;
+                    setTimeout(() => {
+                        this.scrollDown();
+                    }, 500);
                 });
             }
         );
