@@ -71,7 +71,7 @@ export class ChatComponent implements OnInit {
         }
     }
 
-    getDisplaynameByUsername(sender: string) {
-        return this.room.memberList.find(member => member.user.username === sender).user.displayname;
+    getUserByUsername(sender: string) {
+        return this.room.memberList.find(member => member.user.username === sender).user;
     }
 }

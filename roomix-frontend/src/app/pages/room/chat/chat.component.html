@@ -5,8 +5,10 @@
 
     <li class="listEntry" *ngFor="let chatMessage of room.messageList">
         <div class="listTextContainer">
+            <img [src]="accountService.sanitizeBase64(getUserByUsername(chatMessage.sender).picUrl)" alt="" class="listImage">
+
             <p class="listHeadline">
-                {{ getDisplaynameByUsername(chatMessage.sender) }}
+                {{ getUserByUsername(chatMessage.sender).displayname }}
                 <span class="listInfo">{{ chatMessage.timestamp | date: 'dd/mm/yyyy HH:mm' }}</span>
             </p>
             <p class="listText">{{ chatMessage.content }}</p>
