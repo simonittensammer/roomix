@@ -231,6 +231,10 @@ button:active {
   z-index: 999;
 
   box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+
+  .listEntry {
+    background: var(--ion-background-color) !important;
+  }
 }
 
 .popup::-webkit-scrollbar {
