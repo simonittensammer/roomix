@@ -34,6 +34,8 @@
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
   object-fit: cover;
+
+  image-rendering: crisp-edges;
 }
 
 .layer1 {
