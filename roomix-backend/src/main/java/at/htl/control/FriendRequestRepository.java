@@ -42,6 +42,10 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
         observerList.forEach(friendRequestRepositoryObserver -> friendRequestRepositoryObserver.respondToFriendRequest(sender, receiver));
     }
 
+    public void notifyObserversUnfriend(String sender, String receiver) {
+        observerList.forEach(friendRequestRepositoryObserver -> friendRequestRepositoryObserver.unfriendUsers(sender, receiver));
+    }
+
     public JsonArray getSerializedFriendRequestList(String username) {
         User user = userRepository.findByName(username);
 
@@ -109,6 +113,22 @@ public class FriendRequestRepository implements PanacheRepository<FriendRequest>
         receiver.getFriendRequestList().remove(friendRequest);
 
         notifyObserversRespond(sender.getUsername(), receiver.getUsername());
+
+        return true;
+    }
+
+    public boolean unfriendUsers(FriendRequestDTO friendRequestDTO) {
+        User sender = userRepository.findByName(friendRequestDTO.getSender());
+        User receiver = userRepository.findByName(friendRequestDTO.getReceiver());
+
+        if (sender == null || receiver == null) return false;
+
+        if (!sender.getFriendList().contains(receiver)) return false;
+
+        sender.getFriendList().remove(receiver);
+        receiver.getFriendList().remove(sender);
+
+        notifyObserversUnfriend(sender.getUsername(), receiver.getUsername());
 
         return true;
     }

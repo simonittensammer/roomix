@@ -185,6 +185,15 @@ public class UserEndpoint {
         return Response.created(uriInfo.getAbsolutePath()).entity(friendRequest).build();
     }
 
+    @PUT
+    @Path("/unfriend")
+    public Response unfriendUsers(FriendRequestDTO friendRequestDTO) {
+
+        if (!friendRequestRepository.unfriendUsers(friendRequestDTO)) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        return Response.noContent().build();
+    }
+
     @POST
     @Path("/roomInvite")
     public Response sendRoomInvite(RoomInviteDTO roomInviteDTO, @Context UriInfo uriInfo) {

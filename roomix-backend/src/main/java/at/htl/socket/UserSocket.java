@@ -93,6 +93,23 @@ public class UserSocket implements FriendRequestRepositoryObserver, RoomInviteRe
     }
 
     @Override
+    public void unfriendUsers(String senderKey, String receiverKey) {
+        SocketMessageDTO message = new SocketMessageDTO("unfriend", null);
+        Session sender = sessions.get(senderKey);
+        Session receiver = sessions.get(receiverKey);
+
+        LOGGER.info(senderKey + " and " + receiverKey + " are no longer friends");
+
+        if (sender != null) {
+            sendMessage(sender, message);
+        }
+
+        if (receiver != null) {
+            sendMessage(receiver, message);
+        }
+    }
+
+    @Override
     public void sendRoomInvite(String receiverKey) {
         SocketMessageDTO message = new SocketMessageDTO("receive-room-invite", null);
         Session receiver = sessions.get(receiverKey);
