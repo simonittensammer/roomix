@@ -84,6 +84,16 @@ export class UserSocketService {
                         this.userService.updateUserValue(this.user);
                     });
             }
+
+            if (data.type === 'unfriend') {
+                console.log('unfriend');
+                this.userService.getProperFriendList(username)
+                    .pipe(first())
+                    .subscribe( value => {
+                        this.user.friendList = value;
+                        this.userService.updateUserValue(this.user);
+                    });
+            }
         });
     }
 }
