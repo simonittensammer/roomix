@@ -20,6 +20,12 @@
             <p class="listHeadline">{{ friend.displayname }}</p>
             <p class="listText">@{{ friend.username }}</p>
         </div>
+
+        <div class="listButtonContainer">
+            <a class="buttonLink">
+                <button (click)="unfriend(friend.username)">Unfriend</button>
+            </a>
+        </div>
     </li>
 </ul>
 <ul *ngIf="!collapsed && user.friendList.length == 0">

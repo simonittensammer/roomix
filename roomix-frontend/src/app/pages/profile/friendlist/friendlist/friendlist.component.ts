@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RoomService} from '../../../../services/room.service';
 import {first} from 'rxjs/operators';
 import {UserService} from '../../../../services/user.service';
+import {FriendRequestDTO} from '../../../../models/dto/friendRequestDTO';
 
 @Component({
   selector: 'app-friendlist',
@@ -37,5 +38,11 @@ export class FriendlistComponent implements OnInit {
 
   collapseList() {
     this.collapsed = !this.collapsed;
+  }
+
+  unfriend(friend: string) {
+    this.userService.unfriend(new FriendRequestDTO(this.user.username, friend)).subscribe(value => {
+      console.log(value);
+    });
   }
 }

@@ -7,6 +7,7 @@ import {FriendRequest} from '../models/friend-request';
 import {RoomInvite} from '../models/room-invite';
 import {HttpClient} from '@angular/common/http';
 import {UserUpdateDTO} from '../models/dto/userUpdateDTO';
+import {FriendRequestDTO} from '../models/dto/friendRequestDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +49,9 @@ export class UserService {
 
   updateUser(username: string, image: string, displayname: string, password: string) {
     return this.http.put<User>(GlobalConstants.APIURL + '/user', new UserUpdateDTO(username, displayname, password, image));
+  }
+
+  unfriend(friendRequestDTO: FriendRequestDTO) {
+    return this.http.put(GlobalConstants.APIURL + '/user/unfriend', friendRequestDTO);
   }
 }
