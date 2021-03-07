@@ -18,14 +18,14 @@
             </ng-template>
 
             <a class="buttonLink mainButton"
-               (click)="playSongService.disconnect(); setActiveMember(); playSongService.connect(user.username, room.id)"
+               (click)="updateMemberList(); playSongService.disconnect(); setActiveMember(); playSongService.connect(user.username, room.id)"
                *ngIf="!playSongService.connected || playSongService.connected && playSongService.room.id !== room.id; else disconnect">
                 <button [disabled]="!userIsMember()">Connect</button>
             </a>
 
             <ng-template #disconnect>
                 <a class="buttonLink mainButton"
-                   (click)="removeActiveMember(); playSongService.disconnect()">
+                   (click)="updateMemberList(); removeActiveMember(); playSongService.disconnect()">
                     <button>Disconnect</button>
                 </a>
             </ng-template>
@@ -59,7 +59,7 @@
                     <a class="buttonLink" *ngIf="!(!(playSongService.connected && room.name === listeningRoom.name)
                         || member.user.username === user.username || (playSongService.connected && room.name === listeningRoom.name)
                         && !(user.activeMember != null && (roles[0] === user.activeMember.role
-                        || roles[1] === user.activeMember.role)))">
+                        || roles[1] === user.activeMember.role))) && member.role != roles[0]">
                         <form [formGroup]="selectForm">
                             <select name="roleSelect" id="roleSelect" formControlName="role"
                                     (change)="changeRole(member)">

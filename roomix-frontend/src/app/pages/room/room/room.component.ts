@@ -178,6 +178,15 @@ export class RoomComponent implements OnInit {
     }
 
     changeRole(member: Member) {
-        this.roomService.updateRole(this.room.id, member, this.selectForm.value.role);
+        this.roomService.updateRole(this.room.id, member, this.selectForm.value.role).subscribe(value => {
+            console.log(value);
+            this.updateMemberList();
+        });
+    }
+
+    updateMemberList() {
+        this.roomService.getMembers(this.room.id).subscribe(members => {
+            this.room.memberList = members;
+        });
     }
 }

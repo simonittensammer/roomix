@@ -84,6 +84,6 @@ export class RoomService {
     }
 
     updateRole(roomId: number, member: Member, newRole: string) {
-        console.log(member, newRole);
+        return this.http.put<Member>(GlobalConstants.APIURL + '/room/' + roomId + '/member/' + member.user.username + '?role=' + newRole, null);
     }
 }
