@@ -1,10 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.*;
-import at.htl.dto.ChatMessageDTO;
-import at.htl.dto.MemberDTO;
-import at.htl.dto.RoomDTO;
-import at.htl.dto.RoomUpdateDTO;
+import at.htl.dto.*;
 import at.htl.entity.*;
 import org.hibernate.Hibernate;
 
@@ -23,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -296,5 +294,24 @@ public class RoomEndpoint {
 
         messageRepository.persist(message);
         return Response.ok(message).build();
+    }
+
+    @PUT
+    @Path("{roomId}/member/{username}")
+    public Response updateMemberRole(@PathParam("roomId") Long roomId, @PathParam("username") String username, @QueryParam("role") String role) {
+        Room room = roomRepository.findById(roomId);
+        User user = userRepository.findByName(username);
+
+        if (room == null || user == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        Member member = memberRepository.getMemberOfRoom(user, room);
+
+        if (member == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        if (!Arrays.asList("member", "dj", "admin", "owner").contains(role)) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        member.setRole(role);
+
+        return Response.ok(member).build();
     }
 }
