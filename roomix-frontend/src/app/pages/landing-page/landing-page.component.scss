@@ -173,7 +173,7 @@
 
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 30px;
+  gap: 0;
 }
 
 @media (max-width: 768px) {
@@ -185,6 +185,16 @@
 .gridHalfWidth {
   grid-column: span 3;
   padding: 30px;
+
+  text-align: center;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.textBox {
+  display: table;
+  width: 100%;
 }
 
 p {
