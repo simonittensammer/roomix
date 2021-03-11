@@ -9,7 +9,7 @@
     </a>
 
     <ul *ngIf="!collapsed">
-        <li class="listEntry" *ngFor="let song of room.playlist.songList">
+        <li class="listEntry" *ngFor="let song of (roomService.roomValue | async).playlist.songList">
             <img src="{{ song.picUrl }}" alt="" class="listImage">
 
             <div class="listTextContainer">

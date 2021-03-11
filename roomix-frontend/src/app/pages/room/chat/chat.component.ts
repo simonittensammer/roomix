@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.roomService.roomValue.subscribe(
+        this.playSongService.roomValue.subscribe(
             room => {
                 this.roomService.getMembers(room.id).subscribe(members => {
                     room.memberList = members;
