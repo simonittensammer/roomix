@@ -201,6 +201,7 @@
 
 .gridTwoCol {
   grid-column: span 2;
+  text-align: center !important;
 }
 
 .textBox {
@@ -222,6 +223,7 @@ footer {
   * {
     color: var(--ion-color-dark);
     line-height: 2em;
+    font-size: 1em !important;
   }
 
   .logo {
@@ -229,8 +231,12 @@ footer {
     margin: 0 !important;
   }
 
-  a, button {
+  p, a, button {
     width: 100%;
+  }
+
+  a:hover {
+    text-decoration: underline !important;
   }
 
   background: var(--ion-card-background);
