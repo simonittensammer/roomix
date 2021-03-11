@@ -176,9 +176,22 @@
   gap: 0;
 }
 
+.divider {
+  grid-column: span 6;
+  height: 1px;
+  margin: 30px 0;
+  //background: var(--ion-color-dark-shade);
+
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, var(--ion-color-dark-shade) 50%, rgba(0,0,0,0) 100%);
+}
+
 @media (max-width: 768px) {
   .gridBox {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .divider {
+    grid-column: span 3;
   }
 }
 
@@ -200,3 +213,4 @@ p {
   font-size: 1.25em;
   line-height: 200%;
 }
+
