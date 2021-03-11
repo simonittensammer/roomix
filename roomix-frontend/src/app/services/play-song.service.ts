@@ -67,10 +67,13 @@ export class PlaySongService {
         this.roomService.getRoom(roomid).subscribe(room => {
 
             this.roomService.getMessages(roomid).subscribe(messages => {
-                this.room = room;
-                this.room.messageList = messages;
-                this.updateRoomValue(room);
-                this.roomService.updateRoomValue(this.room);
+                room.messageList = messages;
+                this.roomService.getMembers(roomid).subscribe(members => {
+                    room.memberList = members;
+                    this.room = room;
+                    this.updateRoomValue(room);
+                    this.roomService.updateRoomValue(this.room);
+                });
             });
         });
 
@@ -106,6 +109,7 @@ export class PlaySongService {
                 else if (data.type === 'add-song') {
                     const song: Song = data.message as Song;
                     this.room.playlist.songList.push(song);
+                    this.updateRoomValue(this.room);
                     this.roomService.updateRoomValue(this.room);
                 }
 
@@ -113,6 +117,7 @@ export class PlaySongService {
                     console.log('removeing');
                     const song: Song = data.message as Song;
                     this.room.playlist.songList.splice(this.room.playlist.songList.findIndex(x => x.url === song.url), 1);
+                    this.updateRoomValue(this.room);
                     this.roomService.updateRoomValue(this.room);
                 }
 
@@ -146,16 +151,16 @@ export class PlaySongService {
     disconnect() {
         if (this.songSocket != null) {
             this.songSocket.complete();
-            this.updateRoomValue(new Room(''));
-            this.currentSong = new Song('', '', '', '', 0);
-            this.currentSongUrl = '';
-            this.player.loadVideoById(this.currentSongUrl);
-            this.currentSongTimer = 0;
-            this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
-            this.connected = false;
-            this.remainingSongDuration = 0;
-            this.songProgress = 0;
         }
+        this.updateRoomValue(new Room(''));
+        this.currentSong = new Song('', '', '', '', 0);
+        this.currentSongUrl = '';
+        this.player.loadVideoById(this.currentSongUrl);
+        this.currentSongTimer = 0;
+        this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
+        this.connected = false;
+        this.remainingSongDuration = 0;
+        this.songProgress = 0;
     }
 
     // tslint:disable-next-line:ban-types

@@ -14,5 +14,7 @@ export class Room {
 
     constructor(name) {
         this.name = name;
+        this.memberList = [];
+        this.messageList = [];
     }
 }
