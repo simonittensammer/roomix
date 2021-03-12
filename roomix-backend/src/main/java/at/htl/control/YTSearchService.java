@@ -23,7 +23,7 @@ public class YTSearchService {
 
 
     public JsonObject getVideos(String query) {
-        String requestURL = API_URL + "search?q=" + query + "&key=" + API_TOKEN + "&part=snippet&type=video&maxResults=1";
+        String requestURL = API_URL + "search?q=" + query + "&key=" + API_TOKEN + "&part=snippet&type=video&maxResults=3";
         return executeRequest(requestURL);
     }
 
