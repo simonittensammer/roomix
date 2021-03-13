@@ -4,9 +4,9 @@
     <button class="scrollDownButton" (click)="scrollDown()" [disabled]="scrolledDown">Scroll down</button>
 
     <li class="listEntry" *ngFor="let chatMessage of room.messageList">
-        <div class="listTextContainer">
-            <img [src]="accountService.sanitizeBase64(getUserByUsername(chatMessage.sender).picUrl)" alt="" class="listImage">
+        <img [src]="accountService.sanitizeBase64(getUserByUsername(chatMessage.sender).picUrl)" alt="" class="listImage">
 
+        <div class="listTextContainer">
             <p class="listHeadline">
                 {{ getUserByUsername(chatMessage.sender).displayname }}
                 <span class="listInfo">{{ chatMessage.timestamp | date: 'dd/mm/yyyy HH:mm' }}</span>
