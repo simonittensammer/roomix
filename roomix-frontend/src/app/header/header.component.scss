@@ -4,10 +4,11 @@
   top: 0;
   left: 0;
   height: 100vh;
-  min-width: 230px;
+  //min-width: 230px;
   width: 15vw;
   padding-top: 30px;
   background: var(--ion-card-background);
+  overflow: hidden;
 
   box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
 }
@@ -15,18 +16,27 @@
 ion-icon {
   float: left;
   font-size: 1.5em;
+  width: 30px;
+  grid-column: span 2;
+  margin-right: 15px;
 }
 
 .linkText {
   float: left;
-  padding-left: 15px;
+  text-align: left;
+  //width: 85%;
+  height: 100%;
   font-size: 1.1em;
   line-height: 1.25em;
 }
 
-#logo {
+#logo, #icon {
   width: 75%;
   margin: 10px 0 30px 12.5%;
+}
+
+#icon {
+  display: none;
 }
 
 #userText {
@@ -39,4 +49,29 @@ ion-icon {
   position: absolute;
   bottom: 30px;
   left: 0;
+}
+
+@media (max-width: 768px) {
+  #logo {
+    display: none;
+  }
+
+  #icon {
+    display: block;
+  }
+}
+
+@media (max-width: 1600px) {
+
+  .formElement {
+    padding: 10px 0 !important;
+  }
+
+  ion-icon {
+    width: 100%
+  }
+
+  .linkText {
+    display: none;
+  }
 }
