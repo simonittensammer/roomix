@@ -6,60 +6,78 @@
   bottom: 0;
   z-index: 800;
 
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 15px;
+  padding: 0 30px;
+
   background: var(--ion-color-primary);
 }
 
-#roomImage {
-  width: 10vw;
-  position: absolute;
-  bottom: 15px;
-  margin-left: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
-}
-
-#roomName {
-  position: absolute;
-  left: 13vw;
-  top: 0;
-  width: 10vw;
+#roomInfoWrapper, #roomInfoWrapper > *, #songInfoWrapper, #songInfoWrapper > * {
+  text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
-#roomInfo {
-  position: absolute;
-  left: 13vw;
-  top: 50px;
+#roomImageWrapper {
+  grid-column: span 2;
+  width: 100%;
+  height: 100%;
+  //background: red;
+  position: relative;
+}
 
-  width: 10vw;
-  overflow: hidden;
+#roomImage {
+  width: 100%;
+
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+
+  //transform-origin: bottom;
+  //transform: translateY(-50%);
+  //margin-bottom: 30px;
+  position: absolute;
+  bottom: 60%;
+}
+
+#roomInfoWrapper {
+  grid-column: span 2;
+}
+
+
+#roomName {
+  width: 100%;
+  white-space: nowrap;
+  margin-bottom: 0 !important;
+}
+
+#roomInfo {
+  width: 100%;
   white-space: nowrap;
   font-size: 1.1em;
 }
 
+#songInfoWrapper {
+  grid-column: span 6;
+}
+
 ion-icon {
-  margin-bottom: -5px;
+  //margin-bottom: -5px;
   font-size: 1.25em;
 }
 
 #currentSongName {
-  position: absolute;
-  left: 25vw;
-  bottom: 5.5vh;
-  width: 50%;
+  width: 100%;
   font-size: 1.1em;
+  margin: 15px 0;
 
   white-space: nowrap;
-  overflow: hidden;
 }
 
 #songProgressBar {
-  position: absolute;
-  left: 25vw;
-  bottom: 3.5vh;
   height: 1vh;
-  width: 50%;
+  width: 100%;
   border-radius: .5vh;
   z-index: 900;
 
@@ -77,16 +95,33 @@ ion-icon {
   transition-timing-function: linear;
 }
 
-#volumeRangeBox {
-  position: absolute;
-  right: 50px;
-  bottom: 15px;
+#skipSong {
+  grid-column: span 1;
+  width: 100%;
+  height: 50%;
 
-  padding: 2.5px;
+  button {
+    height: 50%;
+    margin: 25% 0;
+    background: var(--ion-color-primary-hover);
+  }
+
+  button:hover {
+    background: var(--ion-color-primary-active);
+  }
+}
+
+#volumeRangeBox {
+  grid-column: span 1;
+
+  width: 45px;
+  padding: 2.5px 0;
   border-radius: 20px;
   background: var(--ion-card-background);
 
   box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+
+  transform: translateY(-60%);
 }
 
 #volumeRange[type=range][orient=vertical] {
@@ -130,14 +165,4 @@ input[type=range]:focus {
   left: 50%;
   transform: translate(-50%, -25%);
   cursor: pointer;
-}
-
-#skipSong {
-  position: absolute;
-  right: 200px;
-  bottom: 15px;
-}
-
-#skipVoteAmount {
-  display: inline;
 }

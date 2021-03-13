@@ -166,6 +166,7 @@ button:hover {
 
 button:active {
   background: var(--ion-color-primary-active);
+  transform: scale(.95);
 }
 
 .buttonLink {

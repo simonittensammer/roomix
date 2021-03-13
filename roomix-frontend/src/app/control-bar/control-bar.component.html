@@ -1,22 +1,28 @@
 <div id="player"></div>
 
 <div id="controlBar" *ngIf="playSongService.connected" (click)="startAnimation()">
-    <div id="roomInfoWrapper">
+    <div id="roomImageWrapper">
         <img [src]="accountService.sanitizeBase64((playSongService.roomValue | async).picUrl)" id="roomImage"
              alt="roomPic">
+    </div>
+
+    <div id="roomInfoWrapper">
         <h3 id="roomName">{{ (playSongService.roomValue | async).name }}</h3>
         <p id="roomInfo">
             Members: {{ (playSongService.roomValue | async).memberList.length }}
         </p>
     </div>
 
-    <p id="currentSongName">
-        <ion-icon name="musical-notes"></ion-icon>
-        {{ playSongService.currentSong.title }}
-    </p>
+    <div id="songInfoWrapper">
+        <p id="currentSongName">
+            <ion-icon name="musical-notes"></ion-icon>
+            {{ playSongService.currentSong.title }}
+        </p>
 
-    <div id="songProgressBar">
-        <div #songProgress id="songProgress" style="transition-duration: {{ playSongService.remainingSongDuration }}s; width: {{ playSongService.songProgress }}%"></div>
+        <div id="songProgressBar">
+            <div #songProgress id="songProgress"
+                 style="transition-duration: {{ playSongService.remainingSongDuration }}s; width: {{ playSongService.songProgress }}%"></div>
+        </div>
     </div>
 
     <div id="skipSong">
@@ -24,18 +30,25 @@
         <ng-template #unskip>
             <button (click)="skipSong()">Unskip</button>
         </ng-template>
-        <div id="skipVoteAmount" *ngIf="skips !== null && skips.currentAmount > 0">{{skips.currentAmount}}/{{skips.amountNeeded}}</div>
+<!--        <p id="skipVoteAmount" *ngIf="skips !== null && skips.currentAmount > 0">-->
+<!--            {{skips.currentAmount}}/{{skips.amountNeeded}}-->
+<!--        </p>-->
     </div>
 
     <div id="volumeRangeBox">
-        <input type="range" orient="vertical" #volumeRange id="volumeRange" name="volumeRange" min="0" max="100" value="{{playSongService.volumePercentage}}"
-        (input)="adjustVolume(volumeRange.value)">
+        <input type="range" orient="vertical" #volumeRange id="volumeRange" name="volumeRange" min="0" max="100"
+               value="{{playSongService.volumePercentage}}"
+               (input)="adjustVolume(volumeRange.value)">
 
         <br>
 
-        <ion-icon class="volumeIcon" name="volume-mute-outline" *ngIf="playSongService.volumeStage == 'x'" (click)="mutePlayer()"></ion-icon>
-        <ion-icon class="volumeIcon" name="volume-low-outline" *ngIf="playSongService.volumeStage == 'l'" (click)="mutePlayer()"></ion-icon>
-        <ion-icon class="volumeIcon" name="volume-medium-outline" *ngIf="playSongService.volumeStage == 'm'" (click)="mutePlayer()"></ion-icon>
-        <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="playSongService.volumeStage == 'h'" (click)="mutePlayer()"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-mute-outline" *ngIf="playSongService.volumeStage == 'x'"
+                  (click)="mutePlayer()"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-low-outline" *ngIf="playSongService.volumeStage == 'l'"
+                  (click)="mutePlayer()"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-medium-outline" *ngIf="playSongService.volumeStage == 'm'"
+                  (click)="mutePlayer()"></ion-icon>
+        <ion-icon class="volumeIcon" name="volume-high-outline" *ngIf="playSongService.volumeStage == 'h'"
+                  (click)="mutePlayer()"></ion-icon>
     </div>
 </div>
