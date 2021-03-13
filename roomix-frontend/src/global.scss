@@ -335,7 +335,10 @@ ul {
 }
 
 .listEntry {
-  display: inline-block;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+
+  gap: 15px;
   width: 100%;
   background: var(--ion-card-background);
   border-radius: 5px;
@@ -354,18 +357,22 @@ ul {
 }
 
 .listImage {
-  height: 50px;
-  width: 50px;
+  //height: 50px;
+  //width: 50px;
   float: left;
   object-fit: cover;
   margin-right: 2.5%;
   border-radius: 5px;
+  grid-column: span 1;
 }
 
 .listTextContainer {
   float: left;
-  width: 60%;
+  //width: 60%;
   overflow-x: hidden;
+  grid-column: span 4;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .listHeadline {
@@ -388,17 +395,24 @@ ul {
 
 .listButtonContainer {
   float: right;
+  grid-column: span 4;
+
+  width: 100%;
 
   * {
-    float: left;
+    float: right;
     height: 40px;
 
+    width: 46%;
+    margin: 0 2%;
+
     button, select {
-      margin: 5px;
+      //margin: 5px;
+      width: 100%;
+      padding: 10px 0 !important;
     }
   }
 }
-
 
 // PLAYER
 
