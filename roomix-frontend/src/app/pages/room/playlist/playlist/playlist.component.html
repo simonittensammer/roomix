@@ -5,7 +5,9 @@
     <a class="buttonLink buttonRight" (click)="playlistService.showAddSong()">
         <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
         || (playSongService.connected && room.name === listeningRoom.name)
-        && !(user.activeMember != null && (roles[3] != user.activeMember.role))">Add song</button>
+        && !(user.activeMember != null && (roles[3] != user.activeMember.role))">
+            Add song
+        </button>
     </a>
 
     <ul *ngIf="!collapsed">
@@ -21,7 +23,8 @@
                 <a class="buttonLink" (click)="deleteFromPlaylist(song)">
                     <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
                     || (playSongService.connected && room.name === listeningRoom.name)
-                    && !(user.activeMember != null && (roles[3] != user.activeMember.role))">Delete
+                    && !(user.activeMember != null && (roles[3] != user.activeMember.role))">
+                        Delete
                     </button>
                 </a>
             </div>

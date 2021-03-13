@@ -57,6 +57,15 @@
                 </div>
 
                 <div class="listButtonContainer">
+                    <a class="buttonLink">
+                        <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
+                        || member.user.username === user.username || (playSongService.connected && room.name === listeningRoom.name)
+                        && !(user.activeMember != null && (roles[0] === user.activeMember.role
+                        || roles[1] === user.activeMember.role))" (click)="removeUserFromRoom(member)">
+                            Kick
+                        </button>
+                    </a>
+
                     <a class="buttonLink" *ngIf="!(!(playSongService.connected && room.name === listeningRoom.name)
                         || member.user.username === user.username || (playSongService.connected && room.name === listeningRoom.name)
                         && !(user.activeMember != null && (roles[0] === user.activeMember.role
@@ -71,15 +80,6 @@
                                 <!--                            <option [value]="roles[3]">Member</option>-->
                             </select>
                         </form>
-                    </a>
-
-                    <a class="buttonLink">
-                        <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)
-                        || member.user.username === user.username || (playSongService.connected && room.name === listeningRoom.name)
-                        && !(user.activeMember != null && (roles[0] === user.activeMember.role
-                        || roles[1] === user.activeMember.role))" (click)="removeUserFromRoom(member)">
-                            Kick
-                        </button>
                     </a>
                 </div>
             </li>
