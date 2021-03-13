@@ -9,7 +9,7 @@
         <div class="listTextContainer">
             <p class="listHeadline">
                 {{ getUserByUsername(chatMessage.sender).displayname }}
-                <span class="listInfo">{{ chatMessage.timestamp | date: 'dd/mm/yyyy HH:mm' }}</span>
+                <span class="listInfo">{{ chatMessage.timestamp | date: 'dd/MM/yyyy HH:mm' }}</span>
             </p>
             <p class="listText">{{ chatMessage.content }}</p>
         </div>
