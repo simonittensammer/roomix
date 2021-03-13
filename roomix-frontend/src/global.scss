@@ -306,6 +306,10 @@ button[disabled] {
   background: var(--ion-card-hover);
 }
 
+.card:active {
+  transform: scale(.95);
+}
+
 .cardImage {
   width: 100%;
   height: auto;
