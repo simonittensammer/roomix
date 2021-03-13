@@ -42,7 +42,8 @@
 
         <h3 class="ulHeadline" (click)="collapseList()">Members</h3>
         <a class="buttonLink buttonRight" (click)="roomService.showInviteFriend()">
-            <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">Invite Friends
+            <button [disabled]="!(playSongService.connected && room.name === listeningRoom.name)">
+                Invite Friends
             </button>
         </a>
 
@@ -63,7 +64,8 @@
                         <form [formGroup]="selectForm">
                             <select name="roleSelect" id="roleSelect" formControlName="role"
                                     (change)="changeRole(member)">
-                                <option *ngFor="let role of roles | slice:1" [ngValue]="role" (load)="setDefaults(role)">{{ role }}</option>
+                                <option *ngFor="let role of roles | slice:1" [ngValue]="role"
+                                        (load)="setDefaults(role)">{{ role }}</option>
                                 <!--                            <option [value]="roles[1]">Admin</option>-->
                                 <!--                            <option [value]="roles[2]">DJ</option>-->
                                 <!--                            <option [value]="roles[3]">Member</option>-->
@@ -76,7 +78,7 @@
                         || member.user.username === user.username || (playSongService.connected && room.name === listeningRoom.name)
                         && !(user.activeMember != null && (roles[0] === user.activeMember.role
                         || roles[1] === user.activeMember.role))" (click)="removeUserFromRoom(member)">
-                            Remove
+                            Kick
                         </button>
                     </a>
                 </div>

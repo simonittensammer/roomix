@@ -157,6 +157,7 @@ button {
   outline: none !important;
 
   transition: all .1s ease-in-out;
+  white-space: nowrap;
 }
 
 button:hover {
@@ -275,7 +276,7 @@ input[type="checkbox"] {
 }
 
 button[disabled] {
-  opacity: .5;
+  filter: brightness(.5);
 }
 
 // CARDS
@@ -346,6 +347,8 @@ ul {
   padding: 1.5%;
   margin-bottom: 1.5%;
 
+  overflow: hidden;
+
   transition: all .1s ease-in-out;
 }
 
@@ -357,7 +360,7 @@ ul {
 }
 
 .listImage {
-  //height: 50px;
+  height: 100%;
   //width: 50px;
   float: left;
   object-fit: cover;
