@@ -30,6 +30,7 @@
     <div class="inputWrapper">
         <input #input type="text" class="searchInput" placeholder="Search Rooms">
         <input type="number" class="numberInput" [(ngModel)]="limit" (change)="updatePublicRoomLimit()">
+        <app-tag-selector [input-tags]="[]" (childToParent)="childToParent($event)"></app-tag-selector>
     </div>
 
     <div class="cardContainer">

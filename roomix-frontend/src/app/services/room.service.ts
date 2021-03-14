@@ -53,8 +53,9 @@ export class RoomService {
         this.inviteFriendVisible = !this.inviteFriendVisible;
     }
 
-    getPopularPublicRooms(limit: number, searchTerm: string) {
-        return this.http.get<Array<Room>>(GlobalConstants.APIURL + '/room/popular?searchTerm=' + searchTerm + '&limit=' + limit)
+    getPopularPublicRooms(limit: number, searchTerm: string, tagList: Tag[]) {
+        const tags = tagList.map(tag => tag.name).join(',');
+        return this.http.get<Array<Room>>(GlobalConstants.APIURL + '/room/popular?searchTerm=' + searchTerm + '&limit=' + limit + '&tags=' + tags)
             .pipe(map(rooms => {
                 return rooms;
             }));

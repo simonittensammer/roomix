@@ -22,7 +22,9 @@ export class JoinRoomComponent implements OnInit, AfterViewInit {
     @ViewChild('input') inputElement: ElementRef;
     user: User;
     publicRooms: Array<Room>;
+    searchTerm = '';
     limit = 10;
+    tagList: Tag[] = [];
 
     constructor(private accountService: AccountService,
                 private userService: UserService,
@@ -36,11 +38,7 @@ export class JoinRoomComponent implements OnInit, AfterViewInit {
                 this.user = value;
             }
         );
-        this.roomService.getPopularPublicRooms(this.limit, '').subscribe(
-            publicRooms => {
-                this.publicRooms = publicRooms;
-            }
-        );
+        this.updatePublicRoomLimit();
     }
 
     response(roomInvite: RoomInvite, accept: boolean) {
@@ -55,7 +53,7 @@ export class JoinRoomComponent implements OnInit, AfterViewInit {
 
     updatePublicRoomLimit() {
         if (this.limit >= 1) {
-            this.roomService.getPopularPublicRooms(this.limit, '').subscribe(
+            this.roomService.getPopularPublicRooms(this.limit, this.searchTerm, this.tagList).subscribe(
                 publicRooms => {
                     this.publicRooms = publicRooms;
                 }
@@ -81,14 +79,17 @@ export class JoinRoomComponent implements OnInit, AfterViewInit {
                 map((value) => value.split(' ').join('+'))
             ).subscribe(value => {
             console.log(value);
-            this.roomService.getPopularPublicRooms(this.limit, value).subscribe(publicRooms => {
-                console.log(publicRooms);
-                this.publicRooms = publicRooms;
-            });
+            this.searchTerm = value;
+            this.updatePublicRoomLimit();
         });
     }
 
     getTagsAsString(tagList: Tag[]): string {
         return tagList.map(tag => tag.name).join(', ');
+    }
+
+    childToParent(tagList: Tag[]){
+        this.tagList = tagList;
+        this.updatePublicRoomLimit();
     }
 }
