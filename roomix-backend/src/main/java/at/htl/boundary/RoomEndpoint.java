@@ -237,10 +237,17 @@ public class RoomEndpoint {
     }
 
     @PUT
-    public Response updateRoom(RoomUpdateDTO roomUpdateDTO) {
+    public Response updateRoom(RoomUpdateDTO roomUpdateDTO) throws IOException {
         Room room = roomRepository.findById(roomUpdateDTO.getRoomId());
 
         if (room == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        if (roomUpdateDTO.getPicUrl().equals("")) {
+            try (InputStream inputStream = getClass().getResourceAsStream("/images/default-room-pic.txt");
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                roomUpdateDTO.setPicUrl(reader.lines().collect(Collectors.joining(System.lineSeparator())));
+            }
+        }
 
         roomUpdateDTO.getTagList().forEach(tagRepository.getEntityManager()::merge);
 
