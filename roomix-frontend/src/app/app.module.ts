@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {RouteReuseStrategy} from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import {HttpClientModule} from '@angular/common/http';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { RegisterComponent } from './account/register/register.component';
+import {RegisterComponent} from './account/register/register.component';
 import {LoginComponent} from './account/login/login.component';
 import {RoomComponent} from './pages/room/room/room.component';
 import {RoomlistComponent} from './pages/roomlist/roomlist/roomlist.component';
@@ -29,6 +29,7 @@ import {ChatComponent} from './pages/room/chat/chat.component';
 import {EditProfileComponent} from './pages/profile/edit-profile/edit-profile.component';
 import {EditRoomComponent} from './pages/room/edit-room/edit-room.component';
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
+import {AuthInterceptor} from './interceptors/auth-interceptor';
 
 @NgModule({
     declarations: [
@@ -53,20 +54,28 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
         EditRoomComponent,
         LandingPageComponent
     ],
-  entryComponents: [],
-  imports: [
-      BrowserModule,
-      IonicModule.forRoot(),
-      AppRoutingModule,
-      HttpClientModule,
-      FormsModule,
-      ReactiveFormsModule
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
-  ],
-  bootstrap: [AppComponent]
+    entryComponents: [],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        {
+            provide: RouteReuseStrategy,
+            useClass: IonicRouteStrategy
+        },
+        {
+            provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

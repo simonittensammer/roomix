@@ -13,6 +13,7 @@ import {UserSocketService} from './user-socket.service';
 import {UserService} from './user.service';
 import {FriendRequestDTO} from '../models/dto/friendRequestDTO';
 import {RoomInviteDTO} from '../models/dto/roomInviteDTO';
+import {JwtTokenDTO} from '../models/dto/JwtTokenDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -33,10 +34,12 @@ export class AccountService {
 
 
     login(username, password) {
-        return this.http.post<User>(GlobalConstants.APIURL + '/user/login', {username, password})
-            .pipe(map(user => {
-                this.userSocketService.connect(user.username);
-                return user;
+        return this.http.post<JwtTokenDTO>(GlobalConstants.APIURL + '/user/login', {username, password})
+            .pipe(map(jwtTokenDTO => {
+                console.log(jwtTokenDTO);
+                localStorage.setItem('id_token', jwtTokenDTO.token);
+                this.userSocketService.connect(jwtTokenDTO.user.username);
+                return jwtTokenDTO.user;
             }));
     }
 
@@ -44,6 +47,7 @@ export class AccountService {
         // remove user from local storage and set current user to null
         // localStorage.removeItem('user');
         // localStorage.removeItem('room');
+        localStorage.removeItem('id_token');
         this.roomService.updateRoomValue(null);
         // this.userSubject.next(null);
         this.userService.updateUserValue(null);
