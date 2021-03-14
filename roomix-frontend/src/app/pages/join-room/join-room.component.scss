@@ -14,6 +14,10 @@
 }
 
 .inputWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
   margin-bottom: 30px;
 }
 
@@ -25,3 +29,9 @@
 .numberInput {
   width: 75px;
 }
+
+app-tag-selector {
+  flex-grow: 1;
+  width: 100%;
+}
+
