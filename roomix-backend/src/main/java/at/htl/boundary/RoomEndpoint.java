@@ -50,14 +50,12 @@ public class RoomEndpoint {
     @Inject
     MessageRepository messageRepository;
 
+    @Inject
+    TagRepository tagRepository;
+
     @GET
     public List<Room> getAll() {
-        return roomRepository.streamAll().peek(o -> {
-            Hibernate.initialize(o.getMessageList());
-            Hibernate.initialize(o.getMemberList());
-            Hibernate.initialize(o.getPlaylist());
-            Hibernate.initialize(o.getPlaylist().getSongList());
-        }).collect(Collectors.toList());
+        return roomRepository.streamAll().map(room -> roomRepository.initRoom(room)).collect(Collectors.toList());
     }
 
     @GET
@@ -136,6 +134,7 @@ public class RoomEndpoint {
             Room room = new Room(roomDTO.getRoomname());
             room.setPrivate(roomDTO.isPrivate());
             room.setPicUrl(roomDTO.getPicUrl());
+            room.setTagList(roomDTO.getTagList());
 
             if (room.getPicUrl().equals("")) {
                 try (InputStream inputStream = getClass().getResourceAsStream("/images/default-room-pic.txt");
@@ -145,6 +144,8 @@ public class RoomEndpoint {
             }
 
             playlistRepository.persist(room.getPlaylist());
+            room.getTagList().forEach(tag -> tagRepository.getEntityManager().merge(tag));
+
             roomRepository.persist(room);
 
             Member member = new Member(creator, room, "owner");
@@ -240,6 +241,8 @@ public class RoomEndpoint {
         Room room = roomRepository.findById(roomUpdateDTO.getRoomId());
 
         if (room == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        roomUpdateDTO.getTagList().forEach(tagRepository.getEntityManager()::merge);
 
         room.update(roomUpdateDTO);
 
