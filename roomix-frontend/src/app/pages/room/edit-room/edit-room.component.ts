@@ -45,6 +45,7 @@ export class EditRoomComponent implements OnInit {
       isPrivate: new FormControl(this.room.private)
     });
     this.editRoomForm.value.picUrl = this.room.picUrl;
+    this.base64textString = this.room.picUrl;
   }
 
   onSubmit() {
