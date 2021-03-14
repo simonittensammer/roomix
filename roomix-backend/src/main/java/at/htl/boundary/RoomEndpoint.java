@@ -94,18 +94,22 @@ public class RoomEndpoint {
 
     @GET
     @Path("/popular")
-    public List<Room> getPopularPublicRooms(@QueryParam("searchTerm") String searchTerm, @QueryParam("limit") int limit) {
-        List<Room> result;
-
-        if (searchTerm == null) result = roomRepository.findPopularPublicRooms(limit);
-
-        else result = roomRepository.streamAll()
+    public List<Room> getPopularPublicRooms(@QueryParam("searchTerm") String searchTerm, @QueryParam("limit") int limit, @QueryParam("tags") String tags) {
+        return roomRepository.streamAll()
                 .map(room -> roomRepository.initRoom(room))
-                .filter(room -> room.getName().toLowerCase().contains(searchTerm.toLowerCase()) && !room.isPrivate())
+                 .filter(room -> {
+                    if (searchTerm == null || searchTerm.equals("")) return true;
+                    return room.getName().toLowerCase().contains(searchTerm.toLowerCase());
+                })
+                .filter(room -> !room.isPrivate())
+                .filter(room -> {
+                    if (tags == null || tags.equals("")) return true;
+                    List<String> tagList = Arrays.asList(tags.split(",").clone());
+                    return room.getTagList().stream().map(Tag::getName).anyMatch(tagList::contains);
+                })
+                .sorted((o1, o2) -> o2.getMemberList().size() - o1.getMemberList().size())
                 .limit(limit)
                 .collect(Collectors.toList());
-
-        return result;
     }
 
     @GET
