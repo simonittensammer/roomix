@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {User} from '../models/user';
 import {BehaviorSubject} from 'rxjs';
 import {Member} from '../models/member';
@@ -10,48 +10,59 @@ import {UserUpdateDTO} from '../models/dto/userUpdateDTO';
 import {FriendRequestDTO} from '../models/dto/friendRequestDTO';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
 
-  private userSubject: BehaviorSubject<User>;
+    private userSubject: BehaviorSubject<User>;
 
-  constructor(
-      private http: HttpClient
-  ) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
-  }
+    constructor(
+        private http: HttpClient
+    ) {
+        // this.getUser(localStorage.getItem('username')).subscribe(user => {
+        this.userSubject = new BehaviorSubject<User>(null);
+        // });
+        // this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
+    }
 
-  public get userValue() {
-    return this.userSubject.asObservable();
-  }
+    public get userValue() {
+        return this.userSubject.asObservable();
+    }
 
-  public updateUserValue(user: User) {
-    localStorage.setItem('user', JSON.stringify(user));
-    this.userSubject.next(user);
-  }
+    public updateUserValue(user: User) {
+        if (user) {
+            localStorage.setItem('username', user.username);
+        } else {
+            localStorage.setItem('username', null);
+        }
+        this.userSubject.next(user);
+    }
 
-  getProperMemberList(username) {
-    return this.http.get<Member[]>(GlobalConstants.APIURL + '/user/' + username + '/members');
-  }
+    getUser(username) {
+        return this.http.get<User>(GlobalConstants.APIURL + '/user/' + username);
+    }
 
-  getProperFriendList(username) {
-    return this.http.get<User[]>(GlobalConstants.APIURL + '/user/' + username + '/friends');
-  }
+    getProperMemberList(username) {
+        return this.http.get<Member[]>(GlobalConstants.APIURL + '/user/' + username + '/members');
+    }
 
-  getProperFriendRequestList(username) {
-    return this.http.get<FriendRequest[]>(GlobalConstants.APIURL + '/user/' + username + '/friendRequests');
-  }
+    getProperFriendList(username) {
+        return this.http.get<User[]>(GlobalConstants.APIURL + '/user/' + username + '/friends');
+    }
 
-  getProperRoomInviteList(username) {
-    return this.http.get<RoomInvite[]>(GlobalConstants.APIURL + '/user/' + username + '/roomInvites');
-  }
+    getProperFriendRequestList(username) {
+        return this.http.get<FriendRequest[]>(GlobalConstants.APIURL + '/user/' + username + '/friendRequests');
+    }
 
-  updateUser(username: string, image: string, displayname: string, password: string) {
-    return this.http.put<User>(GlobalConstants.APIURL + '/user', new UserUpdateDTO(username, displayname, password, image));
-  }
+    getProperRoomInviteList(username) {
+        return this.http.get<RoomInvite[]>(GlobalConstants.APIURL + '/user/' + username + '/roomInvites');
+    }
 
-  unfriend(friendRequestDTO: FriendRequestDTO) {
-    return this.http.put(GlobalConstants.APIURL + '/user/unfriend', friendRequestDTO);
-  }
+    updateUser(username: string, image: string, displayname: string, password: string) {
+        return this.http.put<User>(GlobalConstants.APIURL + '/user', new UserUpdateDTO(username, displayname, password, image));
+    }
+
+    unfriend(friendRequestDTO: FriendRequestDTO) {
+        return this.http.put(GlobalConstants.APIURL + '/user/unfriend', friendRequestDTO);
+    }
 }
