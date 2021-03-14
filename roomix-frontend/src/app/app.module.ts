@@ -29,6 +29,7 @@ import {ChatComponent} from './pages/room/chat/chat.component';
 import {EditProfileComponent} from './pages/profile/edit-profile/edit-profile.component';
 import {EditRoomComponent} from './pages/room/edit-room/edit-room.component';
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -60,7 +61,8 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      BrowserAnimationsModule
   ],
   providers: [
     StatusBar,
