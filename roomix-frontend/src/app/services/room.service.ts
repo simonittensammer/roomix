@@ -9,6 +9,7 @@ import {User} from '../models/user';
 import {MemberDTO} from '../models/dto/memberDTO';
 import {ChatMessageDTO} from '../models/dto/chatMessageDTO';
 import {RoomUpdateDTO} from '../models/dto/roomUpdateDTO';
+import {Tag} from '../models/tag';
 
 @Injectable({
     providedIn: 'root'
@@ -52,8 +53,9 @@ export class RoomService {
         this.inviteFriendVisible = !this.inviteFriendVisible;
     }
 
-    getPopularPublicRooms(limit: number, searchTerm: string) {
-        return this.http.get<Array<Room>>(GlobalConstants.APIURL + '/room/popular?searchTerm=' + searchTerm + '&limit=' + limit)
+    getPopularPublicRooms(limit: number, searchTerm: string, tagList: Tag[]) {
+        const tags = tagList.map(tag => tag.name).join(',');
+        return this.http.get<Array<Room>>(GlobalConstants.APIURL + '/room/popular?searchTerm=' + searchTerm + '&limit=' + limit + '&tags=' + tags)
             .pipe(map(rooms => {
                 return rooms;
             }));
@@ -79,8 +81,8 @@ export class RoomService {
         return this.http.delete(GlobalConstants.APIURL + '/room/' + roomId);
     }
 
-    updateRoom(roomId: number, image: string, name: string, isPrivate: boolean) {
-        return this.http.put<Room>(GlobalConstants.APIURL + '/room', new RoomUpdateDTO(roomId, name, isPrivate, image));
+    updateRoom(roomId: number, image: string, name: string, isPrivate: boolean, tagList: Tag[]) {
+        return this.http.put<Room>(GlobalConstants.APIURL + '/room', new RoomUpdateDTO(roomId, name, isPrivate, image, tagList));
     }
 
     updateRole(roomId: number, member: Member, newRole: string) {

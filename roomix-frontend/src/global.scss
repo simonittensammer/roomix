@@ -261,6 +261,14 @@ label {
   margin-left: 10%;
 }
 
+.mat-form-field-label {
+  margin-left: 0;
+}
+
+.mat-option-text {
+  color: black;
+}
+
 input[type="checkbox"] {
   margin: 15px;
   transform: scale(1.25);

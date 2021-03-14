@@ -31,6 +31,9 @@ public class Room {
     @JoinColumn(name = "RM_PLL_ID")
     Playlist playlist;
 
+    @ManyToMany(cascade = CascadeType.MERGE)
+    List<Tag> tagList;
+
     int activeMemberCount;
 
     boolean isPrivate;
@@ -39,6 +42,7 @@ public class Room {
         this.memberList = new LinkedList<>();
         this.messageList = new LinkedList<>();
         this.playlist = new Playlist();
+        this.tagList = new LinkedList<>();
     }
 
     public Room(String name) {
@@ -46,6 +50,7 @@ public class Room {
         this.memberList = new LinkedList<>();
         this.messageList = new LinkedList<>();
         this.playlist = new Playlist();
+        this.tagList = new LinkedList<>();
     }
 
     public Room(String name, String picUrl, boolean isPrivate) {
@@ -54,6 +59,7 @@ public class Room {
         this.isPrivate = isPrivate;
         this.memberList = new LinkedList<>();
         this.messageList = new LinkedList<>();
+        this.tagList = new LinkedList<>();
         this.activeMemberCount = 0;
         this.playlist = new Playlist();
     }
@@ -62,6 +68,7 @@ public class Room {
         this.name = roomUpdateDTO.getRoomname();
         this.picUrl = roomUpdateDTO.getPicUrl();
         this.isPrivate = roomUpdateDTO.isPrivate();
+        this.tagList = roomUpdateDTO.getTagList();
         return  this;
     }
 
@@ -111,6 +118,14 @@ public class Room {
 
     public void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
 
     public int getActiveMemberCount() {

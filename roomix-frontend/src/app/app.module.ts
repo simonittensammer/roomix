@@ -28,7 +28,14 @@ import {AddFriendComponent} from './pages/profile/friendlist/add-friend/add-frie
 import {ChatComponent} from './pages/room/chat/chat.component';
 import {EditProfileComponent} from './pages/profile/edit-profile/edit-profile.component';
 import {EditRoomComponent} from './pages/room/edit-room/edit-room.component';
+import {TagSelectorComponent} from './pages/room/tag-selector/tag-selector.component';
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
     declarations: [
@@ -51,17 +58,24 @@ import {LandingPageComponent} from './pages/landing-page/landing-page.component'
         ChatComponent,
         EditProfileComponent,
         EditRoomComponent,
-        LandingPageComponent
+        LandingPageComponent,
+        TagSelectorComponent,
     ],
   entryComponents: [],
-  imports: [
-      BrowserModule,
-      IonicModule.forRoot(),
-      AppRoutingModule,
-      HttpClientModule,
-      FormsModule,
-      ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatTooltipModule,
+        MatFormFieldModule,
+        MatChipsModule,
+        MatAutocompleteModule,
+        MatIconModule
+    ],
   providers: [
     StatusBar,
     SplashScreen,

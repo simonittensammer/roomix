@@ -75,6 +75,7 @@ public class RoomRepository implements PanacheRepository<Room> {
         Hibernate.initialize(room.getPlaylist());
         Hibernate.initialize(room.getPlaylist().getSongList());
         Hibernate.initialize(room.getPlaylist().getCurrentSong());
+        Hibernate.initialize(room.getTagList());
         return room;
     }
 }

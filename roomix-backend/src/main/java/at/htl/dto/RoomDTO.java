@@ -1,7 +1,11 @@
 package at.htl.dto;
 
+import at.htl.entity.Tag;
+
 import javax.json.bind.annotation.JsonbCreator;
 import javax.json.bind.annotation.JsonbProperty;
+import java.util.LinkedList;
+import java.util.List;
 
 public class RoomDTO {
 
@@ -9,16 +13,19 @@ public class RoomDTO {
     private String roomname;
     private boolean isPrivate;
     private String picUrl;
+    private List<Tag> tagList;
 
     public RoomDTO() {
+        tagList = new LinkedList<>();
     }
 
     @JsonbCreator
-    public RoomDTO(String username, String roomname, @JsonbProperty("isPrivate") boolean isPrivate, String picUrl) {
+    public RoomDTO(String username, String roomname, @JsonbProperty("isPrivate") boolean isPrivate, String picUrl, List<Tag> tagList) {
         this.username = username;
         this.roomname = roomname;
         this.isPrivate = isPrivate;
         this.picUrl = picUrl;
+        this.tagList = tagList;
     }
 
     public String getUsername() {
@@ -51,5 +58,13 @@ public class RoomDTO {
 
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
 }

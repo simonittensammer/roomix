@@ -50,14 +50,12 @@ public class RoomEndpoint {
     @Inject
     MessageRepository messageRepository;
 
+    @Inject
+    TagRepository tagRepository;
+
     @GET
     public List<Room> getAll() {
-        return roomRepository.streamAll().peek(o -> {
-            Hibernate.initialize(o.getMessageList());
-            Hibernate.initialize(o.getMemberList());
-            Hibernate.initialize(o.getPlaylist());
-            Hibernate.initialize(o.getPlaylist().getSongList());
-        }).collect(Collectors.toList());
+        return roomRepository.streamAll().map(room -> roomRepository.initRoom(room)).collect(Collectors.toList());
     }
 
     @GET
@@ -96,18 +94,22 @@ public class RoomEndpoint {
 
     @GET
     @Path("/popular")
-    public List<Room> getPopularPublicRooms(@QueryParam("searchTerm") String searchTerm, @QueryParam("limit") int limit) {
-        List<Room> result;
-
-        if (searchTerm == null) result = roomRepository.findPopularPublicRooms(limit);
-
-        else result = roomRepository.streamAll()
+    public List<Room> getPopularPublicRooms(@QueryParam("searchTerm") String searchTerm, @QueryParam("limit") int limit, @QueryParam("tags") String tags) {
+        return roomRepository.streamAll()
                 .map(room -> roomRepository.initRoom(room))
-                .filter(room -> room.getName().toLowerCase().contains(searchTerm.toLowerCase()) && !room.isPrivate())
+                 .filter(room -> {
+                    if (searchTerm == null || searchTerm.equals("")) return true;
+                    return room.getName().toLowerCase().contains(searchTerm.toLowerCase());
+                })
+                .filter(room -> !room.isPrivate())
+                .filter(room -> {
+                    if (tags == null || tags.equals("")) return true;
+                    List<String> tagList = Arrays.asList(tags.split(",").clone());
+                    return room.getTagList().stream().map(Tag::getName).anyMatch(tagList::contains);
+                })
+                .sorted((o1, o2) -> o2.getMemberList().size() - o1.getMemberList().size())
                 .limit(limit)
                 .collect(Collectors.toList());
-
-        return result;
     }
 
     @GET
@@ -136,6 +138,7 @@ public class RoomEndpoint {
             Room room = new Room(roomDTO.getRoomname());
             room.setPrivate(roomDTO.isPrivate());
             room.setPicUrl(roomDTO.getPicUrl());
+            room.setTagList(roomDTO.getTagList());
 
             if (room.getPicUrl().equals("")) {
                 try (InputStream inputStream = getClass().getResourceAsStream("/images/default-room-pic.txt");
@@ -145,6 +148,8 @@ public class RoomEndpoint {
             }
 
             playlistRepository.persist(room.getPlaylist());
+            room.getTagList().forEach(tag -> tagRepository.getEntityManager().merge(tag));
+
             roomRepository.persist(room);
 
             Member member = new Member(creator, room, "owner");
@@ -236,10 +241,19 @@ public class RoomEndpoint {
     }
 
     @PUT
-    public Response updateRoom(RoomUpdateDTO roomUpdateDTO) {
+    public Response updateRoom(RoomUpdateDTO roomUpdateDTO) throws IOException {
         Room room = roomRepository.findById(roomUpdateDTO.getRoomId());
 
         if (room == null) return Response.status(Response.Status.BAD_REQUEST).build();
+
+        if (roomUpdateDTO.getPicUrl().equals("")) {
+            try (InputStream inputStream = getClass().getResourceAsStream("/images/default-room-pic.txt");
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                roomUpdateDTO.setPicUrl(reader.lines().collect(Collectors.joining(System.lineSeparator())));
+            }
+        }
+
+        roomUpdateDTO.getTagList().forEach(tagRepository.getEntityManager()::merge);
 
         room.update(roomUpdateDTO);
 
@@ -277,6 +291,12 @@ public class RoomEndpoint {
         }
 
         return Response.status(406).entity("room or song does not exist").build();
+    }
+
+    @GET
+    @Path("tags")
+    public List<Tag> getAllTags() {
+        return tagRepository.listAll();
     }
 
     @GET

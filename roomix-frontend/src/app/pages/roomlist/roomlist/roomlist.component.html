@@ -20,7 +20,8 @@
             </p>
         </div>
 
-        <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)">
+        <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)"
+             matTooltip="{{ getTagsAsString(member.room.tagList) }}">
             <img class="cardImage" [src]="accountService.sanitizeBase64(member.room.picUrl)"
                  alt="cover">
             <p class="cardHeadline">{{ member.room.name }}</p>

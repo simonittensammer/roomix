@@ -7,6 +7,7 @@ import {AccountService} from '../../../services/account.service';
 import {User} from '../../../models/user';
 import {Router} from '@angular/router';
 import {UserService} from '../../../services/user.service';
+import {Tag} from '../../../models/tag';
 
 @Component({
     selector: 'app-create-room',
@@ -17,6 +18,7 @@ export class CreateRoomComponent implements OnInit {
 
     user: User;
     newRoomForm: FormGroup;
+    tagList: Tag[] = [];
     base64textString = '';
 
   constructor(
@@ -42,7 +44,7 @@ export class CreateRoomComponent implements OnInit {
     onSubmit() {
         if (this.newRoomForm.valid) {
             this.roomlistService.createNewRoom(this.user.username, this.newRoomForm.value.name,
-                this.newRoomForm.value.isPrivate, this.base64textString)
+                this.newRoomForm.value.isPrivate, this.base64textString, this.tagList)
                 .pipe(first())
                 .subscribe(data => {
                     console.log(this.user);
@@ -75,5 +77,9 @@ export class CreateRoomComponent implements OnInit {
     _handleReaderLoaded(readerEvt) {
         const binaryString = readerEvt.target.result;
         this.base64textString = btoa(binaryString);
+    }
+
+    childToParent(tagList: Tag[]){
+        this.tagList = tagList;
     }
 }
