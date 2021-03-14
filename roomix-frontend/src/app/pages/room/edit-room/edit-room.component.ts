@@ -57,6 +57,7 @@ export class EditRoomComponent implements OnInit {
             this.room.picUrl = value.picUrl;
             this.roomService.updateRoomValue(this.room);
       });
+      this.roomService.showEditRoom();
     }
   }
 
