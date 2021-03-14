@@ -290,6 +290,12 @@ public class RoomEndpoint {
     }
 
     @GET
+    @Path("tags")
+    public List<Tag> getAllTags() {
+        return tagRepository.listAll();
+    }
+
+    @GET
     @Path("messages/{roomId}")
     public List<ChatMessageDTO> getMessagesInRoom(@PathParam("roomId") Long roomId) {
         return roomRepository.getAllMessagesInRoom(roomId);
