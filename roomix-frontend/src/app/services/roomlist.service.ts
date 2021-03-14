@@ -8,6 +8,7 @@ import {User} from '../models/user';
 import {GlobalConstants} from '../helpers/globalConstants';
 import {map} from 'rxjs/operators';
 import {RoomDTO} from '../models/dto/roomDTO';
+import {Tag} from '../models/tag';
 
 @Injectable({
     providedIn: 'root'
@@ -24,8 +25,8 @@ export class RoomlistService {
     ) {
     }
 
-    createNewRoom(username, roomname, isPrivate, base64textString: string) {
-        return this.http.post<User>(GlobalConstants.APIURL + '/room', new RoomDTO(username, roomname, isPrivate, base64textString))
+    createNewRoom(username, roomname, isPrivate, base64textString: string, tagList: Tag[]) {
+        return this.http.post<User>(GlobalConstants.APIURL + '/room', new RoomDTO(username, roomname, isPrivate, base64textString, tagList))
             .pipe(map(user => {
                 return user;
             }));

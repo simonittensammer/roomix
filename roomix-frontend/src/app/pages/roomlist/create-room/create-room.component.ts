@@ -42,7 +42,7 @@ export class CreateRoomComponent implements OnInit {
     onSubmit() {
         if (this.newRoomForm.valid) {
             this.roomlistService.createNewRoom(this.user.username, this.newRoomForm.value.name,
-                this.newRoomForm.value.isPrivate, this.base64textString)
+                this.newRoomForm.value.isPrivate, this.base64textString, [])
                 .pipe(first())
                 .subscribe(data => {
                     console.log(this.user);

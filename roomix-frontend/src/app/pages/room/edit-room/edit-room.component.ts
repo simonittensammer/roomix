@@ -48,7 +48,7 @@ export class EditRoomComponent implements OnInit {
   onSubmit() {
     if (this.editRoomForm.valid) {
       this.roomService.updateRoom(this.room.id, this.base64textString,
-          this.editRoomForm.value.name, this.editRoomForm.value.isPrivate).subscribe(value => {
+          this.editRoomForm.value.name, this.editRoomForm.value.isPrivate, []).subscribe(value => {
             this.room.name = value.name;
             this.room.isPrivate = value.isPrivate;
             this.room.picUrl = value.picUrl;

@@ -1,6 +1,7 @@
 import {Member} from './member';
 import {Playlist} from './playlist';
 import {ChatMessageDTO} from './dto/chatMessageDTO';
+import {Tag} from './tag';
 
 export class Room {
     id: number;
@@ -11,10 +12,12 @@ export class Room {
     playlist: Playlist;
     // activeMemberAmount: number;
     isPrivate: boolean;
+    tagList: Tag[];
 
     constructor(name) {
         this.name = name;
         this.memberList = [];
         this.messageList = [];
+        this.tagList = [];
     }
 }
