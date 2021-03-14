@@ -33,7 +33,8 @@
     </div>
 
     <div class="cardContainer">
-        <div class="card" *ngFor="let room of publicRooms" (click)="showRoom(room)">
+        <div class="card" *ngFor="let room of publicRooms" (click)="showRoom(room)"
+             matTooltip="{{ getTagsAsString(room.tagList) }}">
             <img class="cardImage" [src]="accountService.sanitizeBase64(room.picUrl)"
                  alt="roomPic">
             <p class="cardHeadline">{{ room.name }}</p>

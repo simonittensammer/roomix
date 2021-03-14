@@ -6,6 +6,7 @@ import {Room} from '../../../models/room';
 import {first} from 'rxjs/operators';
 import {RoomlistService} from '../../../services/roomlist.service';
 import {UserService} from '../../../services/user.service';
+import {Tag} from '../../../models/tag';
 
 @Component({
   selector: 'app-roomlist',
@@ -39,4 +40,7 @@ export class RoomlistComponent implements OnInit {
     this.router.navigate(['room', room.id]);
   }
 
+  getTagsAsString(tagList: Tag[]): string {
+    return tagList.map(tag => tag.name).join(', ');
+  }
 }

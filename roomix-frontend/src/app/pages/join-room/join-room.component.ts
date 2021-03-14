@@ -10,6 +10,7 @@ import {compareNumbers} from '@angular/compiler-cli/src/diagnostics/typescript_v
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import {fromEvent} from 'rxjs';
+import {Tag} from '../../models/tag';
 
 @Component({
     selector: 'app-join-room',
@@ -85,5 +86,9 @@ export class JoinRoomComponent implements OnInit, AfterViewInit {
                 this.publicRooms = publicRooms;
             });
         });
+    }
+
+    getTagsAsString(tagList: Tag[]): string {
+        return tagList.map(tag => tag.name).join(', ');
     }
 }

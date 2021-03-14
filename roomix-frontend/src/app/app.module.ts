@@ -30,6 +30,7 @@ import {EditProfileComponent} from './pages/profile/edit-profile/edit-profile.co
 import {EditRoomComponent} from './pages/room/edit-room/edit-room.component';
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -55,15 +56,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         LandingPageComponent
     ],
   entryComponents: [],
-  imports: [
-      BrowserModule,
-      IonicModule.forRoot(),
-      AppRoutingModule,
-      HttpClientModule,
-      FormsModule,
-      ReactiveFormsModule,
-      BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatTooltipModule
+    ],
   providers: [
     StatusBar,
     SplashScreen,
