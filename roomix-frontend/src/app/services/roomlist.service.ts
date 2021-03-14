@@ -9,6 +9,7 @@ import {GlobalConstants} from '../helpers/globalConstants';
 import {map} from 'rxjs/operators';
 import {RoomDTO} from '../models/dto/roomDTO';
 import {Tag} from '../models/tag';
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -34,5 +35,10 @@ export class RoomlistService {
 
     showCreateRoom() {
         this.createRoomVisible = !this.createRoomVisible;
+    }
+
+    getAllTags(): Observable<Tag[]> {
+        console.log(GlobalConstants.APIURL + 'room/tags');
+        return this.http.get<Tag[]>(GlobalConstants.APIURL + '/room/tags');
     }
 }
