@@ -45,6 +45,7 @@ export class EditRoomComponent implements OnInit {
       isPrivate: new FormControl(this.room.private)
     });
     this.editRoomForm.value.picUrl = this.room.picUrl;
+    this.base64textString = this.room.picUrl;
   }
 
   onSubmit() {
@@ -56,6 +57,7 @@ export class EditRoomComponent implements OnInit {
             this.room.picUrl = value.picUrl;
             this.roomService.updateRoomValue(this.room);
       });
+      this.roomService.showEditRoom();
     }
   }
 

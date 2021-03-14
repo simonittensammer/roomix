@@ -54,6 +54,7 @@ export class TagSelectorComponent implements OnInit{
 
     if ((value || '').trim()) {
       this.tags.push(value.trim());
+      this.sendToParent();
     }
 
     if (input) {
