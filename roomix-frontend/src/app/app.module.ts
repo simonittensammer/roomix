@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {RouteReuseStrategy} from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import {HttpClientModule} from '@angular/common/http';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { RegisterComponent } from './account/register/register.component';
+import {RegisterComponent} from './account/register/register.component';
 import {LoginComponent} from './account/login/login.component';
 import {RoomComponent} from './pages/room/room/room.component';
 import {RoomlistComponent} from './pages/roomlist/roomlist/roomlist.component';
@@ -30,7 +30,8 @@ import {EditProfileComponent} from './pages/profile/edit-profile/edit-profile.co
 import {EditRoomComponent} from './pages/room/edit-room/edit-room.component';
 import {TagSelectorComponent} from './pages/room/tag-selector/tag-selector.component';
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AuthInterceptor} from './interceptors/auth-interceptor';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatChipsModule} from '@angular/material/chips';
@@ -59,9 +60,9 @@ import {MatIconModule} from '@angular/material/icon';
         EditProfileComponent,
         EditRoomComponent,
         LandingPageComponent,
-        TagSelectorComponent,
+        TagSelectorComponent
     ],
-  entryComponents: [],
+    entryComponents: [],
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
@@ -76,11 +77,19 @@ import {MatIconModule} from '@angular/material/icon';
         MatAutocompleteModule,
         MatIconModule
     ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
-  ],
-  bootstrap: [AppComponent]
+    providers: [
+        StatusBar,
+        SplashScreen,
+        {
+            provide: RouteReuseStrategy,
+            useClass: IonicRouteStrategy
+        },
+        {
+            provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

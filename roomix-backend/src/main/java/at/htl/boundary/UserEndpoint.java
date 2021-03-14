@@ -8,6 +8,8 @@ import at.htl.entity.*;
 import at.htl.control.UserRepository;
 import org.hibernate.Hibernate;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.JsonArray;
@@ -31,6 +33,8 @@ import java.util.stream.Collectors;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
+@RolesAllowed("user")
+//@PermitAll
 public class UserEndpoint {
 
     @Inject
@@ -115,40 +119,24 @@ public class UserEndpoint {
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
-    @POST
-    public Response addUser(User user) throws IOException {
-        try {
-            if (user.getPicUrl().equals("")) {
-                try (InputStream inputStream = getClass().getResourceAsStream("/images/default-user-pic.txt");
-                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-                    user.setPicUrl(reader.lines().collect(Collectors.joining(System.lineSeparator())));
-                }
-            }
-            userRepository.persist(user);
-            return Response.status(201).entity(user).build();
-        } catch (PersistenceException e) {
-            return Response.status(406).entity("username is already taken").build();
-        }
-    }
-
-    @POST
-    @Path("/login")
-    public Response loginUser(JsonObject jsonObject) {
-        String username = jsonObject.getString("username");
-        String password = jsonObject.getString("password");
-
-        User user = userRepository.findByName(username);
-
-        if (user != null) {
-            if (user.getPassword().equals(password)) {
-                return Response.ok(user).build();
-            } else {
-                return Response.status(406).entity("password wrong").build();
-            }
-        }
-
-        return Response.status(406).entity("user does not exist").build();
-    }
+//    @POST
+//    @Path("/login")
+//    public Response loginUser(JsonObject jsonObject) {
+//        String username = jsonObject.getString("username");
+//        String password = jsonObject.getString("password");
+//
+//        User user = userRepository.findByName(username);
+//
+//        if (user != null) {
+//            if (user.getPassword().equals(password)) {
+//                return Response.ok(user).build();
+//            } else {
+//                return Response.status(406).entity("password wrong").build();
+//            }
+//        }
+//
+//        return Response.status(406).entity("user does not exist").build();
+//    }
 
     @PUT
     public Response updateUser(UserUpdateDTO userUpdateDTO) {
