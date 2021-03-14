@@ -42,7 +42,7 @@ export class EditRoomComponent implements OnInit {
     this.editRoomForm = new FormGroup({
       picUrl: new FormControl(null),
       name: new FormControl(this.room.name, Validators.required),
-      isPrivate: new FormControl(this.room.isPrivate)
+      isPrivate: new FormControl(this.room.private)
     });
     this.editRoomForm.value.picUrl = this.room.picUrl;
   }
@@ -52,7 +52,7 @@ export class EditRoomComponent implements OnInit {
       this.roomService.updateRoom(this.room.id, this.base64textString,
           this.editRoomForm.value.name, this.editRoomForm.value.isPrivate, this.room.tagList).subscribe(value => {
             this.room.name = value.name;
-            this.room.isPrivate = value.isPrivate;
+            this.room.private = value.private;
             this.room.picUrl = value.picUrl;
             this.roomService.updateRoomValue(this.room);
       });

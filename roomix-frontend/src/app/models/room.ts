@@ -11,7 +11,7 @@ export class Room {
     messageList: Array<ChatMessageDTO>;
     playlist: Playlist;
     // activeMemberAmount: number;
-    isPrivate: boolean;
+    private: boolean;
     tagList: Tag[];
 
     constructor(name) {
