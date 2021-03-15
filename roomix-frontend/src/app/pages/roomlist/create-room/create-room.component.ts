@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RoomlistService} from '../../../services/roomlist.service';
 import {first} from 'rxjs/operators';
-import {LoginComponent} from '../../../account/login/login.component';
+import {LoginComponent} from '../../account/login/login.component';
 import {AccountService} from '../../../services/account.service';
 import {User} from '../../../models/user';
 import {Router} from '@angular/router';

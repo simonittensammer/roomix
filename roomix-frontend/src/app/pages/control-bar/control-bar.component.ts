@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {RoomService} from '../services/room.service';
-import {Room} from '../models/room';
-import {AccountService} from '../services/account.service';
-import {User} from '../models/user';
-import {PlaySongService} from '../services/play-song.service';
-import { SkipVoteAmountDTO } from '../models/dto/skipVoteAmountDTO';
+import {RoomService} from '../../services/room.service';
+import {Room} from '../../models/room';
+import {AccountService} from '../../services/account.service';
+import {User} from '../../models/user';
+import {PlaySongService} from '../../services/play-song.service';
+import { SkipVoteAmountDTO } from '../../models/dto/skipVoteAmountDTO';
 
 @Component({
     selector: 'app-control-bar',

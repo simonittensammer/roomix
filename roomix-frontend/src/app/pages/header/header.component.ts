@@ -1,13 +1,13 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
-import {AccountService} from '../services/account.service';
+import {AccountService} from '../../services/account.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
-import {User} from '../models/user';
-import {RoomService} from '../services/room.service';
-import {Room} from '../models/room';
-import {PlaySongService} from '../services/play-song.service';
-import {UserSocketService} from '../services/user-socket.service';
-import {UserService} from '../services/user.service';
+import {User} from '../../models/user';
+import {RoomService} from '../../services/room.service';
+import {Room} from '../../models/room';
+import {PlaySongService} from '../../services/play-song.service';
+import {UserSocketService} from '../../services/user-socket.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-header',

@@ -1,7 +1,7 @@
 <div id="navBar" *ngIf="user != null">
 
-    <img id="logo" src="assets/logo/logo-light.svg" alt="logo">
-    <img id="icon" src="assets/icon/icon-light.svg" alt="icon">
+    <img id="logo" src="../../../assets/logo/logo-light.svg" alt="logo">
+    <img id="icon" src="../../../assets/icon/icon-light.svg" alt="icon">
 
     <a class="buttonLink" routerLink="/roomlist">
         <button class="formElement">
@@ -18,7 +18,7 @@
     </a>
 
     <a class="buttonLink" routerLink="/roomlist/join-room">
-        <button class="formElement" [disabled]="!room">
+        <button class="formElement">
             <ion-icon name="albums"></ion-icon>
             <div class="linkText">Browse</div>
         </button>
@@ -31,6 +31,6 @@
         </button>
     </a>
 
-    <div id="userText" class="formElement">Logged in as <br><b>{{ user.displayname }}</b></div>
+    <!-- <div id="userText" class="formElement">Logged in as <br><b>{{ user.displayname }}</b></div> -->
     <button id="logoutButton" class="formElement" (click)="logout()">Logout</button>
 </div>

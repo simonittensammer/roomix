@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {AccountService} from '../../services/account.service';
+import {AccountService} from '../../../services/account.service';
 import {LoginComponent} from '../login/login.component';
 import {Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
-import {UserService} from '../../services/user.service';
+import {UserService} from '../../../services/user.service';
 
 @Component({
     selector: 'app-register',

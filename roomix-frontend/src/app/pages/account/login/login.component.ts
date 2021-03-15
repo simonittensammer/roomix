@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AccountService} from '../../services/account.service';
+import {AccountService} from '../../../services/account.service';
 import {first} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {User} from '../../models/user';
-import {UserService} from '../../services/user.service';
+import {User} from '../../../models/user';
+import {UserService} from '../../../services/user.service';
 
 @Component({
     selector: 'app-login',

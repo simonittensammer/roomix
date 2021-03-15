@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {AuthGuard} from './helpers/auth.guard';
-import {LoginComponent} from './account/login/login.component';
-import {RegisterComponent} from './account/register/register.component';
+import {LoginComponent} from './pages/account/login/login.component';
+import {RegisterComponent} from './pages/account/register/register.component';
 import {RoomlistComponent} from './pages/roomlist/roomlist/roomlist.component';
 import {RoomComponent} from './pages/room/room/room.component';
 import {CreateRoomComponent} from './pages/roomlist/create-room/create-room.component';
