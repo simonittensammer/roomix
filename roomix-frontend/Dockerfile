@@ -1,12 +1,10 @@
-### STAGE 1: Build ###
-FROM node:12.7-alpine AS build
-WORKDIR /usr/src/app
-COPY package.json ./
+FROM node:13-alpine as build
+WORKDIR /app
+COPY package.json /app/
+RUN npm install -g ionic
 RUN npm install
-COPY . .
-RUN npm run build
-
-### STAGE 2: Run ###
-FROM nginx:1.17.1-alpine
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /usr/src/app/dist/roomix-frontend /usr/share/nginx/html
+COPY ./ /app/
+RUN npm run-script build
+FROM nginx:alpine
+RUN rm -rf /usr/share/nginx/html/
+COPY --from=build /app/www/ /usr/share/nginx/html/
