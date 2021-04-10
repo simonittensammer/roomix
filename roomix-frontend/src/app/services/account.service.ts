@@ -53,6 +53,7 @@ export class AccountService {
         localStorage.removeItem('username');
         localStorage.removeItem('id_token');
         this.router.navigate(['/login']);
+        window.location.reload();
     }
 
     register(user: User, base64textString: string) {
@@ -88,8 +89,12 @@ export class AccountService {
         this.addFriendVisible = !this.addFriendVisible;
     }
 
-    public sanitizeBase64(picUrl: string): SafeUrl {
+    /*public sanitizeBase64(picUrl: string): SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + picUrl);
+    }*/
+
+    public sanitizeBase64(picUrl: string): SafeUrl {
+        return picUrl.includes('http') ? picUrl : this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + picUrl);
     }
 
     showEditProfile() {

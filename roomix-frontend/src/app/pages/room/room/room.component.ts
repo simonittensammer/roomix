@@ -70,19 +70,19 @@ export class RoomComponent implements OnInit {
             });
 
         this.playSongService.updateMemberListEvent.subscribe(() => {
-           this.roomService.getMembers(this.room.id).subscribe(members => {
-               this.room.memberList = members;
-               if (!this.userIsMember()) {
-                   this.userService.getProperMemberList(this.user.username).subscribe(memberList => {
-                       this.user.memberList = memberList;
-                       this.joined = false;
-                       this.left = true;
-                       this.userService.updateUserValue(this.user);
-                       this.playSongService.disconnect();
-                       this.router.navigate(['roomlist']);
-                   });
-               }
-           });
+            this.roomService.getMembers(this.room.id).subscribe(members => {
+                this.room.memberList = members;
+                if (!this.userIsMember()) {
+                    this.userService.getProperMemberList(this.user.username).subscribe(memberList => {
+                        this.user.memberList = memberList;
+                        this.joined = false;
+                        this.left = true;
+                        this.userService.updateUserValue(this.user);
+                        this.playSongService.disconnect();
+                        this.router.navigate(['roomlist']);
+                    });
+                }
+            });
         });
 
         this.selectForm = this.fb.group({
