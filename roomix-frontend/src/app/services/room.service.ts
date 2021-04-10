@@ -16,7 +16,6 @@ import {Tag} from '../models/tag';
 })
 export class RoomService {
     private roomSubject: BehaviorSubject<Room>;
-    oldRoom: Room = null;
     inviteFriendVisible: boolean;
     editRoomVisible: boolean;
 

@@ -59,10 +59,7 @@ export class RoomComponent implements OnInit {
                                         value => {
                                             this.user = value;
                                             this.room = data;
-                                            if (!this.roomService.oldRoom || this.room.id !== this.roomService.oldRoom.id) {
-                                                this.roomService.oldRoom = this.room;
-                                                this.roomService.updateRoomValue(this.room);
-                                            }
+                                            this.roomService.updateRoomValue(this.room);
                                         });
                                 });
                         });
