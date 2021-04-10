@@ -15,18 +15,20 @@ public class RoomUpdateDTO implements Serializable {
     private boolean isPrivate;
     private String picUrl;
     private List<Tag> tagList;
+    private boolean resetPic;
 
     public RoomUpdateDTO() {
         tagList = new LinkedList<>();
     }
 
     @JsonbCreator
-    public RoomUpdateDTO(Long roomId, String roomname, @JsonbProperty("isPrivate") boolean isPrivate, String picUrl, List<Tag> tagList) {
+    public RoomUpdateDTO(Long roomId, String roomname,  @JsonbProperty("isPrivate") boolean isPrivate, String picUrl, List<Tag> tagList, boolean resetPic) {
         this.roomId = roomId;
         this.roomname = roomname;
         this.isPrivate = isPrivate;
         this.picUrl = picUrl;
         this.tagList = tagList;
+        this.resetPic = resetPic;
     }
 
     public Long getRoomId() {
@@ -67,5 +69,13 @@ public class RoomUpdateDTO implements Serializable {
 
     public void setTagList(List<Tag> tagList) {
         this.tagList = tagList;
+    }
+
+    public boolean isResetPic() {
+        return resetPic;
+    }
+
+    public void setResetPic(boolean resetPic) {
+        this.resetPic = resetPic;
     }
 }

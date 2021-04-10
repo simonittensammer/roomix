@@ -144,6 +144,15 @@ public class UserEndpoint {
 
         if (user == null) return Response.status(Response.Status.BAD_REQUEST).build();
 
+        if(userUpdateDTO.isResetProfilePic()) {
+            try (InputStream inputStream = getClass().getResourceAsStream("/images/default-user-pic.txt");
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                userUpdateDTO.setPicUrl(reader.lines().collect(Collectors.joining(System.lineSeparator())));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         user.update(userUpdateDTO);
         return Response.ok(user).build();
     }
