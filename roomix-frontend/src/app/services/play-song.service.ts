@@ -20,7 +20,6 @@ export class PlaySongService {
     currentSong: Song;
     currentSongUrl = '';
     currentSongTimer: number;
-    completeUrl: SafeResourceUrl;
     room: Room;
     private listeningRoom: BehaviorSubject<Room>;
     connected = false;
@@ -71,7 +70,7 @@ export class PlaySongService {
                 this.roomService.getMembers(roomid).subscribe(members => {
                     room.memberList = members;
                     this.room = room;
-                    this.updateRoomValue(room);
+                    this.updateRoomValue(this.room);
                     this.roomService.updateRoomValue(this.room);
                 });
             });
@@ -93,8 +92,6 @@ export class PlaySongService {
                     this.currentSongUrl = this.currentSong.url;
                     this.currentSongTimer = message.time;
                     this.player.loadVideoById(this.currentSongUrl, this.currentSongTimer);
-                    this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'
-                        + this.currentSongUrl + '?start=' + this.currentSongTimer + '&controls=1&amp&autoplay=1');
                     setTimeout(() => {
                         this.remainingSongDuration = 0.05;
                         this.songProgress =  (this.currentSongTimer * 100) / this.currentSong.length;
@@ -123,8 +120,6 @@ export class PlaySongService {
 
                else if (data.type === 'stop') {
                     console.log('stop playing song');
-                    this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(null);
-
                 }
 
                else if (data.type === 'chat-message') {
@@ -151,16 +146,15 @@ export class PlaySongService {
     disconnect() {
         if (this.songSocket != null) {
             this.songSocket.complete();
+            this.updateRoomValue(new Room(''));
+            this.currentSong = new Song('', '', '', '', 0);
+            this.currentSongUrl = '';
+            this.player.loadVideoById(this.currentSongUrl);
+            this.currentSongTimer = 0;
+            this.connected = false;
+            this.remainingSongDuration = 0;
+            this.songProgress = 0;
         }
-        this.updateRoomValue(new Room(''));
-        this.currentSong = new Song('', '', '', '', 0);
-        this.currentSongUrl = '';
-        this.player.loadVideoById(this.currentSongUrl);
-        this.currentSongTimer = 0;
-        this.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
-        this.connected = false;
-        this.remainingSongDuration = 0;
-        this.songProgress = 0;
     }
 
     // tslint:disable-next-line:ban-types
@@ -259,9 +253,13 @@ export class PlaySongService {
     }
 
     changeVolume(volume: number) {
+        if (this.mute) {
+            this.mute = !this.mute;
+            this.player.unMute();
+        }
         if (volume === -1) {
             volume = Number(localStorage.getItem('volume'));
-            if (volume === null) {
+            if (!volume) {
                volume = 50;
             }
         }
@@ -275,8 +273,10 @@ export class PlaySongService {
         this.mute = !this.mute;
         if (this.mute) {
            this.player.mute();
+           this.volumePercentage = 0;
            this.volumeStage = 'x';
         } else {
+            this.volumePercentage = Number(localStorage.getItem('volume'));
             this.setVolumeStage();
             this.player.unMute();
         }
