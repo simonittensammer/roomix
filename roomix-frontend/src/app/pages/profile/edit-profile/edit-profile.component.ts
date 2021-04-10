@@ -28,8 +28,9 @@ export class EditProfileComponent implements OnInit {
     );
     this.editProfileForm = new FormGroup({
       profilePic: new FormControl(null),
-      username: new FormControl(this.user.username, Validators.required),
+      username: new FormControl(this.user.username, Validators.required,),
       displayname: new FormControl(this.user.displayname, Validators.required),
+      resetProfilePic: new FormControl(false),
       password: new FormControl(this.user.password, Validators.required)
     });
     this.editProfileForm.value.profilePic = this.user.picUrl;
@@ -38,8 +39,9 @@ export class EditProfileComponent implements OnInit {
 
   onSubmit() {
     if (this.editProfileForm.valid) {
-      this.userService.updateUser(this.user.username, this.base64textString,
-          this.editProfileForm.value.displayname, this.editProfileForm.value.password).subscribe(value => {
+      console.log(this.editProfileForm.value);
+      this.userService.updateUser(this.user.username, this.base64textString, this.editProfileForm.value.displayname,
+          this.editProfileForm.value.password, this.editProfileForm.value.resetProfilePic).subscribe(value => {
             this.user.displayname = value.displayname;
             this.user.password = value.password;
             this.user.picUrl = value.picUrl;

@@ -58,8 +58,8 @@ export class UserService {
         return this.http.get<RoomInvite[]>(GlobalConstants.APIURL + '/user/' + username + '/roomInvites');
     }
 
-    updateUser(username: string, image: string, displayname: string, password: string) {
-        return this.http.put<User>(GlobalConstants.APIURL + '/user', new UserUpdateDTO(username, displayname, password, image));
+    updateUser(username: string, image: string, displayname: string, password: string, resetProfilePic: boolean) {
+        return this.http.put<User>(GlobalConstants.APIURL + '/user', new UserUpdateDTO(username, displayname, password, image, resetProfilePic));
     }
 
     unfriend(friendRequestDTO: FriendRequestDTO) {
