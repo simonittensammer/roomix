@@ -27,10 +27,13 @@ export class EditProfileComponent implements OnInit {
         }
     );
     this.editProfileForm = new FormGroup({
-      profilePic: new FormControl(this.user.picUrl, null),
+      profilePic: new FormControl(null),
+      username: new FormControl(this.user.username, Validators.required),
       displayname: new FormControl(this.user.displayname, Validators.required),
       password: new FormControl(this.user.password, Validators.required)
     });
+    this.editProfileForm.value.profilePic = this.user.picUrl;
+    this.base64textString = this.user.picUrl;
   }
 
   onSubmit() {
