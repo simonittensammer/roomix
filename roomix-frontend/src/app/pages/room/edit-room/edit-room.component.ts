@@ -42,7 +42,8 @@ export class EditRoomComponent implements OnInit {
     this.editRoomForm = new FormGroup({
       picUrl: new FormControl(null),
       name: new FormControl(this.room.name, Validators.required),
-      isPrivate: new FormControl(this.room.private)
+      isPrivate: new FormControl(this.room.private),
+      resetPic: new FormControl(false)
     });
     this.editRoomForm.value.picUrl = this.room.picUrl;
     this.base64textString = this.room.picUrl;
@@ -50,8 +51,8 @@ export class EditRoomComponent implements OnInit {
 
   onSubmit() {
     if (this.editRoomForm.valid) {
-      this.roomService.updateRoom(this.room.id, this.base64textString,
-          this.editRoomForm.value.name, this.editRoomForm.value.isPrivate, this.room.tagList).subscribe(value => {
+      this.roomService.updateRoom(this.room.id, this.base64textString, this.editRoomForm.value.name,
+          this.editRoomForm.value.isPrivate, this.room.tagList, this.editRoomForm.value.resetPic).subscribe(value => {
             this.room.name = value.name;
             this.room.private = value.private;
             this.room.picUrl = value.picUrl;

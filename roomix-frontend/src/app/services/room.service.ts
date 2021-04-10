@@ -80,8 +80,8 @@ export class RoomService {
         return this.http.delete(GlobalConstants.APIURL + '/room/' + roomId);
     }
 
-    updateRoom(roomId: number, image: string, name: string, isPrivate: boolean, tagList: Tag[]) {
-        return this.http.put<Room>(GlobalConstants.APIURL + '/room', new RoomUpdateDTO(roomId, name, isPrivate, image, tagList));
+    updateRoom(roomId: number, image: string, name: string, isPrivate: boolean, tagList: Tag[], resetPic: boolean) {
+        return this.http.put<Room>(GlobalConstants.APIURL + '/room', new RoomUpdateDTO(roomId, name, isPrivate, image, tagList, resetPic));
     }
 
     updateRole(roomId: number, member: Member, newRole: string) {
