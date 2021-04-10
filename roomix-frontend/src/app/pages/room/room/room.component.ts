@@ -85,9 +85,6 @@ export class RoomComponent implements OnInit {
         this.selectForm = this.fb.group({
             role: [null]
         });
-        // this.selectForm.get('role').valueChanges.subscribe(f => {
-        //     this.changeRole(f);
-        // });
     }
 
     showPlaylist() {

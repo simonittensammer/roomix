@@ -35,11 +35,9 @@ export class UserSocketService {
             });
 
         this.userSocket = webSocket('ws://localhost:8080/user/' + username);
-        console.log(username);
         this.userSocket.asObservable().subscribe(data => {
 
             if (data.type === 'receive-friend-request') {
-                console.log('receive-friend-request');
                 this.userService.getProperFriendRequestList(username)
                     .pipe(first())
                     .subscribe( value => {
@@ -49,7 +47,6 @@ export class UserSocketService {
             }
 
             if (data.type === 'friend-request-response') {
-                console.log('friend-request-response');
                 this.userService.getProperFriendList(username)
                     .pipe(first())
                     .subscribe( value => {
@@ -59,7 +56,6 @@ export class UserSocketService {
             }
 
             if (data.type === 'receive-room-invite') {
-                console.log('receive-room-invite');
                 this.userService.getProperRoomInviteList(username)
                     .pipe(first())
                     .subscribe( value => {
@@ -69,8 +65,6 @@ export class UserSocketService {
             }
 
             if (data.type === 'room-invite-response') {
-                console.log('room-invite-response');
-                console.log(data.message);
                 this.roomService.getMembers(data.message)
                     .pipe(first())
                     .subscribe( value => {
@@ -86,7 +80,6 @@ export class UserSocketService {
             }
 
             if (data.type === 'unfriend') {
-                console.log('unfriend');
                 this.userService.getProperFriendList(username)
                     .pipe(first())
                     .subscribe( value => {

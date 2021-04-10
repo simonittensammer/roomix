@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
         );
 
         if (localStorage.getItem('username') && localStorage.getItem('id_token')) {
-            // console.log(this.user.username + ' | ' + this.user.password);
             this.userService.getUser(localStorage.getItem('username')).subscribe(value2 => {
                 this.userService.updateUserValue(value2);
                 this.login(value2.username, value2.password);

@@ -75,9 +75,6 @@
                                     (change)="changeRole(member)">
                                 <option *ngFor="let role of roles | slice:1" [ngValue]="role"
                                         (load)="setDefaults(role)">{{ role }}</option>
-                                <!--                            <option [value]="roles[1]">Admin</option>-->
-                                <!--                            <option [value]="roles[2]">DJ</option>-->
-                                <!--                            <option [value]="roles[3]">Member</option>-->
                             </select>
                         </form>
                     </a>

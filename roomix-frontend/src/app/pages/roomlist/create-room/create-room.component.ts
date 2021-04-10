@@ -21,12 +21,13 @@ export class CreateRoomComponent implements OnInit {
     tagList: Tag[] = [];
     base64textString = '';
 
-  constructor(
-      private roomlistService: RoomlistService,
-      private accountService: AccountService,
-      private userService: UserService,
-      private router: Router
-  ) { }
+    constructor(
+        private roomlistService: RoomlistService,
+        private accountService: AccountService,
+        private userService: UserService,
+        private router: Router
+    ) {
+    }
 
     ngOnInit() {
         this.newRoomForm = new FormGroup({
@@ -79,7 +80,7 @@ export class CreateRoomComponent implements OnInit {
         this.base64textString = btoa(binaryString);
     }
 
-    childToParent(tagList: Tag[]){
+    childToParent(tagList: Tag[]) {
         this.tagList = tagList;
     }
 }

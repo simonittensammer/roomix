@@ -32,7 +32,6 @@ export class AccountService {
     ) {
     }
 
-
     login(username, password) {
         return this.http.post<JwtTokenDTO>(GlobalConstants.APIURL + '/user/login', {username, password})
             .pipe(map(jwtTokenDTO => {
@@ -44,12 +43,8 @@ export class AccountService {
     }
 
     logout() {
-        // remove user from local storage and set current user to null
         this.roomService.updateRoomValue(null);
-        // this.userSubject.next(null);
         this.userService.updateUserValue(null);
-        // localStorage.removeItem('room');
-        // localStorage.removeItem('user');
         localStorage.removeItem('username');
         localStorage.removeItem('id_token');
         this.router.navigate(['/login']);

@@ -23,6 +23,7 @@ export class PlaySongService {
     room: Room;
     private listeningRoom: BehaviorSubject<Room>;
     connected = false;
+
     volumePercentage: number;
     volumeStage: string;
     mute: boolean;
@@ -84,8 +85,6 @@ export class PlaySongService {
 
         this.songSocket.asObservable().subscribe(
             data  => {
-                console.log(data);
-
                 if (data.type === 'new-song') {
                     const message: PlaySongMessageDTO = data.message as PlaySongMessageDTO;
                     this.currentSong = message.song;
@@ -111,7 +110,6 @@ export class PlaySongService {
                 }
 
                 else if (data.type === 'remove-song') {
-                    console.log('removeing');
                     const song: Song = data.message as Song;
                     this.room.playlist.songList.splice(this.room.playlist.songList.findIndex(x => x.url === song.url), 1);
                     this.updateRoomValue(this.room);
@@ -119,12 +117,10 @@ export class PlaySongService {
                 }
 
                else if (data.type === 'stop') {
-                    console.log('stop playing song');
                 }
 
                else if (data.type === 'chat-message') {
                    const chatMessage: ChatMessageDTO = data.message as ChatMessageDTO;
-                   console.log(chatMessage.sender + ': ' + chatMessage.content);
                    this.room.messageList.push(chatMessage);
                    this.roomService.updateRoomValue(this.room);
                 }

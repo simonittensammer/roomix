@@ -19,10 +19,7 @@ export class UserService {
     constructor(
         private http: HttpClient
     ) {
-        // this.getUser(localStorage.getItem('username')).subscribe(user => {
         this.userSubject = new BehaviorSubject<User>(null);
-        // });
-        // this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     }
 
     public get userValue() {

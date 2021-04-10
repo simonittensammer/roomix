@@ -13,10 +13,8 @@
 
     <app-tag-selector [input-tags]="[]" (childToParent)="childToParent($event)"></app-tag-selector>
 
-    <!--    <label>Roomtype</label>-->
     <label>Room is private</label>
     <input type="checkbox" class="checkBox" formControlName="isPrivate">
-
 
     <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Create</button>
 

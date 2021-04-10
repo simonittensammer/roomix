@@ -39,7 +39,6 @@ export class EditProfileComponent implements OnInit {
 
   onSubmit() {
     if (this.editProfileForm.valid) {
-      console.log(this.editProfileForm.value);
       this.userService.updateUser(this.user.username, this.base64textString, this.editProfileForm.value.displayname,
           this.editProfileForm.value.password, this.editProfileForm.value.resetProfilePic).subscribe(value => {
             this.user.displayname = value.displayname;
