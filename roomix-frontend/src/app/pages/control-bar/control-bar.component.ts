@@ -5,6 +5,7 @@ import {AccountService} from '../../services/account.service';
 import {User} from '../../models/user';
 import {PlaySongService} from '../../services/play-song.service';
 import { SkipVoteAmountDTO } from '../../models/dto/skipVoteAmountDTO';
+import {UserService} from '../../services/user.service';
 
 @Component({
     selector: 'app-control-bar',
@@ -26,6 +27,7 @@ export class ControlBarComponent implements OnInit {
         private roomService: RoomService,
         private accountService: AccountService,
         public playSongService: PlaySongService,
+        private userService: UserService,
         private renderer: Renderer2
     ) {
     }
@@ -37,6 +39,10 @@ export class ControlBarComponent implements OnInit {
                 this.playSongService.changeVolume(-1);
             }
         );
+
+        this.userService.userValue.subscribe(value => {
+            this.user = value;
+        });
 
         this.playSongService.resetSkipVoteEvent.subscribe(() => {
             this.skip = false;
@@ -58,5 +64,16 @@ export class ControlBarComponent implements OnInit {
 
     mutePlayer() {
         this.playSongService.mutePlayer();
+    }
+
+    removeActiveMember() {
+        this.user.activeMember = null;
+        this.userService.updateUserValue(this.user);
+    }
+
+    updateMemberList() {
+        this.roomService.getMembers(this.room.id).subscribe(members => {
+            this.room.memberList = members;
+        });
     }
 }
