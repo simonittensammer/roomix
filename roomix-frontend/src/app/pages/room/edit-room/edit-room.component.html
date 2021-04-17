@@ -19,6 +19,7 @@
 
     <label>Tags</label>
     <app-tag-selector [input-tags]="room.tagList" (childToParent)="childToParent($event)"></app-tag-selector>
+    <br>
 
     <label>Room is private</label>
     <mat-slide-toggle formControlName="isPrivate"></mat-slide-toggle>
