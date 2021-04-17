@@ -37,6 +37,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
     declarations: [
@@ -75,7 +76,8 @@ import {MatIconModule} from '@angular/material/icon';
         MatFormFieldModule,
         MatChipsModule,
         MatAutocompleteModule,
-        MatIconModule
+        MatIconModule,
+        MatSlideToggleModule
     ],
     providers: [
         StatusBar,

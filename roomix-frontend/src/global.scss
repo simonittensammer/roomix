@@ -314,6 +314,10 @@ button[disabled] {
   filter: brightness(.5);
 }
 
+mat-slide-toggle {
+  margin-left: 15px;
+}
+
 // CARDS
 .cardContainer {
   width: 100%;
