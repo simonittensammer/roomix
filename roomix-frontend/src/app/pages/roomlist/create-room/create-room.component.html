@@ -19,7 +19,7 @@
     <app-tag-selector [input-tags]="[]" (childToParent)="childToParent($event)"></app-tag-selector>
 
     <label>Room is private</label>
-    <input type="checkbox" class="checkBox" formControlName="isPrivate">
+    <mat-slide-toggle formControlName="isPrivate"></mat-slide-toggle>
 
     <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Create</button>
 
