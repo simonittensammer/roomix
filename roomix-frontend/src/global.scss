@@ -222,7 +222,7 @@ button:active {
 }
 
 .popup {
-  min-width: 540px;
+  min-width: 360px;
   width: 35vw;
   max-height: 75vh;
   overflow: scroll;
@@ -253,6 +253,12 @@ button:active {
   white-space: nowrap;
 }
 
+.formImage {
+  float: right;
+  width: 15%;
+  border-radius: 5px;
+}
+
 #formSubmit {
   margin-top: 30px;
 }
@@ -272,6 +278,14 @@ label {
 input[type="checkbox"] {
   margin: 15px;
   transform: scale(1.25);
+}
+
+.inputFile {
+  display: none;
+}
+
+.formButton {
+  width: 35%;
 }
 
 .errorMsg {

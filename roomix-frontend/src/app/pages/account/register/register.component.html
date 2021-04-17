@@ -2,8 +2,11 @@
     <form [formGroup]="regForm" class="popup centerXY">
         <h2 class="formHeadline formElement">Create an account!</h2>
 
-        <label for="img">Profile Picture:</label>
-        <input class="formElement" formControlName="profilePic" type="file" id="img" name="img" accept="image/*" (change)="handleFileSelect($event)">
+        <img class="formElement formImage" [src]="accountService.sanitizeBase64(base64textString)" alt="">
+        <label for="img">Profile Picture:</label> <br>
+        <input #file class="formElement inputFile" formControlName="profilePic" type="file" id="img" name="img" accept="image/*" (change)="handleFileSelect($event)">
+        <button class="formElement formButton" (click)="file.click()">Upload file</button>
+        <br>
 
         <label for="username">Username</label>
         <input type="text" id="username" class="formElement" formControlName="username" placeholder="Username">
