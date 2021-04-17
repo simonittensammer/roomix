@@ -11,7 +11,7 @@
     <button class="formElement formButton" (click)="file.click()">Upload</button>
 
     <label>Reset Picture</label>
-    <input type="checkbox" class="checkBox" formControlName="resetPic">
+    <mat-slide-toggle formControlName="resetPic"></mat-slide-toggle>
     <br>
 
     <label for="name">Name</label>
@@ -21,7 +21,7 @@
     <app-tag-selector [input-tags]="room.tagList" (childToParent)="childToParent($event)"></app-tag-selector>
 
     <label>Room is private</label>
-    <input type="checkbox" class="checkBox" formControlName="isPrivate">
+    <mat-slide-toggle formControlName="isPrivate"></mat-slide-toggle>
 
     <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Save</button>
 
