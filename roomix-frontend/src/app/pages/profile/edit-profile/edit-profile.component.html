@@ -4,12 +4,17 @@
     <form [formGroup]="editProfileForm">
         <h2 class="formElement formHeadline">Edit your Profile</h2>
 
-        <img *ngIf="base64textString == ''" class="formElement formImage" src="./assets/previews/space-profile.jpg" alt="">
-        <img *ngIf="base64textString != ''" class="formElement formImage" [src]="accountService.sanitizeBase64(base64textString)" alt="">
-        <label for="img">Profile Picture:</label> <br>
+        <img *ngIf="base64textString == '' || editProfileForm.value.resetProfilePic" class="formElement formImage" src="./assets/previews/space-profile.jpg" alt="">
+        <img *ngIf="base64textString != '' && !editProfileForm.value.resetProfilePic" class="formElement formImage" [src]="accountService.sanitizeBase64(base64textString)" alt="">
+        <label for="img">Profile Picture</label> <br>
         <input #file class="formElement inputFile" formControlName="profilePic" type="file" id="img" name="img" accept="image/*" (change)="handleFileSelect($event)">
         <button class="formElement formButton" (click)="file.click()">Upload</button>
-        <br><br>
+<!--        <br>-->
+
+        <label>Reset Profile Picture</label>
+        <input type="checkbox" class="checkBox" formControlName="resetProfilePic">
+
+        <br>
 
         <label>Username</label>
         <input type="text" id="username" class="formElement" formControlName="username" placeholder="{{user.username}}" disabled="true">
@@ -19,9 +24,6 @@
 
         <label for="password">Password</label>
         <input type="password" id="password" class="formElement" formControlName="password">
-
-        <label>Reset Profile Picture</label>
-        <input type="checkbox" class="checkBox" formControlName="resetProfilePic">
 
         <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit(); accountService.showEditProfile()">Save</button>
 
