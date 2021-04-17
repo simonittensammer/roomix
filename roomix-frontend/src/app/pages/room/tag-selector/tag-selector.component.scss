@@ -16,3 +16,15 @@ input::placeholder {
   color: #a5a5a5 !important;
 }
 
+mat-form-field-wrapper {
+  padding: 0 !important;
+}
+
+mat-form-field {
+  background: var(--ion-background-color) !important;
+  margin-top: 10px;
+  padding: 5px 10px;
+  height: 65px !important;
+  overflow: hidden;
+  border-radius: 5px;
+}
