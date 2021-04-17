@@ -8,6 +8,7 @@ import {PlaySongService} from '../../../services/play-song.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {GlobalConstants} from '../../../helpers/globalConstants';
 import {Tag} from '../../../models/tag';
+import {AccountService} from '../../../services/account.service';
 
 @Component({
   selector: 'app-edit-room',
@@ -25,6 +26,7 @@ export class EditRoomComponent implements OnInit {
   constructor(
       private roomService: RoomService,
       private userService: UserService,
+      public accountService: AccountService,
       private playSongService: PlaySongService,
       private router: Router
   ) {

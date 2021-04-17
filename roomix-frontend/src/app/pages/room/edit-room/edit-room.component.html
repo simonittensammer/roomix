@@ -4,19 +4,24 @@
   <form [formGroup]="editRoomForm">
     <h2 class="formElement formHeadline">Edit your Room</h2>
 
-    <label for="img">Picture:</label>
-    <input value="" class="formElement" formControlName="picUrl" type="file" id="img" name="img" accept="image/*" (change)="handleFileSelect($event)">
+    <img *ngIf="base64textString == ''  || editRoomForm.value.resetPic" class="formElement formImage" src="./assets/previews/space-room.jpg" alt="">
+    <img *ngIf="base64textString != ''  && !editRoomForm.value.resetPic" class="formElement formImage" [src]="accountService.sanitizeBase64(base64textString)" alt="">
+    <label for="img">Room Picture</label> <br>
+    <input #file class="formElement inputFile" formControlName="picUrl" type="file" id="img" name="img" accept="image/*" (change)="handleFileSelect($event)">
+    <button class="formElement formButton" (click)="file.click()">Upload</button>
+
+    <label>Reset Picture</label>
+    <input type="checkbox" class="checkBox" formControlName="resetPic">
+    <br>
 
     <label for="name">Name</label>
     <input type="text" id="name" class="formElement" formControlName="name" placeholder="Name">
 
+    <label>Tags</label>
     <app-tag-selector [input-tags]="room.tagList" (childToParent)="childToParent($event)"></app-tag-selector>
 
     <label>Room is private</label>
     <input type="checkbox" class="checkBox" formControlName="isPrivate">
-
-    <label>Reset Picture</label>
-    <input type="checkbox" class="checkBox" formControlName="resetPic">
 
     <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()">Save</button>
 
