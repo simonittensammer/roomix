@@ -1,31 +1,33 @@
 <div class="content">
-    <h2>Rooms</h2>
+    <div class="scrollWrapper">
+        <h2>Rooms</h2>
 
-    <a class="buttonLink createRoomButton" (click)="roomListService.showCreateRoom()">
-        <button>Create a Room</button>
-    </a>
+        <a class="buttonLink createRoomButton" (click)="roomListService.showCreateRoom()">
+            <button>Create a Room</button>
+        </a>
 
-    <div class="cardContainer">
-        <div class="card" *ngIf="user.memberList.length == 0">
-            <p class="cardHeadline">No Rooms yet!</p>
-            <p class="cardText">
-                <button (click)="roomListService.showCreateRoom()">Create</button>
-                <br>
-                or
-                <br>
-                <a class="buttonLink" routerLink="/roomlist/join-room">
-                    <button>Join</button>
-                </a>
-                a Room!
-            </p>
-        </div>
+        <div class="cardContainer">
+            <div class="card" *ngIf="user.memberList.length == 0">
+                <p class="cardHeadline">No Rooms yet!</p>
+                <p class="cardText">
+                    <button (click)="roomListService.showCreateRoom()">Create</button>
+                    <br>
+                    or
+                    <br>
+                    <a class="buttonLink" routerLink="/roomlist/join-room">
+                        <button>Join</button>
+                    </a>
+                    a Room!
+                </p>
+            </div>
 
-        <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)"
-             matTooltip="{{ getTagsAsString(member.room.tagList) }}">
-            <img class="cardImage" [src]="accountService.sanitizeBase64(member.room.picUrl)"
-                 alt="cover">
-            <p class="cardHeadline">{{ member.room.name }}</p>
-            <p class="cardText">Members: {{ member.room.memberList.length }}</p>
+            <div class="card" *ngFor="let member of user.memberList" (click)="showRoom(member.room)"
+                 matTooltip="{{ getTagsAsString(member.room.tagList) }}">
+                <img class="cardImage" [src]="accountService.sanitizeBase64(member.room.picUrl)"
+                     alt="cover">
+                <p class="cardHeadline">{{ member.room.name }}</p>
+                <p class="cardText">Members: {{ member.room.memberList.length }}</p>
+            </div>
         </div>
     </div>
 </div>
