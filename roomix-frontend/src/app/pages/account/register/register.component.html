@@ -6,7 +6,7 @@
         <img *ngIf="base64textString != ''" class="formElement formImage" [src]="accountService.sanitizeBase64(base64textString)" alt="">
         <label for="img">Profile Picture:</label> <br>
         <input #file class="formElement inputFile" formControlName="profilePic" type="file" id="img" name="img" accept="image/*" (change)="handleFileSelect($event)">
-        <button class="formElement formButton" (click)="file.click()">Upload file</button>
+        <button class="formElement formButton" (click)="file.click()">Upload</button>
         <br><br>
 
         <label for="username">Username</label>
