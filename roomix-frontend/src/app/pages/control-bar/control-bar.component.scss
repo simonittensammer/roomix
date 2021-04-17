@@ -12,6 +12,7 @@
   padding: 0 30px;
 
   background: var(--ion-color-primary);
+  box-shadow: 0 0 10px 0 var(--ion-background-color);
 }
 
 #roomInfoWrapper, #roomInfoWrapper > *, #songInfoWrapper, #songInfoWrapper > * {
@@ -32,13 +33,13 @@
   width: 100%;
 
   border-radius: 10px;
-  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
 
   //transform-origin: bottom;
   //transform: translateY(-50%);
   //margin-bottom: 30px;
   position: absolute;
   bottom: 60%;
+  box-shadow: 0 0 10px 0 var(--ion-background-color);
 }
 
 #roomInfoWrapper {
@@ -120,7 +121,7 @@ ion-icon {
   border-radius: 20px;
   background: var(--ion-card-background);
 
-  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+  box-shadow: 0 0 10px 0 var(--ion-background-color);
 
   margin-left: 50%;
   transform: translate(-50%, -60%);
