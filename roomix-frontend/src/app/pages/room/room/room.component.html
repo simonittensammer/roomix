@@ -71,7 +71,7 @@
                         && !(user.activeMember != null && (roles[0] === user.activeMember.role
                         || roles[1] === user.activeMember.role))) && member.role != roles[0]">
                         <form [formGroup]="selectForm">
-                            <select name="roleSelect" id="roleSelect" formControlName="role"
+                            <select name="roleSelect" class="roleSelect" formControlName="role"
                                     (change)="changeRole(member)">
                                 <option *ngFor="let role of roles | slice:1" [ngValue]="role"
                                         (load)="setDefaults(role)">{{ role }}</option>
