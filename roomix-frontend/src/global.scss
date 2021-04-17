@@ -322,6 +322,8 @@ button[disabled] {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-auto-rows: auto;
   grid-gap: 1rem;
+
+  padding-bottom: 25%;
 }
 
 .card {
