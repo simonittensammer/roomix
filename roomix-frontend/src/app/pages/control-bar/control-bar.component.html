@@ -13,11 +13,6 @@
         </p>
     </div>
 
-    <a class="buttonLink mainButton"
-       (click)="updateMemberList(); removeActiveMember(); playSongService.disconnect()">
-        <button>Disconnect</button>
-    </a>
-
     <div id="songInfoWrapper">
         <p id="currentSongName">
             <ion-icon name="musical-notes"></ion-icon>
@@ -35,9 +30,11 @@
         <ng-template #unskip>
             <button (click)="skipSong()">Unskip</button>
         </ng-template>
-<!--        <p id="skipVoteAmount" *ngIf="skips !== null && skips.currentAmount > 0">-->
-<!--            {{skips.currentAmount}}/{{skips.amountNeeded}}-->
-<!--        </p>-->
+        <!--        <p id="skipVoteAmount" *ngIf="skips !== null && skips.currentAmount > 0">-->
+        <!--            {{skips.currentAmount}}/{{skips.amountNeeded}}-->
+        <!--        </p>-->
+
+        <button (click)="updateMemberList(); removeActiveMember(); playSongService.disconnect()">Disconnect</button>
     </div>
 
     <div id="volumeRangeBox">
