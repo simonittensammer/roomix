@@ -5,6 +5,7 @@ import at.htl.dto.*;
 import at.htl.entity.*;
 import org.hibernate.Hibernate;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
 @RolesAllowed("user")
+//@PermitAll
 public class RoomEndpoint {
 
     @Inject

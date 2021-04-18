@@ -96,7 +96,7 @@ public class AuthResource {
 
     private String generateToken(String username) throws Exception {
         Map<String, Long> timeClaims = new HashMap<>();
-        timeClaims.put(Claims.exp.name(), TokenUtils.currentTimeInSecs() + 120l);
+        timeClaims.put(Claims.exp.name(), TokenUtils.currentTimeInSecs() + lifespan);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put(Claims.iss.name(), issuer);

@@ -4,6 +4,7 @@ import at.htl.control.SongRepository;
 import at.htl.control.YTSearchService;
 import at.htl.entity.Song;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -20,6 +21,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
 @RolesAllowed("user")
+//@PermitAll
 public class SongEndpoint {
 
     @Inject
