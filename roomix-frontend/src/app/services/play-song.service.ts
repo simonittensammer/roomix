@@ -184,6 +184,8 @@ export class PlaySongService {
         this.player = new window['YT'].Player('player', {
             videoId: this.currentSongUrl,
             startSeconds: this.currentSongTimer,
+            width: '0',
+            height: '0',
             playerVars: {
                 autoplay: 1,
                 modestbranding: 1,

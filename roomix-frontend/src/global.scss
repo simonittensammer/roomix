@@ -244,7 +244,7 @@ button:active {
   scrollbar-width: none;
   z-index: 999;
 
-  box-shadow: 0 0 10px 0 var(--ion-color-dark-contrast);
+  box-shadow: 0 0 10px 0 var(--ion-background-color);
 
   .listEntry {
     background: var(--ion-background-color) !important;
@@ -334,7 +334,6 @@ mat-slide-toggle {
 .card {
   background: var(--ion-card-background);
   border-radius: 5px;
-  box-shadow: 0 0 15px -5px var(--ion-color-dark-contrast);
   padding: 10%;
 
   transition: all .1s ease-in-out;
@@ -344,6 +343,7 @@ mat-slide-toggle {
   cursor: pointer;
 
   //transform: scale(1.025);
+  box-shadow: 0 0 10px 0 var(--ion-card-background);
   background: var(--ion-card-hover);
 }
 
@@ -389,7 +389,6 @@ ul {
   width: 100%;
   background: var(--ion-card-background);
   border-radius: 5px;
-  box-shadow: 0 0 15px -5px var(--ion-color-dark-contrast);
   padding: 1.5%;
   margin-bottom: 1.5%;
 
@@ -402,6 +401,7 @@ ul {
   cursor: pointer;
 
   background: var(--ion-card-hover);
+  box-shadow: 0 0 10px 0 var(--ion-card-background);
 }
 
 .listImage {
