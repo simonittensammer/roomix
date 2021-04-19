@@ -5,4 +5,4 @@ mvn package -f ./roomix-backend
 docker build -t roomix-frontend-image ./roomix-frontend
 
 # run in docker
-docker-compose up --build
+docker-compose up --build -d
